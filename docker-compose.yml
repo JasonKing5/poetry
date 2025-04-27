@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ifs
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  server:
+    build:
+      context: ./apps/server
+    ports:
+      - "3001:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/ifs
+    volumes:
+      - ./apps/server:/app
+
+  web:
+    build:
+      context: ./apps/web
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/web:/app
+
+volumes:
+  pgdata:
