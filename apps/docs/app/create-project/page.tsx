@@ -85,7 +85,5 @@ export default function CreateProject() {
     # - 实现用户注册 / 登录 / 鉴权模块
     # - 配置 RBAC 权限模块
     # - 封装 API 请求并实现前端登录页面
-
-    # 🚀 你可以告诉我想优先完成哪一部分，我来继续帮你搭建。
   </div>;
 }
