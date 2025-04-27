@@ -1,0 +1,21 @@
+.api-card {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #eeeeee;
+  padding: 16px;
+}
+
+.api-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.api-buttons {
+  display: flex;
+  gap: 8px;
+}

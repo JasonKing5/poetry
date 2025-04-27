@@ -1,19 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { RoleEnum } from '../common/enums/role.enum';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(email: string, password: string, name?: string) {
-    return await this.prisma.user.create({
+    if (!email || !password) {
+      throw new BadRequestException('Email and password are required');
+    }
+    if (await this.prisma.user.findUnique({ where: { email } })) {
+      throw new BadRequestException('Email already exists');
+    }
+    if (name && name.length > 20) {
+      throw new BadRequestException('Name must be less than 20 characters');
+    }
+    if (password.length < 6) {
+      throw new BadRequestException('Password must be at least 6 characters');
+    }
+    
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await this.prisma.user.create({
       data: {
         email,
-        password,
+        password: hashedPassword,
         name,
       },
     });
+
+    await this.assignRole(user.id, [RoleEnum.USER]);
+    const roles = await this.getUserRoles(user.id);
+    return { ...user, roles };
   }
   async assignRole(userId: number, roleNames: RoleEnum[]) {
     const roles = await this.prisma.role.findMany({ where: { name: { in: roleNames } } });
@@ -60,6 +79,9 @@ export class UserService {
   }
 
   async findOneByEmail(email: string) {
+    if (!email) {
+      throw new BadRequestException('Email is required');
+    }
     return await this.prisma.user.findUnique({
       where: { email },
     });
@@ -73,19 +95,45 @@ export class UserService {
     );
   }
   async findOne(id: number) {
+    if (!id) {
+      throw new BadRequestException('ID is required');
+    }
     return await this.prisma.user.findUnique({
       where: { id },
     });
   }
   async update(id: number, email: string | undefined, password: string | undefined, name: string | undefined) {
+    if (!id) {
+      throw new BadRequestException('ID is required');
+    }
+    if (email) {
+      const user = await this.prisma.user.findUnique({ where: { email } });
+      if (user && user.id !== id) {
+        throw new BadRequestException('Email already exists');
+      }
+    }
+    if (name && name.length > 20) {
+      throw new BadRequestException('Name must be less than 20 characters');
+    }
+    if (password && password.length < 6) {
+      throw new BadRequestException('Password must be at least 6 characters');
+    }
+    const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
     return await this.prisma.user.update({
       where: { id },
-      data: { email, password, name },
+      data: { email, password: hashedPassword, name },
     });
   }
   async delete(id: number) {
-    return await this.prisma.user.delete({
+    if (!id) {
+      throw new BadRequestException('ID is required');
+    }
+    const result = await this.prisma.user.delete({
       where: { id },
     });
+    await this.prisma.userRole.deleteMany({
+      where: { userId: id },
+    });
+    return result;
   }
 }
