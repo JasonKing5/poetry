@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import { RoleEnum } from '../common/enums/role.enum';
 
 @Injectable()
 export class UserService {
@@ -13,6 +14,49 @@ export class UserService {
         name,
       },
     });
+  }
+  async assignRole(userId: number, roleNames: RoleEnum[]) {
+    const roles = await this.prisma.role.findMany({ where: { name: { in: roleNames } } });
+    if (roles.length !== roleNames.length) {
+      throw new Error('One or more roles not found');
+    }
+
+    await this.prisma.userRole.createMany({
+      data: roles.map(role => ({
+        userId,
+        roleId: role.id,
+      })),
+      skipDuplicates: true,
+    });
+
+    return roles;
+  }
+
+  async getUserRoles(userId: number) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        userRoles: {
+          include: {
+            role: {
+              include: {
+                rolePermissions: {
+                  include: {
+                    permission: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    if (!user || user.userRoles.length === 0) {
+      throw new Error('User has no role assigned');
+    }
+
+    return user.userRoles.map(userRole => userRole.role);
   }
 
   async findOneByEmail(email: string) {
