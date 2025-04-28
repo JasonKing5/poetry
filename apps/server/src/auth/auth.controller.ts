@@ -9,12 +9,12 @@ export class AuthController {
   @Post('register')
   @Public()
   async register(@Body() body: { email: string; password: string; name?: string }) {
-    return this.authService.register(body.email, body.password, body.name);
+    return await this.authService.register(body.email, body.password, body.name);
   }
 
   @Post('login')
   @Public()
   async login(@Body() body: { email: string; password: string }) {
-    return this.authService.login(body.email, body.password);
+    return await this.authService.login(body.email, body.password);
   }
 }

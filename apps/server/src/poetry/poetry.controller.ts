@@ -22,9 +22,11 @@ export class PoetryController {
   @Get('/:id')
   @Public()
   async findOne(@Param('id') id: number) {
-    console.log('poetry id: ', id, typeof id);
     if (!id) {
       throw new BadRequestException('ID is required');
+    }
+    if (isNaN(Number(id))) {
+      throw new BadRequestException('Invalid ID');
     }
     return await this.poetryService.findOne(Number(id));
   }
