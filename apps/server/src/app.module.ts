@@ -5,9 +5,10 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { PoetryModule } from './poetry/poetry.module';
 import { PoetryPropModule } from './poetry-prop/poetry-prop.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
-  imports: [UserModule, AuthModule, PoetryModule, PoetryPropModule],
+  imports: [UserModule, AuthModule, PoetryModule, PoetryPropModule, MailModule],
   controllers: [AppController],
   providers: [AppService],
 })

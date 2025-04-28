@@ -17,4 +17,16 @@ export class AuthController {
   async login(@Body() body: { email: string; password: string }) {
     return await this.authService.login(body.email, body.password);
   }
+
+  @Post('email/reset')
+  @Public()
+  async sendEmail(@Body() body: { email: string }) {
+    return await this.authService.sendEmail(body.email)
+  }
+
+  @Post('reset')
+  @Public()
+  async resetPassword(@Body() body: { email: string, password: string, token: string }) {
+    return  await this.authService.resetPassword(body.email, body.password, body.token)
+  }
 }

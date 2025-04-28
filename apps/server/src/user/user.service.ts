@@ -30,6 +30,8 @@ export class UserService {
       },
     });
 
+    console.log('register user:', user)
+
     await this.assignRole(user.id, [RoleEnum.USER]);
     const roles = await this.getUserRoles(user.id);
     return { ...user, roles };

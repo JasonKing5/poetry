@@ -4,6 +4,7 @@ import { Roles } from 'src/common/decorators/roles.decorator';
 import { Permissions } from 'src/common/decorators/permissions.decorator';
 import { PermissionEnum } from 'src/common/enums/permission.enum';
 import { RoleEnum } from 'src/common/enums/role.enum';
+import { Public } from 'src/common/decorators/public.decorator';
 
 
 @Controller('users')
@@ -25,8 +26,9 @@ export class UserController {
   }
 
   @Get()
-  @Roles(RoleEnum.ADMIN)
-  @Permissions(PermissionEnum.VIEW_USER)
+  // @Roles(RoleEnum.ADMIN)
+  @Public()
+  // @Permissions(PermissionEnum.VIEW_USER)
   async findAll(@Query() query: { email?: string, name?: string }) {
     return await this.userService.findAll(query.email, query.name);
   }
