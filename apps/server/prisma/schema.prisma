@@ -65,3 +65,15 @@ model RolePermission {
   
   @@unique([roleId, permissionId])
 }
+
+model Poetry {
+  id    Int     @id @default(autoincrement())
+  title String
+  content String[]
+  author String
+  type String
+  tags String[]
+  source Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
