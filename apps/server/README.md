@@ -29,6 +29,12 @@
 
 ```bash
 $ pnpm install
+
+$ pnpm exec prisma generate --schema=prisma/schema.prisma
+
+$ pnpm dlx prisma db push
+
+$ pnpm run seed
 ```
 
 ## Compile and run the project
