@@ -101,7 +101,7 @@ async function authorSeed() {
   console.log(`Author successfully seeded. Inserted: ${inserted}`);
 }
 
-async function poetrySeed() {
+async function poetrySeed(submitterId: number) {
   console.log('Start seed poetry');
   const poetryDir = path.resolve(__dirname, '../data/chinese-poetry');
   const files = fs.readdirSync(poetryDir).filter(f => f.endsWith('.json'));
@@ -195,7 +195,7 @@ async function poetrySeed() {
         tags: getTags(fileType, item),
         source: PoetrySource.ancientPoetry,
         dynasty: getDynasty(fileType),
-        submitterId: 1, // root user
+        submitterId, // root user
         authorId: getAuthorId(fileType, item),
         status: PoetryStatus.approved,
       };
@@ -292,6 +292,7 @@ async function main() {
     update: {},
     create: {
       email: 'root@example.com',
+      name: 'root',
       password: await bcrypt.hash('123456', 10),
     },
   });
@@ -311,7 +312,7 @@ async function main() {
 
   await authorSeed();
 
-  await poetrySeed();
+  await poetrySeed(rootUser.id);
 
   console.log('All successfully seeded.');
 }
