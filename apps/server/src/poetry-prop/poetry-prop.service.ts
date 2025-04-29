@@ -8,11 +8,11 @@ export class PoetryPropService {
   async findAllAuthor() {
     const authors = await this.prisma.poetry.findMany({
       select: {
-        author: true
+        authorId: true
       },
-      distinct: ['author']
+      distinct: ['authorId']
     });
-    return authors.map(author => author.author).filter(Boolean);
+    return authors.map(author => author.authorId).filter(Boolean);
   }
 
   async findAllType() {

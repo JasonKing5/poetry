@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import { Dynasty, PoetrySource, PoetryStatus, PoetryType } from '@prisma/client';
 
 @Injectable()
 export class PoetryService {
@@ -47,6 +48,38 @@ export class PoetryService {
 
   async findOne(id: number) {
     return await this.prisma.poetry.findUnique({
+      where: { id },
+    });
+  }
+
+  async create(title: string, authorId: number, type: PoetryType, tags: string[], dynasty: Dynasty) {
+    return await this.prisma.poetry.create({
+      data: {
+        title,
+        authorId,
+        type,
+        tags,
+        source: PoetrySource.systemUser,
+        status: PoetryStatus.pending,
+        dynasty,
+        submitterId: 1,
+      },
+    });
+  }
+
+  async update(id: number, title: string, authorId: number, tags: string[]) {
+    return await this.prisma.poetry.update({
+      where: { id },
+      data: {
+        title,
+        authorId,
+        tags,
+      },
+    });
+  }
+
+  async delete(id: number) {
+    return await this.prisma.poetry.delete({
       where: { id },
     });
   }

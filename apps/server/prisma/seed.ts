@@ -1,27 +1,105 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, PoetryType, PoetrySource, PoetryStatus, Dynasty } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import * as fs from 'fs';
 import * as path from 'path';
 
 const prisma = new PrismaClient();
 
-const POETRY_TYPEs = {
-  chu_ci: 'chu_ci',
-  lun_yu: 'lun_yu',
-  shi_jing: 'shi_jing',
-  song_ci: 'song_ci',
-  tang_shi: 'tang_shi',
-  yuan_qu: 'yuan_qu',
+const POETRY_TYPE_MAP = {
+  'chuCi': '楚辞',
+  'lunYu': '论语',
+  'shiJing': '诗经',
+  'songCi': '宋词',
+  'tangShi': '唐诗',
+  'yuanQu': '元曲',
 };
 
-const POETRY_TYPE_MAP = {
-  'chu_ci': '楚辞',
-  'lun_yu': '论语',
-  'shi_jing': '诗经',
-  'song_ci': '宋词',
-  'tang_shi': '唐诗',
-  'yuan_qu': '元曲',
+const POETRY_SOURCE_MAP = {
+  'ancientPoetry': '古诗词',
+  'systemUser': '系统用户',
 };
+
+const POETRY_STATUS_MAP = {
+  'pending': '待审核',
+  'approved': '审核通过',
+  'notApproved': '审核未通过',
+};
+
+const DYNASTY_MAP = {
+  'chunQiu': '春秋',
+  'zhanGuo': '战国',
+  'qin': '秦',
+  'han': '汉',
+  'sui': '隋',
+  'tang': '唐',
+  'song': '宋',
+  'yuan': '元',
+  'ming': '明',
+  'qing': '清',
+};
+
+const POETRY_AUTHOR_MAP = {
+  noOne: '无名氏',
+  lunYu: '孔子',
+};
+
+let NullNameId: number = 0;
+
+async function authorSeed() {
+  console.log('Start seed author');
+  const authorDir = path.resolve(__dirname, '../data/chinese-poetry');
+  const files = fs.readdirSync(authorDir).filter(f => f.endsWith('.json'));
+  const lunYuAuthor = await prisma.author.findFirst({ where: { name: POETRY_AUTHOR_MAP[PoetryType.lunYu] } });
+  if (!lunYuAuthor) {
+    await prisma.author.create({ data: { name: POETRY_AUTHOR_MAP[PoetryType.lunYu] } });
+  }
+  let nullNameAuthor = await prisma.author.findFirst({ where: { name: POETRY_AUTHOR_MAP.noOne } });
+  if (!nullNameAuthor) {
+    nullNameAuthor = await prisma.author.create({ data: { name: POETRY_AUTHOR_MAP.noOne } });
+  }
+  NullNameId = nullNameAuthor.id;
+
+  const getAuthorName = (type: string, poetry: any) => {
+    let author = poetry.author;
+    if (type === PoetryType.chuCi) {
+      author = poetry.author;
+    } else if (type === PoetryType.lunYu) {
+      author = POETRY_AUTHOR_MAP.lunYu;
+    } else if (type === PoetryType.shiJing) {
+      author = POETRY_AUTHOR_MAP.noOne;
+    } else if (type === PoetryType.songCi) {
+      author = poetry.author;
+    } else if (type === PoetryType.tangShi) {
+      author = poetry.author;
+    } else if (type === PoetryType.yuanQu) {
+      author = poetry.author;
+    }
+    return author;
+  }
+
+  const authorSet = new Set<string>();
+
+  for (const file of files) {
+    const filePath = path.join(authorDir, file);
+    const json = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    if (!Array.isArray(json)) continue;
+    const fileType = path.basename(file, '.json');
+    console.log('Start seed poetry: ', fileType);
+    for (const item of json) {
+      const authorName = getAuthorName(fileType, item);
+      if (authorName) {
+        authorSet.add(authorName);
+      }
+    }
+  }
+  const authorsToCreate = Array.from(authorSet).map(name => ({ name }));
+  await prisma.author.createMany({
+    data: authorsToCreate,
+    skipDuplicates: true,
+  });
+  const inserted = authorsToCreate.length;
+  console.log(`Author successfully seeded. Inserted: ${inserted}`);
+}
 
 async function poetrySeed() {
   console.log('Start seed poetry');
@@ -30,78 +108,102 @@ async function poetrySeed() {
   let total = 0, skipped = 0, inserted = 0;
 
   const getContent = (type: string, poetry: any) => {
-    if (type === POETRY_TYPEs.chu_ci) {
+    if (type === PoetryType.chuCi) {
       return poetry.content;
-    } else if (type === POETRY_TYPEs.lun_yu) {
+    } else if (type === PoetryType.lunYu) {
       return poetry.paragraphs;
-    } else if (type === POETRY_TYPEs.shi_jing) {
+    } else if (type === PoetryType.shiJing) {
       return poetry.content;
-    } else if (type === POETRY_TYPEs.song_ci) {
+    } else if (type === PoetryType.songCi) {
       return poetry.paragraphs;
-    } else if (type === POETRY_TYPEs.tang_shi) {
+    } else if (type === PoetryType.tangShi) {
       return poetry.paragraphs;
-    } else if (type === POETRY_TYPEs.yuan_qu) {
+    } else if (type === PoetryType.yuanQu) {
       return poetry.paragraphs;
     }
     return poetry.content;
   }
 
   const getTags = (type: string, poetry: any) => {
-    if (type === POETRY_TYPEs.chu_ci) {
+    if (type === PoetryType.chuCi) {
       return [poetry.section];
-    } else if (type === POETRY_TYPEs.lun_yu) {
+    } else if (type === PoetryType.lunYu) {
       return [poetry.chapter];
-    } else if (type === POETRY_TYPEs.shi_jing) {
+    } else if (type === PoetryType.shiJing) {
       return [poetry.chapter, poetry.section];
-    } else if (type === POETRY_TYPEs.song_ci) {
+    } else if (type === PoetryType.songCi) {
       return poetry.tags || [];
-    } else if (type === POETRY_TYPEs.tang_shi) {
+    } else if (type === PoetryType.tangShi) {
       return poetry.tags || [];
-    } else if (type === POETRY_TYPEs.yuan_qu) {
-      return [poetry.dynasty];
+    } else if (type === PoetryType.yuanQu) {
+      return [];
     }
     return poetry.tags || [];
   }
 
-  const getAuthor = (type: string, poetry: any) => {
-    if (type === POETRY_TYPEs.chu_ci) {
-      return poetry.author;
-    } else if (type === POETRY_TYPEs.lun_yu) {
-      return '孔子';
-    } else if (type === POETRY_TYPEs.shi_jing) {
-      return '';
-    } else if (type === POETRY_TYPEs.song_ci) {
-      return poetry.author;
-    } else if (type === POETRY_TYPEs.tang_shi) {
-      return poetry.author;
-    } else if (type === POETRY_TYPEs.yuan_qu) {
-      return poetry.author;
+  const authors = await prisma.author.findMany({
+    select: { name: true, id: true },
+  });
+
+  const getAuthorId = (type: string, poetry: any) => {
+    let author = poetry.author;
+    if (type === PoetryType.chuCi) {
+      author = poetry.author;
+    } else if (type === PoetryType.lunYu) {
+      author = POETRY_AUTHOR_MAP.lunYu;
+    } else if (type === PoetryType.shiJing) {
+      author = POETRY_AUTHOR_MAP.noOne;
+    } else if (type === PoetryType.songCi) {
+      author = poetry.author;
+    } else if (type === PoetryType.tangShi) {
+      author = poetry.author;
+    } else if (type === PoetryType.yuanQu) {
+      author = poetry.author;
     }
-    return poetry.author;
+    return authors.find(a => a.name === author)?.id || NullNameId;
+  }
+
+  const getDynasty = (type: string) => {
+    if (type === PoetryType.shiJing) {
+      return Dynasty.chunQiu;
+    } else if (type === PoetryType.lunYu) {
+      return Dynasty.chunQiu;
+    } else if (type === PoetryType.chuCi) {
+      return Dynasty.zhanGuo;
+    } else if (type === PoetryType.songCi) {
+      return Dynasty.song;
+    } else if (type === PoetryType.tangShi) {
+      return Dynasty.tang;
+    } else if (type === PoetryType.yuanQu) {
+      return Dynasty.yuan;
+    }
+    return Dynasty.chunQiu;
   }
 
   for (const file of files) {
     const filePath = path.join(poetryDir, file);
     const json = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     if (!Array.isArray(json)) continue;
-    const source = 1; // 1: 诗词库, 2: 用户
     const fileType = path.basename(file, '.json');
     console.log('Start seed poetry: ', fileType);
     for (const item of json) {
       // convert to poetry
       const poetry = {
-        title: fileType === POETRY_TYPEs.lun_yu ? item.chapter : item.title,
+        title: fileType === PoetryType.lunYu ? item.chapter : item.title,
         content: getContent(fileType, item),
-        author: getAuthor(fileType, item),
-        type: POETRY_TYPE_MAP[fileType],
+        type: PoetryType[fileType],
         tags: getTags(fileType, item),
-        source,
+        source: PoetrySource.ancientPoetry,
+        dynasty: getDynasty(fileType),
+        submitterId: 1, // root user
+        authorId: getAuthorId(fileType, item),
+        status: PoetryStatus.approved,
       };
       // insert or skip
       const exists = await prisma.poetry.findFirst({
         where: {
           title: poetry.title,
-          author: poetry.author,
+          authorId: poetry.authorId,
           type: poetry.type,
         },
       });
@@ -206,6 +308,8 @@ async function main() {
   });
 
   console.log('Roles and permissions successfully seeded.');
+
+  await authorSeed();
 
   await poetrySeed();
 

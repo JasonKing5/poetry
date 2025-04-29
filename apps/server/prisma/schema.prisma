@@ -19,6 +19,7 @@ model User {
   name  String?
   password String
   userRoles  UserRole[]
+  submittedPoetries Poetry[] @relation("Poetry_submitter")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -66,14 +67,66 @@ model RolePermission {
   @@unique([roleId, permissionId])
 }
 
+enum PoetryType {
+  shiJing
+  chuCi
+  lunYu
+  tangShi
+  songCi
+  yuanQu
+}
+
+// 枚举类型：来源
+enum PoetrySource {
+  ancientPoetry
+  systemUser
+}
+
+// 枚举类型：审核状态
+enum PoetryStatus {
+  pending
+  approved
+  notApproved
+}
+
+// 枚举类型：朝代
+enum Dynasty {
+  chunQiu
+  zhanGuo
+  qin
+  han
+  sui
+  tang
+  song
+  yuan
+  ming
+  qing
+}
+
+// 古代诗人表
+model Author {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  poems Poetry[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Poetry {
-  id    Int     @id @default(autoincrement())
-  title String
-  content String[]
-  author String
-  type String
-  tags String[]
-  source Int
+  id        Int          @id @default(autoincrement())
+  title     String
+  content   String[]
+  type      PoetryType
+  tags      String[]
+  source    PoetrySource
+  dynasty   Dynasty
+  submitter User         @relation("Poetry_submitter", fields: [submitterId], references: [id])
+  submitterId  Int
+  author    Author?      @relation(fields: [authorId], references: [id])
+  authorId  Int?
+  status    PoetryStatus @default(pending)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
