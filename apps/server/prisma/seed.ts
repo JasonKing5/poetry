@@ -5,39 +5,6 @@ import * as path from 'path';
 
 const prisma = new PrismaClient();
 
-const POETRY_TYPE_MAP = {
-  'chuCi': '楚辞',
-  'lunYu': '论语',
-  'shiJing': '诗经',
-  'songCi': '宋词',
-  'tangShi': '唐诗',
-  'yuanQu': '元曲',
-};
-
-const POETRY_SOURCE_MAP = {
-  'ancientPoetry': '古诗词',
-  'systemUser': '系统用户',
-};
-
-const POETRY_STATUS_MAP = {
-  'pending': '待审核',
-  'approved': '审核通过',
-  'notApproved': '审核未通过',
-};
-
-const DYNASTY_MAP = {
-  'chunQiu': '春秋',
-  'zhanGuo': '战国',
-  'qin': '秦',
-  'han': '汉',
-  'sui': '隋',
-  'tang': '唐',
-  'song': '宋',
-  'yuan': '元',
-  'ming': '明',
-  'qing': '清',
-};
-
 const POETRY_AUTHOR_MAP = {
   noOne: '无名氏',
   lunYu: '孔子',

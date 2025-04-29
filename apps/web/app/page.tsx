@@ -1,5 +1,6 @@
 import Image, { type ImageProps } from "next/image";
 import { Button } from "@repo/ui/button";
+import { POETRY_TYPE_MAP } from '@repo/common';
 import styles from "./page.module.css";
 
 type Props = Omit<ImageProps, "src"> & {
@@ -22,6 +23,12 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        <h1>诗词库</h1>
+        <ul>
+          {Object.entries(POETRY_TYPE_MAP).map(([key, value]) => (
+            <li key={key}>{value}</li>
+          ))}
+        </ul>
         <ThemeImage
           className={styles.logo}
           srcLight="turborepo-dark.svg"
