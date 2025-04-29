@@ -23,6 +23,9 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        <h1 className="text-3xl font-bold underline">
+          Hello world!
+        </h1>
         <h1>诗词库</h1>
         <ul>
           {Object.entries(POETRY_TYPE_MAP).map(([key, value]) => (
