@@ -35,12 +35,11 @@ export class AuthService {
       throw new BadRequestException('Email already exists');
     }
     
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await this.userService.create(email, hashedPassword, name);
+    const user = await this.userService.create(email, password, name);
     await this.userService.assignRole(user.id, [RoleEnum.USER]);
     const roles = await this.userService.getUserRoles(user.id);
     const { password: dbPassword, ...reset } = user;
-    return { ...reset, roles };
+    return { user: reset, roles };
   }
 
   async login(email: string, password: string) {
@@ -51,7 +50,7 @@ export class AuthService {
       throw new BadRequestException('Password must be at least 6 characters');
     }
 
-    const user = await this.userService.findOneByEmail(email);
+    const user = await this.userService.findOneByEmailWithPassword(email);
     if (!user || !(await bcrypt.compare(password, user.password))) {
       throw new UnauthorizedException('Email or password is incorrect');
     }
@@ -60,6 +59,7 @@ export class AuthService {
     const userId = user.id;
     return {
       user: reset,
+      roles,
       accessToken: this.generateJwt(userId, roles)
     };
   }
@@ -92,7 +92,7 @@ export class AuthService {
       throw new UnauthorizedException('Token is invalid or expired')
     }
     
-    await this.userService.update(user.id, user.email, password, user.name as string | undefined);
+    await this.userService.updatePassword(verifyUser.id, password);
   }
 
   private generateJwt(id: number, roles: any[]) {

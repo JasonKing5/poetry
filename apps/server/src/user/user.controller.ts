@@ -18,13 +18,6 @@ export class UserController {
     return await this.userService.create(body.email, body.password, body.name);
   }
 
-  @Get('/email/:email')
-  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
-  @Permissions(PermissionEnum.VIEW_DETAIL_USER)
-  async findOneByEmail(@Param('email') email: string) {
-    return await this.userService.findOneByEmail(email);
-  }
-
   @Get()
   // @Roles(RoleEnum.ADMIN)
   @Public()
@@ -43,8 +36,8 @@ export class UserController {
   @Put(':id')
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   @Permissions(PermissionEnum.UPDATE_USER)
-  async update(@Param('id') id: number, @Body() body: { email?: string; password?: string; name?: string }) {
-    return await this.userService.update(Number(id), body.email, body.password, body.name);
+  async update(@Param('id') id: number, @Body() body: { email?: string; name?: string }) {
+    return await this.userService.update(Number(id), body.email, body.name);
   }
 
   @Delete(':id')

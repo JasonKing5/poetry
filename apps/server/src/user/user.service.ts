@@ -7,6 +7,8 @@ import * as bcrypt from 'bcrypt';
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
+  private readonly SELECT_USER = { id: true, email: true, name: true, createdAt: true, updatedAt: true };
+
   async create(email: string, password: string, name?: string) {
     if (!email || !password) {
       throw new BadRequestException('Email and password are required');
@@ -80,21 +82,29 @@ export class UserService {
     return user.userRoles.map(userRole => userRole.role);
   }
 
-  async findOneByEmail(email: string) {
+  async findOneByEmailWithPassword(email: string) {
     if (!email) {
       throw new BadRequestException('Email is required');
     }
     return await this.prisma.user.findUnique({
       where: { email },
+      select: { ...this.SELECT_USER, password: true },
+    });
+  }
+  async findOneByEmail(email: string) {
+    return await this.prisma.user.findUnique({
+      where: { email },
+      select: this.SELECT_USER,
     });
   }
   async findAll(email?: string, name?: string) {
     const where: Record<string, any> = {};
     if (email) where.email = email;
     if (name) where.name = name;
-    return await this.prisma.user.findMany(
-      Object.keys(where).length > 0 ? { where } : undefined
-    );
+    return await this.prisma.user.findMany({
+      where,
+      select: this.SELECT_USER
+    });
   }
   async findOne(id: number) {
     if (!id) {
@@ -102,9 +112,10 @@ export class UserService {
     }
     return await this.prisma.user.findUnique({
       where: { id },
+      select: this.SELECT_USER,
     });
   }
-  async update(id: number, email: string | undefined, password: string | undefined, name: string | undefined) {
+  async update(id: number, email: string | undefined, name: string | undefined) {
     if (!id) {
       throw new BadRequestException('ID is required');
     }
@@ -117,14 +128,28 @@ export class UserService {
     if (name && name.length > 20) {
       throw new BadRequestException('Name must be less than 20 characters');
     }
-    if (password && password.length < 6) {
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: { email, name },
+    });
+    const roles = await this.getUserRoles(id);
+    const { password, ...reset } = user;
+    return { ...reset, roles };
+  }
+  async updatePassword(id: number, password: string) {
+    if (!id) {
+      throw new BadRequestException('ID is required');
+    }
+    if (password.length < 6) {
       throw new BadRequestException('Password must be at least 6 characters');
     }
-    const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
-    return await this.prisma.user.update({
+    const user = await this.prisma.user.update({
       where: { id },
-      data: { email, password: hashedPassword, name },
+      data: { password },
     });
+    const roles = await this.getUserRoles(id);
+    const { password: dbPassword, ...reset } = user;
+    return { ...reset, roles };
   }
   async delete(id: number) {
     if (!id) {
@@ -132,6 +157,9 @@ export class UserService {
     }
     const result = await this.prisma.user.delete({
       where: { id },
+    });
+    await this.prisma.userRole.deleteMany({
+      where: { userId: id },
     });
     await this.prisma.userRole.deleteMany({
       where: { userId: id },
