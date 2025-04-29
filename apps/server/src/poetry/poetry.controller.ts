@@ -1,7 +1,7 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { PoetryService } from './poetry.service';
 import { Public } from 'src/common/decorators/public.decorator';
-import { Dynasty, PoetryType } from '@prisma/client';
+import { Dynasty, PoetrySource, PoetryStatus, PoetryType } from '@prisma/client';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { RoleEnum } from 'src/common/enums/role.enum';
 import { Permissions } from 'src/common/decorators/permissions.decorator';
@@ -14,14 +14,14 @@ export class PoetryController {
   @Get()
   @Public()
   async findAll(
-    @Query() query: { title?: string, author?: string, type?: string, tags?: string[], page?: number, pageSize?: number }
+    @Query() query: { title?: string, author?: string, type?: string, tags?: string[], status?: PoetryStatus, submitter?: number, dynasty?: Dynasty, page?: number, pageSize?: number }
   ) {
-    let { title, author, type, tags, page, pageSize } = query;
+    let { title, author, type, tags, status, submitter, dynasty, page, pageSize } = query;
     if (typeof page === 'string') page = parseInt(page, 10);
     if (typeof pageSize === 'string') pageSize = parseInt(pageSize, 10);
     if (typeof page !== 'number' || isNaN(page)) page = 1;
     if (typeof pageSize !== 'number' || isNaN(pageSize)) pageSize = 20;
-    return await this.poetryService.findAll(title, author, type, tags, page, pageSize);
+    return await this.poetryService.findAll(title, author, type, tags, status, submitter, dynasty, page, pageSize);
   }
 
   @Get('/:id')
@@ -39,8 +39,8 @@ export class PoetryController {
   @Post()
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   @Permissions(PermissionEnum.CREATE_POETRY)
-  async create(@Body() body: { title: string, authorId: number, type: PoetryType, tags: string[], dynasty: Dynasty }) {
-    return await this.poetryService.create(body.title, Number(body.authorId), body.type, body.tags, body.dynasty);
+  async create(@Body() body: { title: string, authorId: number, type: PoetryType, tags: string[], source: PoetrySource, status: PoetryStatus, dynasty: Dynasty, submitterId: number }) {
+    return await this.poetryService.create(body.title, Number(body.authorId), body.type, body.tags, body.source = PoetrySource.systemUser, body.status = PoetryStatus.pending, body.dynasty, Number(body.submitterId));
   }
 
   @Put(':id')

@@ -6,19 +6,55 @@ import { Dynasty, PoetrySource, PoetryStatus, PoetryType } from '@prisma/client'
 export class PoetryService {
   constructor(private readonly prisma: PrismaService) {}
 
+  private SELECT_POETRY_BASE = {
+    id: true,
+    title: true,
+    author: {
+      select: {
+        id: true,
+        name: true,
+      },
+    },
+    type: true,
+    tags: true,
+    source: true,
+    status: true,
+    dynasty: true,
+    submitter: {
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    },
+    createdAt: true,
+    updatedAt: true,
+  };
+
+  private SELECT_POETRY_FULL = {
+    ...this.SELECT_POETRY_BASE,
+    content: true,
+  };
+
   /**
    * 分页查询诗词
    * @param title 标题
    * @param author 作者
    * @param type 类型
    * @param tags 标签数组
+   * @param status 状态
+   * @param submitter 提交人
+   * @param dynasty 朝代
    * @param page 当前页码（从1开始）
    * @param pageSize 每页条数
    */
-  async findAll(title?: string, author?: string, type?: string, tags?: string[], page: number = 1, pageSize: number = 20) {
+  async findAll(title?: string, author?: string, type?: string, tags?: string[], status?: PoetryStatus, submitter?: number, dynasty?: Dynasty, page: number = 1, pageSize: number = 20) {
     const where: any = {};
     if (type) where.type = type;
     if (title) where.title = title;
+    if (status) where.status = status;
+    if (submitter) where.submitter = submitter;
+    if (dynasty) where.dynasty = dynasty;
     if (author) where.author = author;
     if (tags && tags.length > 0) {
       where.tags = { hasSome: tags };
@@ -33,36 +69,28 @@ export class PoetryService {
       orderBy: {
         id: 'asc',
       },
-      select: {
-        id: true,
-        title: true,
-        author: true,
-        type: true,
-        tags: true,
-        source: true,
-        createdAt: true,
-        updatedAt: true,
-      }
+      select: this.SELECT_POETRY_BASE,
     });
   }
 
   async findOne(id: number) {
     return await this.prisma.poetry.findUnique({
       where: { id },
+      select: this.SELECT_POETRY_FULL,
     });
   }
 
-  async create(title: string, authorId: number, type: PoetryType, tags: string[], dynasty: Dynasty) {
+  async create(title: string, authorId: number, type: PoetryType, tags: string[], source: PoetrySource, status: PoetryStatus, dynasty: Dynasty, submitterId: number) {
     return await this.prisma.poetry.create({
       data: {
         title,
         authorId,
         type,
         tags,
-        source: PoetrySource.systemUser,
-        status: PoetryStatus.pending,
+        source,
+        status,
         dynasty,
-        submitterId: 1,
+        submitterId,
       },
     });
   }
