@@ -1,6 +1,7 @@
 import Image, { type ImageProps } from "next/image";
-import { Button } from "@repo/ui/button";
 import { POETRY_TYPE_MAP } from '@repo/common';
+import { Button } from "@/components/ui/button"
+import { Button as RepoButton } from "@repo/ui/button"
 import styles from "./page.module.css";
 
 type Props = Omit<ImageProps, "src"> & {
@@ -26,6 +27,7 @@ export default function Home() {
         <h1 className="text-3xl font-bold underline">
           Hello world!
         </h1>
+        <Button>Click me</Button>
         <h1>诗词库</h1>
         <ul>
           {Object.entries(POETRY_TYPE_MAP).map(([key, value]) => (
@@ -73,9 +75,9 @@ export default function Home() {
             Read our docs
           </a>
         </div>
-        <Button appName="web" className={styles.secondary}>
+        <RepoButton appName="web" className={styles.secondary}>
           Open alert
-        </Button>
+        </RepoButton>
       </main>
       <footer className={styles.footer}>
         <a
