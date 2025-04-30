@@ -3,6 +3,7 @@ import { POETRY_TYPE_MAP } from '@repo/common';
 import { Button } from "@/components/ui/button"
 import { Button as RepoButton } from "@repo/ui/button"
 import styles from "./page.module.css";
+import { TEXTS } from "@/lib/texts";
 
 type Props = Omit<ImageProps, "src"> & {
   srcLight: string;
@@ -25,7 +26,7 @@ export default function Home() {
     <div className={styles.page}>
       <main className={styles.main}>
         <h1 className="text-3xl font-bold underline">
-          Hello world!
+          {TEXTS.loginTitle}
         </h1>
         <Button>Click me</Button>
         <h1>诗词库</h1>
