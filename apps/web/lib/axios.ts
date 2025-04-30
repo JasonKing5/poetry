@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { toast } from 'sonner';
-import { useAuth } from '@/hooks/useAuth'
-
-const { setUser, clearUser } = useAuth();
+import { useUserStore } from '@/store/user'
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || '/api',
@@ -46,7 +44,7 @@ instance.interceptors.response.use(
         refreshPromise = refreshTokenRequest()
           .then((res) => {
             if (res.data?.code === 0) {
-              // 👇 更新 user 状态
+              const setUser = useUserStore((state) => state.setUser);
               setUser(res.data.user);
               onRefreshed();
               return;
@@ -55,6 +53,7 @@ instance.interceptors.response.use(
             }
           })
           .catch(() => {
+            const clearUser = useUserStore((state) => state.clearUser);
             clearUser();
             location.href = '/login';
             toast.warning('Token expired, please login again');

@@ -19,14 +19,16 @@ export default function AppLayout({ children }: AppLayoutProps) {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="flex items-center justify-between px-4 py-2 shadow bg-white">
-        <div className="flex items-center gap-2 text-xl font-bold">
+        <Link href="/" className="flex items-center gap-2 text-xl font-bold">
           <LayoutGrid className="w-6 h-6" />
           <span>中华诗词</span>
-        </div>
+        </Link>
         <nav className="flex items-center gap-6 text-sm">
           {isAdmin && <Link href="/user">用户管理</Link>}
           <Link href="/author">作者管理</Link>
+          <Link href="/about">关于我们</Link>
         </nav>
+        <Link href="/login">Login</Link>
       </header>
       <main className="flex-1 container py-6">{children}</main>
     </div>
