@@ -52,15 +52,33 @@ export class AuthService {
 
     const user = await this.userService.findOneByEmailWithPassword(email);
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      throw new UnauthorizedException('Email or password is incorrect');
+      throw new BadRequestException('Email or password is incorrect');
     }
     const roles = await this.userService.getUserRoles(user.id);
     const { password: dbPassword, ...reset } = user;
     const userId = user.id;
+
+    const accessToken = this.generateAccessToken(user.id, roles);
+    const refreshToken = this.generateRefreshToken(user.id);
+
     return {
       user: reset,
       roles,
-      accessToken: this.generateJwt(userId, roles)
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  async refresh(token: string) {
+    if (!token) {
+      throw new BadRequestException('No refresh token found');
+    }
+    const payload = this.jwtService.verify(token, {
+      secret: process.env.JWT_REFRESH_SECRET,
+    });
+    const accessToken = this.generateAccessToken(payload.sub, []); // 这里你也可以重新查角色
+    return {
+      accessToken,
     };
   }
 
@@ -75,7 +93,7 @@ export class AuthService {
     }
 
     const roles = await this.userService.getUserRoles(user.id);
-    const resetToken = this.generateJwt(user.id, roles);
+    const resetToken = this.generateAccessToken(user.id, roles);
 
     return await this.mailService.sendResetPasswordEmail(email, resetToken)
   }
@@ -95,13 +113,22 @@ export class AuthService {
     await this.userService.updatePassword(verifyUser.id, password);
   }
 
-  private generateJwt(id: number, roles: any[]) {
+  private generateAccessToken(id: number, roles: any[]) {
     const payload: JwtPayload = {
       sub: id,
       roles: roles.map(r => r.name),
       permissions: roles.flatMap(r => r.rolePermissions.map(p => p.permission.name)),
     };
-    const accessToken = this.jwtService.sign(payload);
-    return accessToken;
+    return this.jwtService.sign(payload, {
+      secret: process.env.JWT_SECRET,
+      expiresIn: '15m',
+    });
+  }
+  
+  private generateRefreshToken(id: number) {
+    return this.jwtService.sign({ sub: id }, {
+      secret: process.env.JWT_REFRESH_SECRET,
+      expiresIn: '7d',
+    });
   }
 }

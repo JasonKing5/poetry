@@ -28,7 +28,7 @@ export default function Home() {
         <h1 className="text-3xl font-bold underline">
           {TEXTS.loginTitle}
         </h1>
-        <Button>Click me</Button>
+        <Button>{TEXTS.submit}</Button>
         <h1>诗词库</h1>
         <ul>
           {Object.entries(POETRY_TYPE_MAP).map(([key, value]) => (
