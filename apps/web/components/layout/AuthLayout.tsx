@@ -24,14 +24,14 @@ export default function AppLayout({ children }: AppLayoutProps) {
           <LayoutGrid className="w-6 h-6" />
           <span className='p-4'>中华诗词</span>
         </Link>
-        <nav className="flex items-center gap-6">
+        <nav className="flex items-center gap-6 text-sm">
           {isAdmin && <Link href="/user">用户</Link>}
           <Link href="/poetry">诗词</Link>
           <Link href="/author">作者</Link>
           <Link href="/me">我的</Link>
         </nav>
         <div className='flex gap-4'>
-          {user ? <span>{user.name}</span> : <Link href="/login"><Button variant={'link'} onClick={() => window.location.href = '/login'}>登录</Button></Link>}
+          <Link href="/login"><Button onClick={() => window.location.href = '/login'}>登录</Button></Link>
         </div>
       </header>
       <main className="flex-1 container py-6">{children}</main>
