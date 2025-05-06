@@ -26,9 +26,12 @@ export default function Home() {
     <div className={styles.page}>
       <main className={styles.main}>
         <h1 className="text-3xl font-bold underline">
-          {TEXTS.loginTitle}
+          {TEXTS.page.loginTitle}
         </h1>
-        <Button>{TEXTS.submit}</Button>
+        <h1 className="text-3xl font-bold underline">
+          {TEXTS.page.registerTitle}
+        </h1>
+        <Button>{TEXTS.page.submit}</Button>
         <h1>诗词库</h1>
         <ul>
           {Object.entries(POETRY_TYPE_MAP).map(([key, value]) => (

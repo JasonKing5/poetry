@@ -1,5 +1,7 @@
 {
-  "loginTitle": "Welcome to login",
-  "registerTitle": "Create account",
-  "submit": "Submit"
+  "page": {
+    "loginTitle": "Welcome to login",
+    "registerTitle": "Create account",
+    "submit": "Submit"
+  }
 }
