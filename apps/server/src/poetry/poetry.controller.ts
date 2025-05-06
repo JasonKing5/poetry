@@ -14,14 +14,15 @@ export class PoetryController {
   @Get()
   @Public()
   async findAll(
-    @Query() query: { title?: string, author?: string, type?: string, tags?: string[], status?: PoetryStatus, submitter?: number, dynasty?: Dynasty, page?: number, pageSize?: number }
+    @Query() query: { title?: string, type?: PoetryType, tags?: string[], source?: string, dynasty?: Dynasty, submitter?: number, author?: string, status?: PoetryStatus, page?: number, pageSize?: number }
   ) {
-    let { title, author, type, tags, status, submitter, dynasty, page, pageSize } = query;
+    let { title, type, tags, source, dynasty, submitter, author, status, page, pageSize } = query;
+    console.log('query', query);
     if (typeof page === 'string') page = parseInt(page, 10);
     if (typeof pageSize === 'string') pageSize = parseInt(pageSize, 10);
     if (typeof page !== 'number' || isNaN(page)) page = 1;
     if (typeof pageSize !== 'number' || isNaN(pageSize)) pageSize = 20;
-    return await this.poetryService.findAll(title, author, type, tags, status, submitter, dynasty, page, pageSize);
+    return await this.poetryService.findAll(title, type, tags, source, dynasty, submitter, author, status, page, pageSize);
   }
 
   @Get('/:id')

@@ -6,7 +6,13 @@ export class AuthorService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll() {
-    return await this.prisma.author.findMany();
+    return await this.prisma.author.findMany({
+      orderBy: { id: 'asc' },
+      select: {
+        id: true,
+        name: true,
+      }
+    });
   }
 
   async findOne(id: number) {

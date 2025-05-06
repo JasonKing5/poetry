@@ -6,6 +6,9 @@ const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || '/api',
   timeout: 10000,
   withCredentials: true,
+  paramsSerializer: {
+    indexes: null, // no brackets at all
+  },
 });
 
 let isRefreshing = false;
@@ -32,7 +35,7 @@ instance.interceptors.response.use(
       toast.warning(res.message || 'Client error');
       return Promise.reject(res);
     }
-    return res.data;
+    return res;
   },
   async (err) => {
     const { response } = err;

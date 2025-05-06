@@ -48,29 +48,33 @@ export class PoetryService {
    * @param page 当前页码（从1开始）
    * @param pageSize 每页条数
    */
-  async findAll(title?: string, author?: string, type?: string, tags?: string[], status?: PoetryStatus, submitter?: number, dynasty?: Dynasty, page: number = 1, pageSize: number = 20) {
+  async findAll(title?: string, type?: PoetryType, tags?: string[], source?: string, dynasty?: Dynasty, submitter?: number, author?: string, status?: PoetryStatus, page: number = 1, pageSize: number = 20) {
     const where: any = {};
     if (type) where.type = type;
     if (title) where.title = title;
     if (status) where.status = status;
-    if (submitter) where.submitter = submitter;
+    if (source) where.status = source;
+    if (submitter) where.submitterId = submitter;
     if (dynasty) where.dynasty = dynasty;
-    if (author) where.author = author;
+    if (author) where.authorId = parseInt(author);
     if (tags && tags.length > 0) {
       where.tags = { hasSome: tags };
     }
     // 校正分页参数
     const take = Math.max(1, Math.min(pageSize, 100));
     const skip = Math.max(0, (page - 1) * take);
-    return await this.prisma.poetry.findMany({
-      where,
-      take,
-      skip,
-      orderBy: {
-        id: 'asc',
-      },
-      select: this.SELECT_POETRY_BASE,
-    });
+    return {
+      total: await this.prisma.poetry.count({ where }),
+      list: await this.prisma.poetry.findMany({
+        where,
+        take,
+        skip,
+        orderBy: {
+          id: 'asc',
+        },
+        select: this.SELECT_POETRY_BASE,
+      }),
+    };
   }
 
   async findOne(id: number) {
