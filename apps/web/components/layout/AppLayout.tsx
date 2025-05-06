@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useHasPermission } from '@/hooks/useHasPermission';
 import { cn } from '@/lib/utils';
 import { LayoutGrid } from 'lucide-react'; 
+import { Button } from '../ui/button';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -18,7 +19,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="flex items-center justify-between px-4 py-2 shadow bg-white">
+      <header className="flex items-center justify-between px-4 shadow bg-white">
         <Link href="/" className="flex items-center gap-2 text-xl font-bold">
           <LayoutGrid className="w-6 h-6" />
           <span className='p-4'>中华诗词</span>
@@ -30,7 +31,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           <Link href="/me">我的</Link>
         </nav>
         <div className='flex gap-4'>
-          <Link href="/login">Login</Link>
+          <Link href="/login"><Button onClick={() => window.location.href = '/login'}>登录</Button></Link>
         </div>
       </header>
       <main className="flex-1 container py-6">{children}</main>
