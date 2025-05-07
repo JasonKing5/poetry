@@ -1,49 +1,55 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import useSWR from 'swr';
 import { usePoetryStore } from '@/store/poetryStore';
 import { getPoetryList } from '@/services/poetry.service';
 import { getAllAuthor } from '@/services/author.service';
-import { useForm } from 'react-hook-form';
+import { getAllTags } from '@/services/poetry-prop.service';
 import { Button } from '@/components/ui/button';
 import { POETRY_SOURCE_MAP, POETRY_TYPE_MAP, DYNASTY_MAP } from '@repo/common'
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+
 import PoetryCard from '@/components/PoetryCard';
+
+const fetcher = (params: any) => getPoetryList(params).then(res => res.data);
 
 export default function PoetryPage() {
   const { page, pageSize, title, type, tags, source, dynasty, submitter, author, status, setFilters, resetFilters } = usePoetryStore();
-  const [data, setData] = useState<{ total: number; list: any[] }>({ total: 0, list: [] });
-  const [authors, setAuthors] = useState<any[]>([]);
 
-  const fetchAuthor = async () => {
-    const authorRes = await getAllAuthor();
-    setAuthors(authorRes.data);
-  };
-  useEffect(() => {
-    fetchAuthor();
-  }, [])
+  // 作者列表用 SWR
+  const { data: authorData } = useSWR('all-authors', getAllAuthor, { suspense: false });
+  const authors = authorData?.data || [];
 
-  const fetchData = async () => {
-    const res = await getPoetryList({ page, pageSize, title, type, tags, source, dynasty, submitter, author, status });
-    
-    console.log('getPoetryList:', res, res.data.list); // Add this line to log the response to the console
-    setData(res.data);
-  };
+  // 诗词列表用 SWR
+  const { data, isLoading, error } = useSWR(
+    ['poetry-list', { page, pageSize, title, type, tags, source, dynasty, submitter, author, status }],
+    ([, params]) => fetcher(params),
+    { keepPreviousData: true }
+  );
 
-  useEffect(() => {
-    fetchData();
-  }, [page, pageSize, title, type, tags, source, dynasty, submitter, author, status]);
+  const { data: tagData } = useSWR(
+    ['all-tags'],
+    getAllTags,
+    { suspense: false },
+  );
+  const allTags = tagData?.data || [];
 
   const handleValueChange = (type: string, value: any) => {
-    console.log('handleValueChange:', type, value);
     setFilters({ [type]: value, page: 1 });
   };
 
@@ -60,9 +66,10 @@ export default function PoetryPage() {
               <SelectValue placeholder="作者" />
             </SelectTrigger>
             <SelectContent>
-              {authors?.map(({id, name}) => (<SelectItem key={id} value={String(id)}>{name}</SelectItem>))}
+              {authors?.map(({id, name}: {id: string, name: string}) => (<SelectItem key={id} value={String(id)}>{name}</SelectItem>))}
             </SelectContent>
           </Select>
+          
           <Select onValueChange={(value) => handleValueChange('type', value)} value={type}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="类型" />
@@ -79,33 +86,100 @@ export default function PoetryPage() {
               {Object.entries(DYNASTY_MAP).map(([key, value]) => (<SelectItem key={key} value={key}>{value}</SelectItem>))}
             </SelectContent>
           </Select>
+          <Select onValueChange={(value) => handleValueChange('tags', [value])} value={dynasty}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="标签" />
+            </SelectTrigger>
+            <SelectContent>
+              {allTags.map((tag: string) => (<SelectItem key={tag} value={tag}>{tag}</SelectItem>))}
+            </SelectContent>
+          </Select>
           <Button onClick={handleReset} >重置</Button>
         </div>
 
-        <ul className="mb-4">
-          {data?.list?.map((item) => (
-            <li key={item.id}>
-              <PoetryCard
-                title={item.title}
-                author={item.author.name}
-                dynasty={item.dynasty}
-                tags={item.tags}
-                content={item.content}
-              />
-            </li>
-          ))}
-        </ul>
+        {isLoading ? (
+          <div>加载中...</div>
+        ) : error ? (
+          <div>加载失败</div>
+        ) : (
+          <ul className="mb-4">
+            {data?.list?.length > 0 ? data?.list?.map((item: {id: string, title: string, author: {name: string}, dynasty: string, tags: string[], content: string[]}) => (
+              <li key={item.id}>
+                <PoetryCard
+                  title={item.title}
+                  author={item.author.name}
+                  dynasty={item.dynasty}
+                  tags={item.tags}
+                  content={item.content}
+                />
+              </li>
+            )) : <div>无结果</div>}
+          </ul>
+        )}
 
         <div className="flex gap-2">
-          <Button onClick={() => setFilters({ page: Math.max(1, page - 1) })} disabled={page === 1}>
-            上一页
-          </Button>
-          <span>
-            第 {page} 页 / 共 {Math.ceil(data.total / pageSize)} 页
-          </span>
-          <Button onClick={() => setFilters({ page: page + 1 })} disabled={page * pageSize >= data.total}>
-            下一页
-          </Button>
+          {/* 分页功能 */}
+          {(() => {
+            const totalPages = Math.max(1, Math.ceil((data?.total || 0) / pageSize));
+            const pageNumbers: (number | string)[] = [];
+            for (let i = 1; i <= totalPages; i++) {
+              if (
+                i === 1 ||
+                i === totalPages ||
+                (i >= page - 2 && i <= page + 2)
+              ) {
+                pageNumbers.push(i);
+              } else if (
+                (i === page - 3 && page - 3 > 1) ||
+                (i === page + 3 && page + 3 < totalPages)
+              ) {
+                pageNumbers.push('ellipsis-' + i);
+              }
+            }
+            // 去重省略号
+            const filteredPageNumbers = pageNumbers.filter((num, idx, arr) => {
+              if (typeof num === 'string' && arr[idx - 1] === num) return false;
+              return true;
+            });
+          
+            return (
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      className="cursor-pointer"
+                      onClick={() => setFilters({ page: Math.max(1, page - 1) })}
+                      aria-disabled={page === 1}
+                    />
+                  </PaginationItem>
+                  {filteredPageNumbers.map((num, idx) =>
+                    typeof num === 'number' ? (
+                      <PaginationItem key={num}>
+                        <PaginationLink
+                          className="cursor-pointer"
+                          isActive={num === page}
+                          onClick={() => setFilters({ page: num })}
+                        >
+                          {num}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ) : (
+                      <PaginationItem key={num}>
+                        <span className="px-2 text-gray-400 select-none">...</span>
+                      </PaginationItem>
+                    )
+                  )}
+                  <PaginationItem>
+                    <PaginationNext
+                      className="cursor-pointer"
+                      onClick={() => setFilters({ page: Math.min(totalPages, page + 1) })}
+                      aria-disabled={page === totalPages}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            );
+          })()}
         </div>
       </div>
     </div>

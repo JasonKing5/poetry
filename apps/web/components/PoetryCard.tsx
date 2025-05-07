@@ -6,7 +6,7 @@ interface PoetryCardProps {
   author: string;
   dynasty: string;
   tags: string[];
-  content?: string;
+  content?: string[];
 }
 
 export default function PoetryCard({ title, author, dynasty, tags, content }: PoetryCardProps) {

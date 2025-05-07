@@ -58,6 +58,7 @@ export class PoetryService {
     if (dynasty) where.dynasty = dynasty;
     if (author) where.authorId = parseInt(author);
     if (tags && tags.length > 0) {
+      if (typeof tags === 'string') tags = [tags];
       where.tags = { hasSome: tags };
     }
     // 校正分页参数
