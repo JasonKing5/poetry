@@ -22,7 +22,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
       <header className="flex items-center justify-between px-4 shadow bg-white">
         <Link href="/" className="flex items-center gap-2 text-xl font-bold">
           <LayoutGrid className="w-6 h-6" />
-          <span className='p-4'>中华诗词</span>
+          <span className='p-4 pl-0'>中华诗词</span>
         </Link>
         <nav className="flex items-center gap-6">
           <Link href="/">首页</Link>
@@ -35,7 +35,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           {user ? <span>{user.name}</span> : <Link href="/login"><Button className='cursor-pointer' variant={'ghost'} onClick={() => window.location.href = '/login'}>登录</Button></Link>}
         </div>
       </header>
-      <main className="flex-1 container py-6">{children}</main>
+      <main className="flex-1 p-6">{children}</main>
     </div>
   );
 }

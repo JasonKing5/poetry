@@ -34,7 +34,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           <Link href="/login"><Button onClick={() => window.location.href = '/login'}>登录</Button></Link>
         </div>
       </header>
-      <main className="flex-1 container py-6">{children}</main>
+      <main className="flex-1 p-6">{children}</main>
     </div>
   );
 }

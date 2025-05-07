@@ -72,7 +72,7 @@ export class PoetryService {
         orderBy: {
           id: 'asc',
         },
-        select: this.SELECT_POETRY_BASE,
+        select: this.SELECT_POETRY_FULL,
       }),
     };
   }
