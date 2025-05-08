@@ -105,7 +105,7 @@ const poetryContentList = [
   },
   {
     content: "錦瑟無端五十絃，一絃一柱思華年。",
-    author: "李商隱",
+    author: "李商隐",
     title: "錦瑟"
   },
   {
@@ -139,7 +139,7 @@ export default function Home() {
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
-  
+
   useEffect(() => {
     if (!carouselApi) return;
 
@@ -152,10 +152,18 @@ export default function Home() {
 
     carouselApi.on("select", updateCarouselState);
 
+    // 自动轮播
+    const interval = setInterval(() => {
+      if (carouselApi && totalItems > 0) {
+        carouselApi.scrollTo((carouselApi.selectedScrollSnap() + 1) % totalItems);
+      }
+    }, 4000); // 4秒切换一次
+
     return () => {
-      carouselApi.off("select", updateCarouselState); // Clean up on unmount
+      carouselApi.off("select", updateCarouselState);
+      clearInterval(interval);
     };
-  }, [carouselApi]);
+  }, [carouselApi, totalItems]);
 
   const scrollToIndex = (index: number) => {
     carouselApi?.scrollTo(index);
