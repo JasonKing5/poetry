@@ -44,7 +44,6 @@ const carouselItems = [
 ]
 
 const poetrySelections = [
-  
   {
     title: "诗 经",
     desc: "关关雎鸠，在河之洲。窈窕淑女，君子好逑。",
@@ -82,6 +81,59 @@ const poetrySelections = [
     filter: { type: "yuanQu" }
   },
 ];
+
+const poetryContentList = [
+  {
+    content: "遂古之初，谁传道之？",
+    author: "屈原",
+    title: "天问"
+  },
+  {
+    content: "学而时习之，不亦说乎？有朋自远方来，不亦乐乎？",
+    author: "孔子",
+    title: "学而篇"
+  },
+  {
+    content: "关关雎鸠，在河之洲。窈窕淑女，君子好逑。",
+    author: "无名氏",
+    title: "关雎"
+  },
+  {
+    content: "君不見黃河之水天上來，奔流到海不復回。",
+    author: "李白",
+    title: "鼓吹曲辭 將進酒"
+  },
+  {
+    content: "錦瑟無端五十絃，一絃一柱思華年。",
+    author: "李商隱",
+    title: "錦瑟"
+  },
+  {
+    content: "閑坐悲君亦自悲，百年都是幾多時。",
+    author: "元稹",
+    title: "遣悲懷三首 三"
+  },
+  {
+    content: "无意苦争春，一任群芳妒。",
+    author: "陆游",
+    title: "卜算子"
+  },
+  {
+    content: "六朝旧事随流水，但寒烟、芳草凝绿。",
+    author: "王安石",
+    title: "桂枝香"
+  },
+  {
+    content: "梦後楼台高锁，酒醒帘幕低垂。",
+    author: "晏几道",
+    title: "临江仙"
+  },
+  {
+    content: "见我这般微微喘息，语言恍惚，脚步儿查梨。",
+    author: "关汉卿",
+    title: "诈妮子调风月・满庭芳"
+  }
+]
 
 export default function Home() {
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
@@ -132,10 +184,8 @@ export default function Home() {
                     <img
                       src={item.src}
                       alt={item.title}
-                      w-full
-                      h-full
                       object-cover
-                      className="w-full h-full object-cover rounded-xl"
+                      className="w-full h-full rounded-xl"
                     />
                   </CardContent>
                 </Card>
@@ -208,6 +258,27 @@ export default function Home() {
           ))}
         </div>
         
+      </div>
+
+      <div className="w-full max-w-6xl mx-auto mt-10">
+        <h2 className="text-2xl font-bold mb-4 pb-2">诗句精选</h2>
+        <ul className="grid grid-cols-1 gap-2">
+          {poetryContentList.map((item, idx) => (
+            <li
+              key={idx}
+              className="flex justify-between items-center px-2 py-2 rounded hover:bg-gray-50 cursor-pointer transition"
+              onClick={() => {
+                const params = new URLSearchParams({ title: item.title }).toString();
+                window.location.href = `/poetry?${params}`;
+              }}
+            >
+              <span className="text-base">{item.content}</span>
+              <span className="text-gray-500 text-sm ml-4 whitespace-nowrap">
+                —— {item.author}《{item.title}》
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

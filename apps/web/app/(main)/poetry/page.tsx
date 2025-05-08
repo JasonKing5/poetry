@@ -64,8 +64,12 @@ export default function PoetryPage() {
   // 页面初始化时，如果URL有type参数，则同步到store
   useEffect(() => {
     const urlType = searchParams.get('type');
+    const urlTitle = searchParams.get('title');
     if (urlType) {
       setFilters({ type: urlType, page: 1 });
+    }
+    if (urlTitle) {
+      setFilters({ title: urlTitle, page: 1 });
     }
   }, []);
 
