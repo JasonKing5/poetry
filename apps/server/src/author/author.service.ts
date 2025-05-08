@@ -8,10 +8,6 @@ export class AuthorService {
   async findAll() {
     return await this.prisma.author.findMany({
       orderBy: { id: 'asc' },
-      select: {
-        id: true,
-        name: true,
-      }
     });
   }
 
