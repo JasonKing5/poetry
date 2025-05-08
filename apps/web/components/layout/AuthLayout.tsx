@@ -1,21 +1,12 @@
 'use client';
 
 import { ReactNode } from 'react';
-import Link from 'next/link';
-import { useAuth } from '@/hooks/useAuth';
-import { useHasPermission } from '@/hooks/useHasPermission';
-import { cn } from '@/lib/utils';
-import { LayoutGrid } from 'lucide-react'; 
-import { Button } from '../ui/button';
 
 interface AuthLayoutProps {
   children: ReactNode;
 }
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
-  const { user } = useAuth();
-  const isAdmin = useHasPermission('admin');
-  const isUser = useHasPermission('user');
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -27,7 +18,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
             href="https://beian.miit.gov.cn/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:underline ml-1"
+            className="text-gray-500 hover:underline ml-1"
           >
             豫ICP备2022004823号-1
           </a>

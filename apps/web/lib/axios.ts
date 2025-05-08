@@ -12,7 +12,6 @@ const instance = axios.create({
 });
 
 let isRefreshing = false;
-let refreshPromise: Promise<any> | null = null;
 let subscribers: (() => void)[] = [];
 
 function onRefreshed() {
@@ -44,7 +43,7 @@ instance.interceptors.response.use(
     if (response?.status === 401) {
       if (!isRefreshing) {
         isRefreshing = true;
-        refreshPromise = refreshTokenRequest()
+        refreshTokenRequest()
           .then((res) => {
             if (res.data?.code === 0) {
               const setUser = useUserStore((state) => state.setUser);
@@ -63,11 +62,10 @@ instance.interceptors.response.use(
           })
           .finally(() => {
             isRefreshing = false;
-            refreshPromise = null;
           });
       }
 
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         addSubscriber(() => {
           resolve(instance(err.config));
         });

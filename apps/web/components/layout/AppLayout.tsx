@@ -2,11 +2,9 @@
 
 import { ReactNode } from 'react';
 import Link from 'next/link';
-import { useAuth } from '@/hooks/useAuth';
 import { useHasPermission } from '@/hooks/useHasPermission';
 import { cn } from '@/lib/utils';
 import { LayoutGrid } from 'lucide-react'; 
-import { Button } from '../ui/button';
 import { usePathname } from 'next/navigation';
 
 interface AppLayoutProps {
@@ -14,9 +12,7 @@ interface AppLayoutProps {
 }
 
 export default function AppLayout({ children }: AppLayoutProps) {
-  const { user } = useAuth();
   const isAdmin = useHasPermission('admin');
-  const isUser = useHasPermission('user');
   const pathname = usePathname();
 
   return (
@@ -87,7 +83,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
             href="https://beian.miit.gov.cn/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:underline ml-1"
+            className="text-gray-500 hover:underline ml-1"
           >
             豫ICP备2022004823号-1
           </a>

@@ -2,34 +2,8 @@
 
 import useSWR from 'swr';
 import { useAuthorStore } from '@/store/authorStore';
-import { getPoetryList } from '@/services/poetry.service';
 import { getAllAuthor } from '@/services/author.service';
 import AuthorTable from './table'
-import { getAllTags } from '@/services/poetry-prop.service';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { POETRY_SOURCE_MAP, POETRY_TYPE_MAP, DYNASTY_MAP } from '@repo/common'
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
 
 import {
   Pagination,
@@ -41,7 +15,7 @@ import {
 } from "@/components/ui/pagination"
 
 export default function AuthorPage() {
-  const { page, pageSize, setFilters, resetFilters } = useAuthorStore();
+  const { page, pageSize, setFilters } = useAuthorStore();
 
   // 作者列表用 SWR
   const { data: authorData } = useSWR('all-authors', getAllAuthor, { suspense: false });
@@ -88,7 +62,7 @@ export default function AuthorPage() {
                       aria-disabled={page === 1}
                     />
                   </PaginationItem>
-                  {filteredPageNumbers.map((num, idx) =>
+                  {filteredPageNumbers.map((num) =>
                     typeof num === 'number' ? (
                       <PaginationItem key={num}>
                         <PaginationLink

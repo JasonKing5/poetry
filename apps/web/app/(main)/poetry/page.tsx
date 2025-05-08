@@ -2,13 +2,12 @@
 
 import useSWR from 'swr';
 import { usePoetryStore } from '@/store/poetryStore';
-import { getPoetryList } from '@/services/poetry.service';
+import { getPoetryList, GetPoetryListProps } from '@/services/poetry.service';
 import { getAllAuthor } from '@/services/author.service';
 import { getAllTags } from '@/services/poetry-prop.service';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { POETRY_SOURCE_MAP, POETRY_TYPE_MAP, DYNASTY_MAP } from '@repo/common'
-import { Checkbox } from "@/components/ui/checkbox"
+import { POETRY_TYPE_MAP, DYNASTY_MAP } from '@repo/common'
 import {
   Select,
   SelectContent,
@@ -27,12 +26,13 @@ import {
 
 import PoetryCard from '@/components/PoetryCard';
 
-const fetcher = (params: any) => getPoetryList(params).then(res => res.data);
+const fetcher = (params: GetPoetryListProps) => getPoetryList(params).then(res => res.data);
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-export default function PoetryPage() {
+// 新增：将页面内容提取为子组件
+function PoetryPageContent() {
   const searchParams = useSearchParams();
   const { page, pageSize, title, type, tags, source, dynasty, submitter, author, status, setFilters, resetFilters } = usePoetryStore();
 
@@ -54,7 +54,7 @@ export default function PoetryPage() {
   );
   const allTags = tagData?.data || [];
 
-  const handleValueChange = (type: string, value: any) => {
+  const handleValueChange = (type: string, value: string | string[]) => {
     setFilters({ [type]: value, page: 1 });
   };
 
@@ -72,7 +72,7 @@ export default function PoetryPage() {
     if (urlTitle) {
       setFilters({ title: urlTitle, page: 1 });
     }
-  }, []);
+  }, [searchParams, setFilters]);
 
   return (
     <div className="w-full flex justify-center">
@@ -176,7 +176,7 @@ export default function PoetryPage() {
                       aria-disabled={page === 1}
                     />
                   </PaginationItem>
-                  {filteredPageNumbers.map((num, idx) =>
+                  {filteredPageNumbers.map((num) =>
                     typeof num === 'number' ? (
                       <PaginationItem key={num}>
                         <PaginationLink
@@ -207,5 +207,14 @@ export default function PoetryPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// 外层组件用 Suspense 包裹
+export default function PoetryPage() {
+  return (
+    <Suspense>
+      <PoetryPageContent />
+    </Suspense>
   );
 }

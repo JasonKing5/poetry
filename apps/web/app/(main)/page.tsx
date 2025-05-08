@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import useSWR from 'swr';
-import Image, { type ImageProps } from "next/image";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card";
 import { getlunar } from "@/services/poetry-prop.service"
@@ -10,37 +9,31 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation"
-
-type Props = Omit<ImageProps, "src"> & {
-  srcLight: string;
-  srcDark: string;
-};
+import Image from "next/image"
 
 const carouselItems = [
   {
-    src: "https://img2.utuku.imgcdc.com/uploadimg/gushici/20230823/97854999-9a48-4c4b-ad2e-d65340bae59f.jpg",
+    src: "/97854999-9a48-4c4b-ad2e-d65340bae59f.jpg",
     title: "处暑无三日，新凉直万金 | 处暑",
   },
   {
-    src: "https://img2.utuku.imgcdc.com/uploadimg/gushici/20230822/8822a76b-1e99-47aa-a933-f50cef3e3e03.jpg",
+    src: "/8822a76b-1e99-47aa-a933-f50cef3e3e03.jpg",
     title: "七夕 | 在古诗词中读懂中国式浪漫",
   },
   {
-    src: "https://img2.utuku.imgcdc.com/uploadimg/gushici/20230816/77847fc9-ac8f-4ade-9914-ce7e3b089912.jpg",
+    src: "/77847fc9-ac8f-4ade-9914-ce7e3b089912.jpg",
     title: "四面垂杨十里荷，问云何处最花多",
   },
   {
-    src: "https://img1.utuku.imgcdc.com/uploadimg/gushici/20230811/2a10254d-0fc1-4f6b-b077-642d178afa2a.jpg",
+    src: "/2a10254d-0fc1-4f6b-b077-642d178afa2a.jpg",
     title: "秋夜长，风急雨急，雨急风急，秋夜长 | 秋夜",
   },
   {
-    src: "https://img2.utuku.imgcdc.com/uploadimg/gushici/20230808/9fa3ea33-43a1-4e6d-9da9-4f441a0f8361.jpg",
+    src: "/9fa3ea33-43a1-4e6d-9da9-4f441a0f8361.jpg",
     title: "关于立秋的古诗词，你知道几首？",
   }
 ]
@@ -180,7 +173,7 @@ export default function Home() {
 
   const router = useRouter();
 
-  const handleSelect = (filter: any) => {
+  const handleSelect = (filter: Record<string, string>) => {
     const params = new URLSearchParams(filter).toString();
     router.push(`/poetry?${params}`);
   };
@@ -218,9 +211,11 @@ export default function Home() {
               <CarouselItem key={item.src}>
                 <Card className="bg-gray-400 px-0 py-0">
                   <CardContent className="flex items-center justify-center h-96 max-h-[500px] px-0 py-0">
-                    <img
+                    <Image
                       src={item.src}
                       alt={item.title}
+                      width={1000}
+                      height={1000}
                       className="w-full h-full rounded-xl"
                     />
                   </CardContent>
@@ -268,7 +263,7 @@ export default function Home() {
       <div className="w-full max-w-6xl mx-auto mt-10">
         <h2 className="text-2xl font-bold mb-6">诗单精选</h2>
         <div className="grid grid-cols-3 gap-6 mb-6">
-          {poetrySelections.slice(0, 3).map((item, idx) => (
+          {poetrySelections.slice(0, 3).map((item) => (
             <div
               key={item.title}
               className="rounded text-white p-6 flex flex-col justify-between min-h-[120px] cursor-pointer transition-shadow hover:shadow-lg"
@@ -281,7 +276,7 @@ export default function Home() {
           ))}
         </div>
         <div className="grid grid-cols-3 gap-6 mb-6">
-          {poetrySelections.slice(3).map((item, idx) => (
+          {poetrySelections.slice(3).map((item) => (
             <div
               key={item.title}
               className="rounded text-white p-6 flex flex-col justify-between min-h-[120px] cursor-pointer transition-shadow hover:shadow-lg"
@@ -299,9 +294,9 @@ export default function Home() {
       <div className="w-full max-w-6xl mx-auto mt-10">
         <h2 className="text-2xl font-bold mb-4 pb-2">诗句精选</h2>
         <ul className="grid grid-cols-1 gap-2">
-          {poetryContentList.map((item, idx) => (
+          {poetryContentList.map((item) => (
             <li
-              key={idx}
+              key={item.title}
               className="flex justify-between items-center px-2 py-2 rounded hover:bg-gray-50 cursor-pointer transition"
               onClick={() => {
                 const params = new URLSearchParams({ title: item.title }).toString();

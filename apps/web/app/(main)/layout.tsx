@@ -4,11 +4,11 @@ import { Providers } from '@/providers'
 import "@/app/globals.css";
 import AppLayout from "@/components/layout/AppLayout";
 
-export const geistSans = localFont({
+const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
 });
-export const geistMono = localFont({
+const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
 });
