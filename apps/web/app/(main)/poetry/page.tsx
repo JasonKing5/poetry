@@ -6,6 +6,7 @@ import { getPoetryList } from '@/services/poetry.service';
 import { getAllAuthor } from '@/services/author.service';
 import { getAllTags } from '@/services/poetry-prop.service';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { POETRY_SOURCE_MAP, POETRY_TYPE_MAP, DYNASTY_MAP } from '@repo/common'
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -110,6 +111,13 @@ export default function PoetryPage() {
               {allTags.map((tag: string) => (<SelectItem key={tag} value={tag}>{tag}</SelectItem>))}
             </SelectContent>
           </Select>
+          <Input
+            type="text"
+            className="w-[180px] px-2 py-1 border border-gray-300 rounded"
+            placeholder="标题"
+            value={title}
+            onChange={(e) => handleValueChange('title', e.target.value)}
+          />
           <Button onClick={handleReset} >重置</Button>
         </div>
 

@@ -184,7 +184,6 @@ export default function Home() {
                     <img
                       src={item.src}
                       alt={item.title}
-                      object-cover
                       className="w-full h-full rounded-xl"
                     />
                   </CardContent>

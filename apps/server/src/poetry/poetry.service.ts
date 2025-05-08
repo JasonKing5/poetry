@@ -51,7 +51,7 @@ export class PoetryService {
   async findAll(title?: string, type?: PoetryType, tags?: string[], source?: string, dynasty?: Dynasty, submitter?: number, author?: string, status?: PoetryStatus, page: number = 1, pageSize: number = 20) {
     const where: any = {};
     if (type) where.type = type;
-    if (title) where.title = title;
+    if (title) where.title = { contains: title };
     if (status) where.status = status;
     if (source) where.status = source;
     if (submitter) where.submitterId = submitter;
