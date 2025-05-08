@@ -13,6 +13,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation"
 
 type Props = Omit<ImageProps, "src"> & {
   srcLight: string;
@@ -42,6 +43,46 @@ const carouselItems = [
   }
 ]
 
+const poetrySelections = [
+  
+  {
+    title: "诗 经",
+    desc: "关关雎鸠，在河之洲。窈窕淑女，君子好逑。",
+    bg: "#4b5c6b",
+    filter: { type: "shiJing" }
+  },
+  {
+    title: "楚 辞",
+    desc: "帝高阳之苗裔兮，朕皇考曰伯庸。",
+    bg: "#3e6b4b",
+    filter: { type: "chuCi" }
+  },
+  {
+    title: "论 语",
+    desc: "学而时习之，不亦说乎？",
+    bg: "#4b6b7d",
+    filter: { type: "lunYu" }
+  },
+  {
+    title: "唐诗三百首",
+    desc: "錦瑟無端五十絃，一絃一柱思華年。",
+    bg: "#6b4b3e",
+    filter: { type: "tangShi" }
+  },
+  {
+    title: "宋词三百首",
+    desc: "回首向来萧瑟处, 归去, 也无风雨也无晴。",
+    bg: "#7d7c4b",
+    filter: { type: "songCi" }
+  },
+  {
+    title: "元曲三百首",
+    desc: "无男儿只一身，担寂寞受孤闷；",
+    bg: "#5c4b6b",
+    filter: { type: "yuanQu" }
+  },
+];
+
 export default function Home() {
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -68,8 +109,15 @@ export default function Home() {
     carouselApi?.scrollTo(index);
   };
 
+  const router = useRouter();
+
+  const handleSelect = (filter: any) => {
+    const params = new URLSearchParams(filter).toString();
+    router.push(`/poetry?${params}`);
+  };
+
   return (
-    <div className='w-full flex justify-center'>
+    <div className='w-full flex flex-col justify-center'>
       <div className="w-full relative h-96 max-h-[500px] mx-auto mt-5 max-w-6xl lg:mt-6">
         <Carousel
           setApi={setCarouselApi}
@@ -129,6 +177,37 @@ export default function Home() {
         <div className="absolute bottom-2 left-4 flex justify-start z-20 bg-gray-500/40 px-2">
           <div className="text-white text-2xl font-bold">{carouselItems[currentIndex]?.title}</div>
         </div>
+      </div>
+
+      <div className="w-full max-w-6xl mx-auto mt-10">
+        <h2 className="text-2xl font-bold mb-6">诗单精选</h2>
+        <div className="grid grid-cols-3 gap-6 mb-6">
+          {poetrySelections.slice(0, 3).map((item, idx) => (
+            <div
+              key={item.title}
+              className="rounded text-white p-6 flex flex-col justify-between min-h-[120px] cursor-pointer transition-shadow hover:shadow-lg"
+              style={{ background: item.bg }}
+              onClick={() => handleSelect(item.filter)}
+            >
+              <div className="text-xl font-semibold text-center mb-2">{item.title}</div>
+              <div className="text-center text-base opacity-90">{item.desc}</div>
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-3 gap-6 mb-6">
+          {poetrySelections.slice(3).map((item, idx) => (
+            <div
+              key={item.title}
+              className="rounded text-white p-6 flex flex-col justify-between min-h-[120px] cursor-pointer transition-shadow hover:shadow-lg"
+              style={{ background: item.bg }}
+              onClick={() => handleSelect(item.filter)}
+            >
+              <div className="text-xl font-semibold text-center mb-2">{item.title}</div>
+              <div className="text-center text-base opacity-90">{item.desc}</div>
+            </div>
+          ))}
+        </div>
+        
       </div>
     </div>
   );

@@ -28,7 +28,11 @@ import PoetryCard from '@/components/PoetryCard';
 
 const fetcher = (params: any) => getPoetryList(params).then(res => res.data);
 
+import { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+
 export default function PoetryPage() {
+  const searchParams = useSearchParams();
   const { page, pageSize, title, type, tags, source, dynasty, submitter, author, status, setFilters, resetFilters } = usePoetryStore();
 
   // 作者列表用 SWR
@@ -56,6 +60,14 @@ export default function PoetryPage() {
   const handleReset = () => {
     resetFilters();
   };
+
+  // 页面初始化时，如果URL有type参数，则同步到store
+  useEffect(() => {
+    const urlType = searchParams.get('type');
+    if (urlType) {
+      setFilters({ type: urlType, page: 1 });
+    }
+  }, []);
 
   return (
     <div className="w-full flex justify-center">
