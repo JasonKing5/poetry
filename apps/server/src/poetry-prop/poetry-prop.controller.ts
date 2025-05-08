@@ -23,4 +23,10 @@ export class PoetryPropController {
   async findAllTags() {
     return await this.poetryPropService.findAllTags();
   }
+
+  @Get('lunar')
+  @Public()
+  async findLunar() {
+    return await this.poetryPropService.findLunar();
+  }
 }

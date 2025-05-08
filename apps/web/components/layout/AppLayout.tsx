@@ -28,7 +28,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           <Link href="/">首页</Link>
           <Link href="/poetry">诗词</Link>
           <Link href="/author">作者</Link>
-          <Link href="/me">我的</Link>
+          {/* <Link href="/me">我的</Link> */}
           {isAdmin && <Link href="/user">用户</Link>}
         </nav>
         <div className='flex gap-4'>

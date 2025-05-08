@@ -5,6 +5,8 @@ import { PrismaService } from '../../prisma/prisma.service';
 export class PoetryPropService {
   constructor(private readonly prisma: PrismaService) {}
 
+  private lunarResult = null as any;
+
   async findAllAuthor() {
     const authors = await this.prisma.poetry.findMany({
       select: {
@@ -33,5 +35,15 @@ export class PoetryPropService {
       distinct: ['tags']
     });
     return Array.from(new Set(tags.flatMap((tag: { tags: string[] }) => tag.tags).filter(Boolean)));
+  }
+
+  async findLunar() {
+    if (this.lunarResult !== null && new Date(this.lunarResult?.gregoriandate).toLocaleDateString() === new Date().toLocaleDateString()) {
+      return this.lunarResult;
+    }
+    const lunar = await fetch(`https://apis.tianapi.com/lunar/index?key=${process.env.TIAN_API_KEY}`);
+    const lunarData = await lunar.json();
+    this.lunarResult = lunarData.result;
+    return lunarData.result;
   }
 }

@@ -1,9 +1,11 @@
 'use client'
 
 import { useState, useEffect } from "react";
+import useSWR from 'swr';
 import Image, { type ImageProps } from "next/image";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card";
+import { getlunar } from "@/services/poetry-prop.service"
 import {
   Carousel,
   CarouselContent,
@@ -140,6 +142,13 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
 
+  const { data: lunarRes } = useSWR(
+    ['lunar'],
+    getlunar,
+    { suspense: false },
+  );
+  const lunarInfo = lunarRes?.data;
+
   useEffect(() => {
     if (!carouselApi) return;
 
@@ -178,6 +187,26 @@ export default function Home() {
 
   return (
     <div className='w-full flex flex-col justify-center'>
+      <div className="w-full flex justify-center">
+        <div
+          className="relative flex w-full max-w-6xl h-36 bg-[#b6b08a]/90 border-[3px] border-white rounded-xl shadow-lg overflow-hidden"
+        >
+          <div className="flex-1 flex flex-col justify-center items-center px-8 py-4">
+            <div className="text-white text-[1.35rem] md:text-2xl font-semibold tracking-wide text-left leading-relaxed drop-shadow-lg mb-2">
+              雪沫乳花浮午盏，蓼茸蒿笋试春盘。<br className="hidden md:block" />人间有味是清欢。
+            </div>
+            <div className="text-white text-base md:text-lg text-left opacity-90 tracking-wide">
+              —— 苏轼 · 宋 《浣溪沙·细雨斜风作晓寒》
+            </div>
+          </div>
+          <div className="flex flex-col items-center justify-center w-1/4 min-w-[120px] bg-[#a6a07a]/80 border-l border-white px-4">
+            <div className="text-white text-lg font-bold mb-1">{lunarInfo?.gregoriandate}</div>
+            <div className="text-white text-base mb-1">{`${lunarInfo?.lubarmonth} ${lunarInfo?.lunarday}`}</div>
+            <div className="text-white text-base">{lunarInfo?.festival}</div>
+            <div className="text-white text-base">{lunarInfo?.shengxiao}</div>
+          </div>
+        </div>
+      </div>
       <div className="w-full relative h-96 max-h-[500px] mx-auto mt-5 max-w-6xl lg:mt-6">
         <Carousel
           setApi={setCarouselApi}
