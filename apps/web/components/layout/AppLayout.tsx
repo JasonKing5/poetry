@@ -7,6 +7,7 @@ import { useHasPermission } from '@/hooks/useHasPermission';
 import { cn } from '@/lib/utils';
 import { LayoutGrid } from 'lucide-react'; 
 import { Button } from '../ui/button';
+import { usePathname } from 'next/navigation';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -16,6 +17,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const { user } = useAuth();
   const isAdmin = useHasPermission('admin');
   const isUser = useHasPermission('user');
+  const pathname = usePathname();
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -25,11 +27,53 @@ export default function AppLayout({ children }: AppLayoutProps) {
           <span className='p-4 pl-0'>中华诗词</span>
         </Link>
         <nav className="flex items-center gap-6">
-          <Link href="/">首页</Link>
-          <Link href="/poetry">诗词</Link>
-          <Link href="/author">作者</Link>
+          <Link
+            href="/"
+            className={cn(
+              "transition-colors",
+              pathname === "/" 
+                ? "text-blue-600 font-bold" 
+                : "text-gray-700 hover:text-blue-400"
+            )}
+          >
+            首页
+          </Link>
+          <Link
+            href="/poetry"
+            className={cn(
+              "transition-colors",
+              pathname.startsWith("/poetry") 
+                ? "text-blue-600 font-bold" 
+                : "text-gray-700 hover:text-blue-400"
+            )}
+          >
+            诗词
+          </Link>
+          <Link
+            href="/author"
+            className={cn(
+              "transition-colors",
+              pathname.startsWith("/author") 
+                ? "text-blue-600 font-bold" 
+                : "text-gray-700 hover:text-blue-400"
+            )}
+          >
+            作者
+          </Link>
           {/* <Link href="/me">我的</Link> */}
-          {isAdmin && <Link href="/user">用户</Link>}
+          {isAdmin && (
+            <Link
+              href="/user"
+              className={cn(
+                "transition-colors",
+                pathname.startsWith("/user") 
+                  ? "text-blue-600 font-bold" 
+                  : "text-gray-700 hover:text-blue-400"
+              )}
+            >
+              用户
+            </Link>
+          )}
         </nav>
         <div className='flex gap-4'>
           {/* {user ? <span>{user.name}</span> : <Link href="/login"><Button className='cursor-pointer' variant={'ghost'} onClick={() => window.location.href = '/login'}>登录</Button></Link>} */}
