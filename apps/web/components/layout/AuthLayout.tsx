@@ -24,7 +24,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
           </a>
         </div>
         <div>
-          &copy; {new Date().getFullYear()} 中华诗词
+          &copy; {new Date().getFullYear()} 醉诗词
         </div>
       </footer>
     </div>

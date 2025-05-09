@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import Link from 'next/link';
 import { useHasPermission } from '@/hooks/useHasPermission';
 import { cn } from '@/lib/utils';
-import { LayoutGrid } from 'lucide-react'; 
+import Image from 'next/image'; 
 import { usePathname } from 'next/navigation';
 
 interface AppLayoutProps {
@@ -19,8 +19,8 @@ export default function AppLayout({ children }: AppLayoutProps) {
     <div className="flex flex-col min-h-screen">
       <header className="flex items-center justify-between px-4 shadow bg-white">
         <Link href="/" className="flex items-center gap-2 text-xl font-bold">
-          <LayoutGrid className="w-6 h-6" />
-          <span className='p-4 pl-0'>中华诗词</span>
+          <Image src="/logo.png" width={30} height={30} alt="Logo" />
+          <span className='p-4 pl-0'>醉诗词</span>
         </Link>
         <nav className="flex items-center gap-6">
           <Link
@@ -89,7 +89,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           </a>
         </div>
         <div>
-          &copy; {new Date().getFullYear()} 中华诗词
+          &copy; {new Date().getFullYear()} 醉诗词
         </div>
       </footer>
     </div>
