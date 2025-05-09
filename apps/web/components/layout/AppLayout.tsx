@@ -22,7 +22,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           <Image src="/logo.png" width={30} height={30} alt="Logo" />
           <span className='p-4 pl-0'>醉诗词</span>
         </Link>
-        <nav className="flex items-center gap-6">
+        <nav className="flex items-center gap-6 text-xl">
           <Link
             href="/"
             className={cn(
