@@ -77,48 +77,59 @@ function PoetryPageContent() {
   return (
     <div className="w-full flex justify-center">
       <div className="max-w-5xl w-full">
-        <div className="flex gap-2 mb-4">
-          <Select onValueChange={(value) => handleValueChange('author', value)} value={author}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="作者" />
-            </SelectTrigger>
-            <SelectContent>
-              {authors?.map(({id, name}: {id: string, name: string}) => (<SelectItem key={id} value={String(id)}>{name}</SelectItem>))}
-            </SelectContent>
-          </Select>
-          
-          <Select onValueChange={(value) => handleValueChange('type', value)} value={type}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="类型" />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.entries(POETRY_TYPE_MAP).map(([key, value]) => (<SelectItem key={key} value={key}>{value}</SelectItem>))}
-            </SelectContent>
-          </Select>
-          <Select onValueChange={(value) => handleValueChange('dynasty', value)} value={dynasty}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="朝代" />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.entries(DYNASTY_MAP).map(([key, value]) => (<SelectItem key={key} value={key}>{value}</SelectItem>))}
-            </SelectContent>
-          </Select>
-          <Select onValueChange={(value) => handleValueChange('tags', [value])} value={dynasty}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="标签" />
-            </SelectTrigger>
-            <SelectContent>
-              {allTags.map((tag: string) => (<SelectItem key={tag} value={tag}>{tag}</SelectItem>))}
-            </SelectContent>
-          </Select>
-          <Input
-            type="text"
-            className="w-[180px] px-2 py-1 border border-gray-300 rounded"
-            placeholder="标题"
-            value={title}
-            onChange={(e) => handleValueChange('title', e.target.value)}
-          />
-          <Button onClick={handleReset} >重置</Button>
+      <div className="flex flex-wrap gap-2 mb-4">
+          <div className="w-full sm:w-[48%] md:w-[32%]">
+            <Select onValueChange={(value) => handleValueChange('author', value)} value={author}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="作者" />
+              </SelectTrigger>
+              <SelectContent>
+                {authors?.map(({id, name}: {id: string, name: string}) => (<SelectItem key={id} value={String(id)}>{name}</SelectItem>))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="w-full sm:w-[48%] md:w-[32%]">
+            <Select onValueChange={(value) => handleValueChange('type', value)} value={type}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="类型" />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(POETRY_TYPE_MAP).map(([key, value]) => (<SelectItem key={key} value={key}>{value}</SelectItem>))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="w-full sm:w-[48%] md:w-[32%]">
+            <Select onValueChange={(value) => handleValueChange('dynasty', value)} value={dynasty}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="朝代" />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(DYNASTY_MAP).map(([key, value]) => (<SelectItem key={key} value={key}>{value}</SelectItem>))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="w-full sm:w-[48%] md:w-[32%]">
+            <Select onValueChange={(value) => handleValueChange('tags', [value])} value={dynasty}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="标签" />
+              </SelectTrigger>
+              <SelectContent>
+                {allTags.map((tag: string) => (<SelectItem key={tag} value={tag}>{tag}</SelectItem>))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="w-full sm:w-[48%] md:w-[32%]">
+            <Input
+              type="text"
+              className="w-full px-2 py-1 border border-gray-300 rounded"
+              placeholder="标题"
+              value={title}
+              onChange={(e) => handleValueChange('title', e.target.value)}
+            />
+          </div>
+          <div className="w-full sm:w-[48%] md:w-[32%] flex items-center">
+            <Button className="w-full" onClick={handleReset}>重置</Button>
+          </div>
         </div>
 
         {isLoading ? (

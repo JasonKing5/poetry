@@ -182,41 +182,41 @@ export default function Home() {
     <div className='w-full flex flex-col justify-center'>
       <div className="w-full flex justify-center">
         <div
-          className="relative flex w-full max-w-6xl h-36 bg-[#b6b08a]/90 border-[3px] border-white rounded-xl shadow-lg overflow-hidden"
+          className="relative flex w-full max-w-6xl h-28 md:h-36 bg-[#b6b08a]/90 border-[3px] border-white rounded-xl shadow-lg overflow-hidden"
         >
-          <div className="flex-1 flex flex-col justify-center items-center px-8 py-4">
-            <div className="text-white text-[1.35rem] md:text-2xl font-semibold tracking-wide text-left leading-relaxed drop-shadow-lg mb-2">
+          <div className="flex-1 flex flex-col justify-center items-center px-4 md:px-8 py-2 md:py-4">
+            <div className="text-white text-base md:text-[1.35rem] lg:text-2xl font-semibold tracking-wide text-left leading-relaxed drop-shadow-lg mb-1 md:mb-2">
               雪沫乳花浮午盏，蓼茸蒿笋试春盘。<br className="hidden md:block" />人间有味是清欢。
             </div>
-            <div className="text-white text-base md:text-lg text-left opacity-90 tracking-wide">
+            <div className="text-white text-sm md:text-base lg:text-lg text-left opacity-90 tracking-wide">
               —— 苏轼 · 宋 《浣溪沙·细雨斜风作晓寒》
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center w-1/4 min-w-[120px] bg-[#a6a07a]/80 border-l border-white px-4">
-            <div className="text-white text-lg font-bold mb-1">{lunarInfo?.gregoriandate}</div>
-            <div className="text-white text-base mb-1">{`${lunarInfo?.lubarmonth} ${lunarInfo?.lunarday}`}</div>
-            <div className="text-white text-base">{lunarInfo?.festival}</div>
-            <div className="text-white text-base">{lunarInfo?.shengxiao}</div>
+          <div className="flex flex-col items-center justify-center w-1/3 md:w-1/4 min-w-[90px] md:min-w-[120px] bg-[#a6a07a]/80 border-l border-white px-2 md:px-4">
+            <div className="text-white text-base md:text-lg font-bold mb-0.5 md:mb-1">{lunarInfo?.gregoriandate}</div>
+            <div className="text-white text-xs md:text-base mb-0.5 md:mb-1">{`${lunarInfo?.lubarmonth} ${lunarInfo?.lunarday}`}</div>
+            <div className="text-white text-xs md:text-base">{lunarInfo?.festival}</div>
+            <div className="text-white text-xs md:text-base">{lunarInfo?.shengxiao}</div>
           </div>
         </div>
       </div>
-      <div className="w-full relative h-96 max-h-[500px] mx-auto mt-5 max-w-6xl lg:mt-6">
+      <div className="w-full relative h-56 sm:h-72 md:h-96 max-h-[500px] mx-auto mt-4 md:mt-5 max-w-6xl lg:mt-6">
         <Carousel
           setApi={setCarouselApi}
           opts={{ loop: true }}
-          className="w-full max-w-6xl h-96 max-h-[500px] z-10"
+          className="w-full max-w-6xl h-56 sm:h-72 md:h-96 max-h-[500px] z-10"
         >
           <CarouselContent>
             {carouselItems.map((item) => (
               <CarouselItem key={item.src}>
-                <Card className="bg-gray-400 px-0 py-0">
-                  <CardContent className="flex items-center justify-center h-96 max-h-[500px] px-0 py-0">
+                <Card className="bg-gray-400 px-0 py-0 rounded-xl shadow-md">
+                  <CardContent className="flex items-center justify-center h-56 sm:h-72 md:h-96 max-h-[500px] px-0 py-0">
                     <Image
                       src={item.src}
                       alt={item.title}
                       width={1000}
                       height={1000}
-                      className="w-full h-full rounded-xl"
+                      className="w-full h-full object-cover rounded-xl"
                     />
                   </CardContent>
                 </Card>
@@ -229,82 +229,68 @@ export default function Home() {
         <div className="absolute inset-0 z-20 flex items-center justify-between pointer-events-none">
           <Button
             onClick={() => scrollToIndex(currentIndex - 1)}
-            className="pointer-events-auto rounded-full w-32 h-32 p-0 bg-transparent shadow-none hover:bg-gray-500/40 cursor-pointer"
+            className="pointer-events-auto rounded-full w-10 h-10 md:w-16 md:h-16 lg:w-32 lg:h-32 p-0 bg-transparent shadow-none hover:bg-gray-500/40 cursor-pointer transition"
           >
-            <ChevronLeft className="size-32" strokeWidth={0.5} />
+            <ChevronLeft className="w-6 h-6 md:w-12 md:h-12 lg:size-32" strokeWidth={0.5} />
           </Button>
           <Button
             onClick={() => scrollToIndex(currentIndex + 1)}
-            className="pointer-events-auto rounded-full w-32 h-32 p-0 bg-transparent shadow-none hover:bg-gray-500/40 cursor-pointer"
+            className="pointer-events-auto rounded-full w-10 h-10 md:w-16 md:h-16 lg:w-32 lg:h-32 p-0 bg-transparent shadow-none hover:bg-gray-500/40 cursor-pointer transition"
           >
-            <ChevronRight className="size-32" strokeWidth={0.5} />
+            <ChevronRight className="w-6 h-6 md:w-12 md:h-12 lg:size-32" strokeWidth={0.5} />
           </Button>
         </div>
 
         {/* Navigation Dots */}
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-20">
+        <div className="absolute bottom-2 md:bottom-4 left-0 right-0 flex justify-center space-x-1 md:space-x-2 z-20">
           {Array.from({ length: totalItems }).map((_, index) => (
             <button
               key={index}
               onClick={() => scrollToIndex(index)}
-              className={`w-3 h-3 rounded-full cursor-pointer hover:bg-gray-50 ${
-                currentIndex === index ? "bg-black w-6" : "bg-gray-300"
+              className={`w-2 h-2 md:w-3 md:h-3 rounded-full cursor-pointer hover:bg-gray-50 transition ${
+                currentIndex === index ? "bg-black w-4 md:w-6" : "bg-gray-300"
               }`}
             />
           ))}
         </div>
 
         {/* Title text */}
-        <div className="absolute bottom-2 left-4 flex justify-start z-20 bg-gray-500/40 px-2">
-          <div className="text-white text-2xl font-bold">{carouselItems[currentIndex]?.title}</div>
+        <div className="absolute bottom-1 md:bottom-2 left-2 md:left-4 flex justify-start z-20 bg-gray-500/40 px-1 md:px-2 rounded">
+          <div className="text-white text-base md:text-2xl font-bold truncate max-w-[80vw] md:max-w-[60vw]">{carouselItems[currentIndex]?.title}</div>
+        </div>
+      </div>
+
+      <div className="w-full max-w-6xl mx-auto mt-6 md:mt-10">
+        <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">诗单精选</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-4 md:mb-6">
+          {poetrySelections.map((item) => (
+            <div
+              key={item.title}
+              className="rounded-xl text-white p-4 md:p-6 flex flex-col justify-between min-h-[90px] md:min-h-[120px] cursor-pointer transition-all duration-200 hover:scale-[1.035] hover:brightness-110 hover:shadow-2xl"
+              style={{ background: item.bg }}
+              onClick={() => handleSelect(item.filter)}
+            >
+              <div className="text-lg md:text-xl font-semibold text-center mb-1 md:mb-2">{item.title}</div>
+              <div className="text-center text-sm md:text-base opacity-90">{item.desc}</div>
+            </div>
+          ))}
         </div>
       </div>
 
       <div className="w-full max-w-6xl mx-auto mt-10">
-        <h2 className="text-2xl font-bold mb-6">诗单精选</h2>
-        <div className="grid grid-cols-3 gap-6 mb-6">
-          {poetrySelections.slice(0, 3).map((item) => (
-            <div
-              key={item.title}
-              className="rounded text-white p-6 flex flex-col justify-between min-h-[120px] cursor-pointer transition-shadow hover:shadow-lg"
-              style={{ background: item.bg }}
-              onClick={() => handleSelect(item.filter)}
-            >
-              <div className="text-xl font-semibold text-center mb-2">{item.title}</div>
-              <div className="text-center text-base opacity-90">{item.desc}</div>
-            </div>
-          ))}
-        </div>
-        <div className="grid grid-cols-3 gap-6 mb-6">
-          {poetrySelections.slice(3).map((item) => (
-            <div
-              key={item.title}
-              className="rounded text-white p-6 flex flex-col justify-between min-h-[120px] cursor-pointer transition-shadow hover:shadow-lg"
-              style={{ background: item.bg }}
-              onClick={() => handleSelect(item.filter)}
-            >
-              <div className="text-xl font-semibold text-center mb-2">{item.title}</div>
-              <div className="text-center text-base opacity-90">{item.desc}</div>
-            </div>
-          ))}
-        </div>
-        
-      </div>
-
-      <div className="w-full max-w-6xl mx-auto mt-10">
-        <h2 className="text-2xl font-bold mb-4 pb-2">诗句精选</h2>
-        <ul className="grid grid-cols-1 gap-2">
+        <h2 className="text-xl md:text-2xl font-bold mb-4 pb-2">诗句精选</h2>
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
           {poetryContentList.map((item) => (
             <li
               key={item.title}
-              className="flex justify-between items-center px-2 py-2 rounded hover:bg-gray-50 cursor-pointer transition"
+              className="flex flex-col md:flex-row md:justify-between md:items-center px-3 md:px-5 py-3 rounded-xl bg-white/80 hover:bg-gray-100 shadow-sm hover:shadow-md cursor-pointer transition-all duration-200"
               onClick={() => {
                 const params = new URLSearchParams({ title: item.title }).toString();
                 window.location.href = `/poetry?${params}`;
               }}
             >
-              <span className="text-base">{item.content}</span>
-              <span className="text-gray-500 text-sm ml-4 whitespace-nowrap">
+              <span className="text-base md:text-lg text-gray-900">{item.content}</span>
+              <span className="text-gray-500 text-sm md:text-base mt-1 md:mt-0 md:ml-4 whitespace-nowrap">
                 —— {item.author}《{item.title}》
               </span>
             </li>
