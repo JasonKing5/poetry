@@ -13,5 +13,5 @@ import axios from '@/lib/axios';
   status: string;
   */
 export const getAllAuthor = async () => {
-  return axios.get('/author')
+  return axios.get('/authors')
 };

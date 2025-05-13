@@ -6,7 +6,7 @@ import { RoleEnum } from 'src/common/enums/role.enum';
 import { Permissions } from 'src/common/decorators/permissions.decorator';
 import { PermissionEnum } from 'src/common/enums/permission.enum';
 
-@Controller('author')
+@Controller('authors')
 export class AuthorController {
   constructor(private readonly authorService: AuthorService) {}
 
