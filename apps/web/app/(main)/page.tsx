@@ -1,10 +1,9 @@
 'use client'
 
 import { useState, useEffect } from "react";
-import useSWR from 'swr';
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card";
-import { getlunar } from "@/services/poetry-prop.service"
+import { useLunar } from "@/services/poetry-prop.service"
 import {
   Carousel,
   CarouselContent,
@@ -135,12 +134,8 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
 
-  const { data: lunarRes } = useSWR(
-    ['lunar'],
-    getlunar,
-    { suspense: false },
-  );
-  const lunarInfo = lunarRes?.data;
+  const { data: lunarData } = useLunar();
+  const lunarInfo = lunarData?.data || [];
 
   useEffect(() => {
     if (!carouselApi) return;

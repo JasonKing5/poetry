@@ -1,4 +1,5 @@
 import axios from '@/lib/axios';
+import useSWR from 'swr';
 
 /*
   page: number;
@@ -14,4 +15,8 @@ import axios from '@/lib/axios';
   */
 export const getAllAuthor = async () => {
   return axios.get('/authors')
+};
+
+export const useAllAuthors = () => {
+  return useSWR('all-authors', getAllAuthor, { suspense: false });
 };

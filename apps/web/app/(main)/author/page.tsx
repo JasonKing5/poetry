@@ -1,8 +1,7 @@
 'use client';
 
-import useSWR from 'swr';
 import { useAuthorStore } from '@/store/authorStore';
-import { getAllAuthor } from '@/services/author.service';
+import { useAllAuthors } from '@/services/author.service';
 import AuthorTable from './table'
 
 import {
@@ -18,7 +17,7 @@ export default function AuthorPage() {
   const { page, pageSize, setFilters } = useAuthorStore();
 
   // 作者列表用 SWR
-  const { data: authorData } = useSWR('all-authors', getAllAuthor, { suspense: false });
+  const { data: authorData } = useAllAuthors();
   const data = authorData?.data || [];
   
 

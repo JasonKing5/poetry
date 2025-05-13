@@ -1,10 +1,9 @@
 'use client';
 
-import useSWR from 'swr';
 import { usePoetryStore } from '@/store/poetryStore';
-import { getPoetryList, GetPoetryListProps } from '@/services/poetry.service';
-import { getAllAuthor } from '@/services/author.service';
-import { getAllTags } from '@/services/poetry-prop.service';
+import { usePoetryList } from '@/services/poetry.service';
+import { useAllAuthors } from '@/services/author.service';
+import { useAllTags } from '@/services/poetry-prop.service';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { POETRY_TYPE_MAP, DYNASTY_MAP } from '@repo/common'
@@ -26,8 +25,6 @@ import {
 
 import PoetryCard from '@/components/PoetryCard';
 
-const fetcher = (params: GetPoetryListProps) => getPoetryList(params).then(res => res.data);
-
 import { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 
@@ -37,21 +34,24 @@ function PoetryPageContent() {
   const { page, pageSize, title, type, tags, source, dynasty, submitter, author, status, setFilters, resetFilters } = usePoetryStore();
 
   // 作者列表用 SWR
-  const { data: authorData } = useSWR('all-authors', getAllAuthor, { suspense: false });
+  const { data: authorData } = useAllAuthors();
   const authors = authorData?.data || [];
 
   // 诗词列表用 SWR
-  const { data, isLoading, error } = useSWR(
-    ['poetry-list', { page, pageSize, title, type, tags, source, dynasty, submitter, author, status }],
-    ([, params]) => fetcher(params),
-    { keepPreviousData: true }
-  );
+  const { data, isLoading, error } = usePoetryList({
+    page,
+    pageSize,
+    title,
+    type,
+    tags,
+    source,
+    dynasty,
+    submitter,
+    author,
+    status,
+  })
 
-  const { data: tagData } = useSWR(
-    ['all-tags'],
-    getAllTags,
-    { suspense: false },
-  );
+  const { data: tagData } = useAllTags();
   const allTags = tagData?.data || [];
 
   const handleValueChange = (type: string, value: string | string[]) => {

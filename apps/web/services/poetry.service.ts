@@ -1,4 +1,5 @@
 import axios from '@/lib/axios';
+import useSWR from 'swr';
 
 /*
   page: number;
@@ -24,8 +25,9 @@ import axios from '@/lib/axios';
   author: string;
   status: string;
  }
-export const getPoetryList = async ({ 
-  page, pageSize, title, type, tags, source, dynasty, submitter, author, status 
-}: GetPoetryListProps) => {
-  return axios.get('/poetry', {params: { page, pageSize, title, type, tags, source, dynasty, submitter, author, status}})
+
+export const usePoetryList = (params: GetPoetryListProps) => {
+  return useSWR(['poetry-list', params], () => axios.get('/poetry', { params }).then(res => res.data), {
+    keepPreviousData: true,
+  });
 };
