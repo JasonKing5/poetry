@@ -6,7 +6,6 @@ export class AuthorService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll() {
-    throw new BadRequestException('Email is required');
     return await this.prisma.author.findMany({
       orderBy: { id: 'asc' },
     });
