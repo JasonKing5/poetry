@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
@@ -6,6 +6,7 @@ export class AuthorService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll() {
+    throw new BadRequestException('Email is required');
     return await this.prisma.author.findMany({
       orderBy: { id: 'asc' },
     });

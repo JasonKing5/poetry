@@ -6,7 +6,7 @@ import { useAllAuthors } from '@/services/author.service';
 import { useAllTags } from '@/services/poetry-prop.service';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { POETRY_TYPE_MAP, DYNASTY_MAP } from '@repo/common'
+import { constants } from '@repo/common';
 import {
   Select,
   SelectContent,
@@ -22,22 +22,32 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import { Author, Poetry } from '@repo/types';
 
 import PoetryCard from '@/components/PoetryCard';
 
 import { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 
+const { POETRY_TYPE_MAP, DYNASTY_MAP } = constants;
+
+type PoetryProps = Poetry & {
+ author: Author,
+};
+
+export type PoetryListResponse = {
+  list: PoetryProps[];
+  total: number;
+};
+
 // 新增：将页面内容提取为子组件
 function PoetryPageContent() {
   const searchParams = useSearchParams();
   const { page, pageSize, title, type, tags, source, dynasty, submitter, author, status, setFilters, resetFilters } = usePoetryStore();
 
-  // 作者列表用 SWR
-  const { data: authorData } = useAllAuthors();
-  const authors = authorData?.data || [];
+  const { data: authors , isLoading: authorsLoading, error: authorsError } = useAllAuthors();
+  
 
-  // 诗词列表用 SWR
   const { data, isLoading, error } = usePoetryList({
     page,
     pageSize,
@@ -51,8 +61,7 @@ function PoetryPageContent() {
     status,
   })
 
-  const { data: tagData } = useAllTags();
-  const allTags = tagData?.data || [];
+  const { data: allTags, isLoading: tagsLoading, error: tagsError } = useAllTags();
 
   const handleValueChange = (type: string, value: string | string[]) => {
     setFilters({ [type]: value, page: 1 });
@@ -74,6 +83,13 @@ function PoetryPageContent() {
     }
   }, [searchParams, setFilters]);
 
+  if (authorsLoading || tagsLoading || isLoading) {
+    return <div>加载中。。。</div>;
+  }
+  if (authorsError || tagsError || error) {
+    return <div>加载失败。。。</div>;
+  }
+
   return (
     <div className="w-full flex justify-center">
       <div className="max-w-5xl w-full">
@@ -84,7 +100,7 @@ function PoetryPageContent() {
                 <SelectValue placeholder="作者" />
               </SelectTrigger>
               <SelectContent>
-                {authors?.map(({id, name}: {id: string, name: string}) => (<SelectItem key={id} value={String(id)}>{name}</SelectItem>))}
+                {(authors as Author[])?.map(({id, name}) => (<SelectItem key={id} value={String(id)}>{name}</SelectItem>))}
               </SelectContent>
             </Select>
           </div>
@@ -114,7 +130,7 @@ function PoetryPageContent() {
                 <SelectValue placeholder="标签" />
               </SelectTrigger>
               <SelectContent>
-                {allTags.map((tag: string) => (<SelectItem key={tag} value={tag}>{tag}</SelectItem>))}
+                {(allTags as string[]).map((tag: string) => (<SelectItem key={tag} value={tag}>{tag}</SelectItem>))}
               </SelectContent>
             </Select>
           </div>
@@ -132,30 +148,25 @@ function PoetryPageContent() {
           </div>
         </div>
 
-        {isLoading ? (
-          <div>加载中...</div>
-        ) : error ? (
-          <div>加载失败</div>
-        ) : (
-          <ul className="mb-4">
-            {data?.list?.length > 0 ? data?.list?.map((item: {id: string, title: string, author: {name: string}, dynasty: string, tags: string[], content: string[]}) => (
-              <li key={item.id}>
-                <PoetryCard
-                  title={item.title}
-                  author={item.author.name}
-                  dynasty={item.dynasty}
-                  tags={item.tags}
-                  content={item.content}
-                />
-              </li>
-            )) : <div>无结果</div>}
-          </ul>
-        )}
+        
+        <ul className="mb-4">
+          {(data as PoetryListResponse)?.list?.length > 0 ? (data as PoetryListResponse)?.list?.map((item) => (
+            <li key={item.id}>
+              <PoetryCard
+                title={item.title}
+                author={item.author.name}
+                dynasty={item.dynasty}
+                tags={item.tags}
+                content={item.content}
+              />
+            </li>
+          )) : <div>无结果</div>}
+        </ul>
 
         <div className="flex gap-2">
           {/* 分页功能 */}
           {(() => {
-            const totalPages = Math.max(1, Math.ceil((data?.total || 0) / pageSize));
+            const totalPages = Math.max(1, Math.ceil(((data as PoetryListResponse)?.total || 0) / pageSize));
             const pageNumbers: (number | string)[] = [];
             for (let i = 1; i <= totalPages; i++) {
               if (

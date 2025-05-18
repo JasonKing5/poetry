@@ -8,13 +8,7 @@ import {
   getCoreRowModel,
 } from "@tanstack/react-table"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-
-export type Author = {
-  id: string
-  name: string
-  createdAt: string
-  updatedAt: string
-}
+import { Author } from '@repo/types';
 
 export const columns: ColumnDef<Author>[] = [
   {

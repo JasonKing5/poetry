@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res, Req, UnauthorizedException } from '@nestjs/common';
+import { Controller, Post, Body, Res, Req, Put } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express'
 import { AuthService } from './auth.service';
@@ -58,13 +58,13 @@ export class AuthController {
     });
   }
 
-  @Post('email/reset')
+  @Post('reset/email')
   @Public()
   async sendEmail(@Body() body: { email: string }) {
     return await this.authService.sendEmail(body.email)
   }
 
-  @Post('reset')
+  @Put('reset/password')
   @Public()
   async resetPassword(@Body() body: { email: string, password: string, token: string }) {
     return  await this.authService.resetPassword(body.email, body.password, body.token)

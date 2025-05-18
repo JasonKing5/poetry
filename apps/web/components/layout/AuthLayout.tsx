@@ -10,7 +10,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <main className="flex-1 p-6">{children}</main>
+      <main className="flex-1 p-6 flex items-center">{children}</main>
       <footer className="bg-white shadow p-4 text-center text-sm text-gray-500 flex items-center justify-center gap-8">
         <div>
           ICP备案：

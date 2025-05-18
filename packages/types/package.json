@@ -1,5 +1,5 @@
 {
-  "name": "@repo/common",
+  "name": "@repo/types",
   "version": "0.0.1",
   "private": true,
   "main": "./src/index.ts",
@@ -13,5 +13,6 @@
     "typescript": "latest"
   },
   "dependencies": {
+    "@prisma/client": "^6.6.0"
   }
 }

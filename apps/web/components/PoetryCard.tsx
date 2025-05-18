@@ -1,5 +1,7 @@
 import React from 'react';
-import { DYNASTY_MAP } from '@repo/common'
+import { constants } from '@repo/common';
+
+const { DYNASTY_MAP } = constants;
 
 interface PoetryCardProps {
   title: string;

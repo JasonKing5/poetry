@@ -134,9 +134,7 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
 
-  const { data: lunarData } = useLunar();
-  const lunarInfo = lunarData?.data || [];
-
+  const { data: lunarInfo, isLoading, error }: any = useLunar();
   useEffect(() => {
     if (!carouselApi) return;
 
@@ -172,6 +170,13 @@ export default function Home() {
     const params = new URLSearchParams(filter).toString();
     router.push(`/poetry?${params}`);
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div className='w-full flex flex-col justify-center'>

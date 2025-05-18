@@ -3,6 +3,8 @@
 import { useAuthorStore } from '@/store/authorStore';
 import { useAllAuthors } from '@/services/author.service';
 import AuthorTable from './table'
+import { Author } from '@repo/types';
+import { withLoadingError } from '@/components/withLoadingError';
 
 import {
   Pagination,
@@ -16,20 +18,20 @@ import {
 export default function AuthorPage() {
   const { page, pageSize, setFilters } = useAuthorStore();
 
-  // 作者列表用 SWR
-  const { data: authorData } = useAllAuthors();
-  const data = authorData?.data || [];
-  
+  const { data, element } = withLoadingError(useAllAuthors);
+  if (element) {
+    return element;
+  }
 
   return (
     <div className="w-full flex justify-center">
       <div className="max-w-5xl w-full">
         
-        <AuthorTable data={data?.slice((page - 1) * pageSize, page * pageSize)} />
+        <AuthorTable data={(data as Author[])?.slice((page - 1) * pageSize, page * pageSize)} />
 
         <div className="flex gap-2 mt-4">
           {(() => {
-            const totalPages = Math.max(1, Math.ceil((data?.length || 0) / pageSize));
+            const totalPages = Math.max(1, Math.ceil(((data as Author[])?.length || 0) / pageSize));
             const pageNumbers: (number | string)[] = [];
             for (let i = 1; i <= totalPages; i++) {
               if (

@@ -3,9 +3,11 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { useHasPermission } from '@/hooks/useHasPermission';
+import { useAuth } from '@/hooks/useAuth'
 import { cn } from '@/lib/utils';
 import Image from 'next/image'; 
 import { usePathname } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -14,6 +16,7 @@ interface AppLayoutProps {
 export default function AppLayout({ children }: AppLayoutProps) {
   const isAdmin = useHasPermission('admin');
   const pathname = usePathname();
+  const { user } = useAuth();
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -72,7 +75,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           )}
         </nav>
         <div className='flex gap-4'>
-          {/* {user ? <span>{user.name}</span> : <Link href="/login"><Button className='cursor-pointer' variant={'ghost'} onClick={() => window.location.href = '/login'}>登录</Button></Link>} */}
+          {user ? <span>{user.name}</span> : <Link href="/login"><Button className='cursor-pointer' variant={'ghost'} onClick={() => window.location.href = '/login'}>登录</Button></Link>}
         </div>
       </header>
       <main className="flex-1 p-6">{children}</main>

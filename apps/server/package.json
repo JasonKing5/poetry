@@ -31,6 +31,7 @@
     "@nestjs/platform-express": "^11.0.1",
     "@prisma/client": "^6.6.0",
     "@repo/common": "workspace:*",
+    "@repo/types": "workspace:*",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
     "passport": "^0.7.0",

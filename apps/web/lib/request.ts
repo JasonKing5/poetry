@@ -1,11 +1,11 @@
-import axios from "./axios"
-import { useQuery, useMutation, UseQueryResult, UseMutationResult, useQueryClient } from '@tanstack/react-query'
+import http from "./http"
+import { useQuery, useMutation, UseQueryResult, UseMutationResult, useQueryClient, UseQueryOptions } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-type QueryParamsProps = Record<string, unknown>;
-type PathParamProps = string | number;
+type QueryParams = Record<string, unknown>;
+type PathParam = string | number;
 
-interface GlobalSuccessOptions {
+interface GlobalOptions {
   successMessage?: string;
   invalidate?: boolean;
   onSuccess?: (data: unknown, ...rest: unknown[]) => void;
@@ -14,30 +14,24 @@ interface GlobalSuccessOptions {
 
 export function useGet<T = unknown>(
   url: string,
-  options?: {
-    params?: QueryParamsProps,
-    path?: PathParamProps,
-    [key: string]: unknown
-  }
+  params?: QueryParams,
+  options?: Omit<UseQueryOptions<T>, 'queryKey' | 'queryFn'>
 ): UseQueryResult<T, Error> {
-  const { params, path, ...rest } = options || {};
   let realUrl = url;
-  if (path !== undefined && path !== null) {
-    realUrl = `${url}/${path}`;
-  }
   return useQuery<T, Error, T>({
     queryKey: [realUrl, params],
+    // @ts-ignore
     queryFn: async () => {
-      const response = await axios.get<T>(realUrl, { params });
-      return response.data;
+      const response = await http.get<T>(url, { params });
+      return response;
     },
-    ...rest,
+    ...options,
   });
 }
 
-function useWithGlobalSuccess(url: string, options?: GlobalSuccessOptions) {
+function withSuccessHandler(options?: GlobalOptions) {
   const queryClient = useQueryClient();
-  const { successMessage, invalidate = true, ...restOptions } = options || {};
+  const { successMessage, invalidateKey, ...restOptions } = options || {};
   return {
     ...restOptions,
     onSuccess: (data: unknown, ...rest: unknown[]) => {
@@ -45,8 +39,8 @@ function useWithGlobalSuccess(url: string, options?: GlobalSuccessOptions) {
       if (successMessage) {
         toast.success(successMessage);
       }
-      if (invalidate) {
-        queryClient.invalidateQueries({ queryKey: [url] });
+      if (invalidateKey) {
+        queryClient.invalidateQueries({ queryKey: [invalidateKey] });
       }
     }
   };
@@ -54,38 +48,33 @@ function useWithGlobalSuccess(url: string, options?: GlobalSuccessOptions) {
 
 export function usePost<T = unknown, D = unknown>(
   url: string,
-  options?: GlobalSuccessOptions
+  options?: GlobalOptions
 ): UseMutationResult<T, Error, D> {
   return useMutation<T, Error, D>({
-    mutationFn: (data: D) => axios.post(url, data),
-    ...useWithGlobalSuccess(url, options),
+    mutationFn: (data: D) => http.post(url, data),
+    ...withSuccessHandler(options),
   });
 }
 
 export function usePut<T = unknown, D = unknown>(
   url: string,
-  options?: GlobalSuccessOptions
+  options?: GlobalOptions
 ): UseMutationResult<T, Error, D> {
   return useMutation<T, Error, D>({
-    mutationFn: (data: D) => axios.put(url, data),
-    ...useWithGlobalSuccess(url, options),
+    mutationFn: (data: D) => http.put(url, data),
+    ...withSuccessHandler(options),
   });
 }
 
 export function useDel<T = unknown, D = unknown>(
   url: string,
-  options?: GlobalSuccessOptions
+  options?: GlobalOptions
 ): UseMutationResult<T, Error, D> {
   return useMutation<T, Error, D>({
     mutationFn: (data: D) => {
-      if (typeof data === 'number' || typeof data === 'string') {
-        return axios.delete(`${url}/${data}`)
-      } else if (data && typeof data === 'object' && 'id' in data) {
-        return axios.delete(`${url}/${(data as { id: PathParamProps }).id}`)
-      } else {
-        return axios.delete(url)
-      }
+      const id = !!data && typeof data === "object" && "id" in data ? data.id : data;
+      return http.delete(`${url}/${id}`);
     },
-    ...useWithGlobalSuccess(url, options),
+    ...withSuccessHandler(options),
   });
 }

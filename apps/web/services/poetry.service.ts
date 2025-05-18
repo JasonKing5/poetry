@@ -1,18 +1,5 @@
-import axios from '@/lib/axios';
-import useSWR from 'swr';
+import { useGet } from '@/lib/request'
 
-/*
-  page: number;
-  pageSize: number;
-  title: string;
-  type: string;
-  tags: string[];
-  source: string;
-  dynasty: string;
-  submitter: string;
-  author: string;
-  status: string;
-  */
  export type GetPoetryListProps = {
   page: number;
   pageSize: number;
@@ -27,7 +14,5 @@ import useSWR from 'swr';
  }
 
 export const usePoetryList = (params: GetPoetryListProps) => {
-  return useSWR(['poetry-list', params], () => axios.get('/poetry', { params }).then(res => res.data), {
-    keepPreviousData: true,
-  });
-};
+ return useGet('/poetry', params);
+}

@@ -84,16 +84,21 @@ export class AuthService {
 
   async sendEmail(email: string) {
     if (!email) {
-      throw new BadRequestException('Email and password are required');
+      throw new BadRequestException('Email is required');
     }
+    console.log('sendEmail:', email)
 
     const user = await this.userService.findOneByEmail(email)
+    console.log('sendEmail:', 2)
     if (!user) {
+      console.log('sendEmail:', 3)
       throw new UnauthorizedException('User not found');
     }
+    console.log('sendEmail:', 4)
 
     const roles = await this.userService.getUserRoles(user.id);
     const resetToken = this.generateAccessToken(user.id, roles);
+    console.log('sendEmail:', 5)
 
     return await this.mailService.sendResetPasswordEmail(email, resetToken)
   }
