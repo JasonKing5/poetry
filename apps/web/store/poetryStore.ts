@@ -17,7 +17,7 @@ interface PoetryState {
 
 export const usePoetryStore = create<PoetryState>((set) => ({
   page: 1,
-  pageSize: 10,
+  pageSize: 12,
   title: '',
   type: '',
   tags: [],

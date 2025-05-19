@@ -255,34 +255,22 @@ function PoetryPageContent() {
           />
         </div>
       </div>
-        <ul className="mb-4">
-          {element ? element : (data as PoetryListResponse)?.list?.length > 0 ? (
-            // 每两项一行
-            ((data as PoetryListResponse)?.list as PoetryProps[]).reduce((rows: JSX.Element[], item, idx, arr) => {
-              if (idx % 2 === 0) {
-                // 取当前和下一个
-                const items = arr.slice(idx, idx + 2);
-                rows.push(
-                  <div className="flex flex-col md:flex-row gap-4" key={idx}>
-                    {items.map((poetry) => (
-                      <li className="w-full md:w-1/2" key={poetry.id}>
-                        <PoetryCard
-                          id={poetry.id}
-                          title={poetry.title}
-                          author={poetry.author.name}
-                          dynasty={poetry.dynasty}
-                          tags={poetry.tags}
-                          content={getShortContent(poetry.content, 8)}
-                        />
-                      </li>
-                    ))}
-                  </div>
-                );
-              }
-              return rows;
-            }, [])
-          ) : <div className='min-h-40 flex justify-center items-center'>无结果</div>}
-        </ul>
+      <ul className="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {element ? element : (data as PoetryListResponse)?.list?.length > 0 ? (
+          ((data as PoetryListResponse)?.list as PoetryProps[]).map((poetry) => (
+            <li className="w-full" key={poetry.id}>
+              <PoetryCard
+                id={poetry.id}
+                title={poetry.title}
+                author={poetry.author.name}
+                dynasty={poetry.dynasty}
+                tags={poetry.tags}
+                content={getShortContent(poetry.content, 8)}
+              />
+            </li>
+          ))
+        ) : <div className='min-h-40 flex justify-center items-center'>无结果</div>}
+      </ul>
 
         <div className="flex gap-2">
           {/* 分页功能 */}
