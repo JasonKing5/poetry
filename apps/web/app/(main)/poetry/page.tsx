@@ -172,6 +172,7 @@ function PoetryPageContent() {
                     {items.map((poetry) => (
                       <li className="w-full md:w-1/2" key={poetry.id}>
                         <PoetryCard
+                          id={poetry.id}
                           title={poetry.title}
                           author={poetry.author.name}
                           dynasty={poetry.dynasty}
