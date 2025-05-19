@@ -23,6 +23,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination"
 import { Author, Poetry } from '@repo/types';
+import { withLoadingError } from '@/components/withLoadingError';
 
 import PoetryCard from '@/components/PoetryCard';
 
@@ -45,10 +46,9 @@ function PoetryPageContent() {
   const searchParams = useSearchParams();
   const { page, pageSize, title, type, tags, source, dynasty, submitter, author, status, setFilters, resetFilters } = usePoetryStore();
 
-  const { data: authors , isLoading: authorsLoading, error: authorsError } = useAllAuthors();
+  const { data: authors , element: authorsElement } = withLoadingError(useAllAuthors());
   
-
-  const { data, isLoading, error } = usePoetryList({
+  const poetryListRes = usePoetryList({
     page,
     pageSize,
     title,
@@ -59,9 +59,10 @@ function PoetryPageContent() {
     submitter,
     author,
     status,
-  })
+  });
+  const { data, element } = withLoadingError(poetryListRes);
 
-  const { data: allTags, isLoading: tagsLoading, error: tagsError } = useAllTags();
+  const { data: allTags, element: tagsElement } = withLoadingError(useAllTags());
 
   const handleValueChange = (type: string, value: string | string[]) => {
     setFilters({ [type]: value, page: 1 });
@@ -83,11 +84,14 @@ function PoetryPageContent() {
     }
   }, [searchParams, setFilters]);
 
-  if (authorsLoading || tagsLoading || isLoading) {
-    return <div>加载中。。。</div>;
+  if (authorsElement) {
+    return authorsElement;
   }
-  if (authorsError || tagsError || error) {
-    return <div>加载失败。。。</div>;
+  if (tagsElement) {
+    return tagsElement;
+  }
+  if (element) {
+    return element;
   }
 
   return (

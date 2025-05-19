@@ -18,7 +18,7 @@ import {
 export default function AuthorPage() {
   const { page, pageSize, setFilters } = useAuthorStore();
 
-  const { data, element } = withLoadingError(useAllAuthors);
+  const { data, element } = withLoadingError(useAllAuthors());
   if (element) {
     return element;
   }

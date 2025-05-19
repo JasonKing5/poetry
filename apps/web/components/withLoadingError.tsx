@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./withLoadingError.module.css";
 
-export function withLoadingError(hook: Function) {
-  const { data, isLoading, error } = hook();
+export function withLoadingError(hookResult: { data: any, isLoading: boolean, error: any }) {
+  const { data, isLoading, error } = hookResult;
 
   // 重试函数，直接刷新页面
   const handleRetry = () => {

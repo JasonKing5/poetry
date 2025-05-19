@@ -13,6 +13,7 @@ import {
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation"
 import Image from "next/image"
+import { withLoadingError } from "@/components/withLoadingError";
 
 const carouselItems = [
   {
@@ -134,7 +135,7 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
 
-  const { data: lunarInfo, isLoading, error }: any = useLunar();
+  const { data: lunarInfo, element: lunarLoadingElement } = withLoadingError(useLunar());
   useEffect(() => {
     if (!carouselApi) return;
 
@@ -171,13 +172,6 @@ export default function Home() {
     router.push(`/poetry?${params}`);
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
   return (
     <div className='w-full flex flex-col justify-center'>
       <div className="w-full flex justify-center">
@@ -193,10 +187,13 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-col items-center justify-center w-1/3 md:w-1/4 min-w-[90px] md:min-w-[120px] bg-[#a6a07a]/80 border-l border-white px-2 md:px-4">
-            <div className="text-white text-base md:text-lg font-bold mb-0.5 md:mb-1">{lunarInfo?.gregoriandate}</div>
-            <div className="text-white text-xs md:text-base mb-0.5 md:mb-1">{`${lunarInfo?.lubarmonth} ${lunarInfo?.lunarday}`}</div>
-            <div className="text-white text-xs md:text-base">{lunarInfo?.festival}</div>
-            <div className="text-white text-xs md:text-base">{lunarInfo?.shengxiao}</div>
+            {lunarLoadingElement ? lunarLoadingElement : 
+            <>
+              <div className="text-white text-base md:text-lg font-bold mb-0.5 md:mb-1">{lunarInfo?.gregoriandate}</div>
+              <div className="text-white text-xs md:text-base mb-0.5 md:mb-1">{`${lunarInfo?.lubarmonth} ${lunarInfo?.lunarday}`}</div>
+              <div className="text-white text-xs md:text-base">{lunarInfo?.festival}</div>
+              <div className="text-white text-xs md:text-base">{lunarInfo?.shengxiao}</div>
+            </>}
           </div>
         </div>
       </div>
