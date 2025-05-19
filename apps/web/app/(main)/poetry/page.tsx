@@ -7,6 +7,8 @@ import { useAllTags } from '@/services/poetry-prop.service';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { constants } from '@repo/common';
+import { useState } from "react";
+import { useRef } from "react";
 import {
   Select,
   SelectContent,
@@ -41,10 +43,56 @@ export type PoetryListResponse = {
   total: number;
 };
 
+function FilterRow({ label, items, allSelected, onAllClick }: { label: string, items: any[], allSelected: boolean, onAllClick: () => void}) {
+  return (
+    <div className="flex items-center gap-2 w-full">
+      <span className="text-gray-700 mr-2 min-w-fit">{label}</span>
+      <Button
+        variant={allSelected ? "default" : "outline"}
+        size="sm"
+        onClick={onAllClick}
+        className={
+          (allSelected
+            ? "bg-primary text-white border-primary "
+            : "") +
+          "hover:bg-primary/90 hover:text-white cursor-pointer transition"
+        }
+      >全部</Button>
+      <div className="flex-1 overflow-x-auto">
+        <div className="flex items-center gap-2 flex-nowrap">
+          {items.map(item => (
+            <Button
+              key={item.key}
+              variant={item.selected ? "default" : "outline"}
+              size="sm"
+              onClick={item.onClick}
+              className={
+                (item.selected
+                  ? "bg-primary text-white border-primary "
+                  : "") +
+                "hover:bg-primary/90 hover:text-white cursor-pointer transition"
+              }
+              style={{
+                maxWidth: 96,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap"
+              }}
+              title={item.label}
+            >{item.label}</Button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // 新增：将页面内容提取为子组件
 function PoetryPageContent() {
   const searchParams = useSearchParams();
   const { page, pageSize, title, type, tags, source, dynasty, submitter, author, status, setFilters, resetFilters } = usePoetryStore();
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+  const [titleInput, setTitleInput] = useState(title);
 
   const { data: authors , element: authorsElement } = withLoadingError(useAllAuthors());
   
@@ -63,6 +111,15 @@ function PoetryPageContent() {
   const { data, element } = withLoadingError(poetryListRes);
 
   const { data: allTags, element: tagsElement } = withLoadingError(useAllTags());
+
+  const handleDebouncedTitleChange = (value: string) => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    debounceRef.current = setTimeout(() => {
+      handleValueChange('title', value);
+    }, 400); // 400ms防抖
+  };
 
   const handleValueChange = (type: string, value: string | string[]) => {
     setFilters({ [type]: value, page: 1 });
@@ -88,8 +145,13 @@ function PoetryPageContent() {
     }
     if (urlTitle) {
       setFilters({ title: urlTitle, page: 1 });
+      setTitleInput(urlTitle); // 保持input同步
     }
   }, [searchParams, setFilters]);
+
+  useEffect(() => {
+    setTitleInput(title);
+  }, [title]);
 
   if (authorsElement) {
     return authorsElement;
@@ -97,71 +159,104 @@ function PoetryPageContent() {
   if (tagsElement) {
     return tagsElement;
   }
-  if (element) {
-    return element;
-  }
 
   return (
     <div className="w-full flex justify-center">
       <div className="max-w-5xl w-full">
-      <div className="flex flex-wrap gap-2 mb-4">
-          <div className="w-full sm:w-[48%] md:w-[32%]">
-            <Select onValueChange={(value) => handleValueChange('author', value)} value={author}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="作者" />
-              </SelectTrigger>
-              <SelectContent>
-                {(authors as Author[])?.map(({id, name}) => (<SelectItem key={id} value={String(id)}>{name}</SelectItem>))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="w-full sm:w-[48%] md:w-[32%]">
-            <Select onValueChange={(value) => handleValueChange('type', value)} value={type}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="类型" />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(POETRY_TYPE_MAP).map(([key, value]) => (<SelectItem key={key} value={key}>{value}</SelectItem>))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="w-full sm:w-[48%] md:w-[32%]">
-            <Select onValueChange={(value) => handleValueChange('dynasty', value)} value={dynasty}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="朝代" />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(DYNASTY_MAP).map(([key, value]) => (<SelectItem key={key} value={key}>{value}</SelectItem>))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="w-full sm:w-[48%] md:w-[32%]">
-            <Select onValueChange={(value) => handleValueChange('tags', [value])} value={dynasty}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="标签" />
-              </SelectTrigger>
-              <SelectContent>
-                {(allTags as string[]).map((tag: string) => (<SelectItem key={tag} value={tag}>{tag}</SelectItem>))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="w-full sm:w-[48%] md:w-[32%]">
+      <div className="bg-white rounded-lg shadow-sm px-4 py-3 mb-6 border border-gray-100">
+        {/* 搜索栏 */}
+        <div className="flex justify-between items-center gap-2 mb-4">
+            <span
+              className="text-gray-700 whitespace-nowrap mr-2"
+              style={{ fontWeight: 500, fontSize: 16, minWidth: 'fit-content' }}
+            >{`搜索出 ${element ? 0 : data.total} 首作品`}</span>
+          <Button variant="outline" className='hover:bg-primary/90 hover:text-white cursor-pointer transition' onClick={handleReset}>重置</Button>
+        </div>
+        {/* 筛选项 */}
+        <div className="space-y-3">
+          {/* 标题 */}
+          <div className="flex items-center gap-2">
+            <span className="text-gray-700 whitespace-nowrap mr-2" style={{ fontWeight: 500, fontSize: 16 }}>标题</span>
             <Input
               type="text"
-              className="w-full px-2 py-1 border border-gray-300 rounded"
-              placeholder="标题"
-              value={title}
-              onChange={(e) => handleValueChange('title', e.target.value)}
+              placeholder="请输入标题"
+              value={titleInput}
+              onChange={(e) => setTitleInput(e.target.value)}
+              className="w-full"
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  handleValueChange('title', titleInput);
+                }
+              }}
             />
+            <Button
+              className="ml-2 hover:bg-primary/90 hover:text-white cursor-pointer transition"
+              onClick={() => handleValueChange('title', titleInput)}
+            >
+              查询
+            </Button>
           </div>
-          <div className="w-full sm:w-[48%] md:w-[32%] flex items-center">
-            <Button className="w-full" onClick={handleReset}>重置</Button>
-          </div>
+          {/* 朝代 */}
+          <FilterRow
+            label="朝代"
+            items={Object.entries(DYNASTY_MAP).map(([key, value]) => ({
+              key,
+              label: value,
+              selected: dynasty === key,
+              onClick: () => handleValueChange('dynasty', key),
+            }))}
+            allSelected={!dynasty}
+            onAllClick={() => handleValueChange('dynasty', "")}
+          />
+          {/* 作者 */}
+          <FilterRow
+            label="诗人"
+            items={(authors as Author[]).map(({ id, name }) => ({
+              key: String(id),
+              label: name,
+              selected: author == String(id),
+              onClick: () => handleValueChange('author', String(id)),
+            }))}
+            allSelected={!author}
+            onAllClick={() => handleValueChange('author', "")}
+          />
+          {/* 分类（标签）多选 */}
+          <FilterRow
+            label="分类"
+            items={(allTags as string[]).map((tag) => ({
+              key: tag,
+              label: tag,
+              selected: tags?.includes(tag),
+              onClick: () => {
+                let newTags = Array.isArray(tags) ? [...tags] : [];
+                if (newTags.includes(tag)) {
+                  newTags = newTags.filter(t => t !== tag);
+                } else {
+                  newTags.push(tag);
+                }
+                handleValueChange('tags', newTags);
+              },
+              multi: true,
+            }))}
+            allSelected={!tags || tags.length === 0}
+            onAllClick={() => handleValueChange('tags', [])}
+          />
+          {/* 类型 */}
+          <FilterRow
+            label="类型"
+            items={Object.entries(POETRY_TYPE_MAP).map(([key, value]) => ({
+              key,
+              label: value,
+              selected: type === key,
+              onClick: () => handleValueChange('type', key),
+            }))}
+            allSelected={!type}
+            onAllClick={() => handleValueChange('type', "")}
+          />
         </div>
-
-        
+      </div>
         <ul className="mb-4">
-          {(data as PoetryListResponse)?.list?.length > 0 ? (
+          {element ? element : (data as PoetryListResponse)?.list?.length > 0 ? (
             // 每两项一行
             ((data as PoetryListResponse)?.list as PoetryProps[]).reduce((rows: JSX.Element[], item, idx, arr) => {
               if (idx % 2 === 0) {
@@ -186,7 +281,7 @@ function PoetryPageContent() {
               }
               return rows;
             }, [])
-          ) : <div>无结果</div>}
+          ) : <div className='min-h-40 flex justify-center items-center'>无结果</div>}
         </ul>
 
         <div className="flex gap-2">
