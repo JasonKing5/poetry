@@ -27,7 +27,7 @@ import { withLoadingError } from '@/components/withLoadingError';
 
 import PoetryCard from '@/components/PoetryCard';
 
-import { Suspense, useEffect } from 'react';
+import { JSX, Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 const { POETRY_TYPE_MAP, DYNASTY_MAP } = constants;
@@ -70,6 +70,13 @@ function PoetryPageContent() {
 
   const handleReset = () => {
     resetFilters();
+  };
+
+  const getShortContent = (content: string[], length: number) => {
+    if (content.length <= length) {
+      return content;
+    }
+    return content.slice(0, length);
   };
 
   // 页面初始化时，如果URL有type参数，则同步到store
@@ -154,17 +161,31 @@ function PoetryPageContent() {
 
         
         <ul className="mb-4">
-          {(data as PoetryListResponse)?.list?.length > 0 ? (data as PoetryListResponse)?.list?.map((item) => (
-            <li key={item.id}>
-              <PoetryCard
-                title={item.title}
-                author={item.author.name}
-                dynasty={item.dynasty}
-                tags={item.tags}
-                content={item.content}
-              />
-            </li>
-          )) : <div>无结果</div>}
+          {(data as PoetryListResponse)?.list?.length > 0 ? (
+            // 每两项一行
+            ((data as PoetryListResponse)?.list as PoetryProps[]).reduce((rows: JSX.Element[], item, idx, arr) => {
+              if (idx % 2 === 0) {
+                // 取当前和下一个
+                const items = arr.slice(idx, idx + 2);
+                rows.push(
+                  <div className="flex flex-col md:flex-row gap-4" key={idx}>
+                    {items.map((poetry) => (
+                      <li className="w-full md:w-1/2" key={poetry.id}>
+                        <PoetryCard
+                          title={poetry.title}
+                          author={poetry.author.name}
+                          dynasty={poetry.dynasty}
+                          tags={poetry.tags}
+                          content={getShortContent(poetry.content, 8)}
+                        />
+                      </li>
+                    ))}
+                  </div>
+                );
+              }
+              return rows;
+            }, [])
+          ) : <div>无结果</div>}
         </ul>
 
         <div className="flex gap-2">
