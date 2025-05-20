@@ -37,6 +37,10 @@ $ pnpm dlx prisma db push
 $ pnpm run seed
 ```
 
+```bash
+# Drop tables (Optional, if needed)
+$ DROP TABLE "RolePermission", "UserRole", "Permission", "Poetry", "Author", "Role", "User";
+
 ## Compile and run the project
 
 ```bash

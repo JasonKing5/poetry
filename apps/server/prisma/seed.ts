@@ -12,10 +12,14 @@ const POETRY_AUTHOR_MAP = {
 
 let NullNameId: number = 0;
 
-async function authorSeed() {
+async function authorSeed(submitterId: number) {
   console.log('Start seed author');
-  const authorDir = path.resolve(__dirname, '../data/chinese-poetry');
-  const files = fs.readdirSync(authorDir).filter(f => f.endsWith('.json'));
+  const poetryDir = path.resolve(__dirname, '../data/chinese-poetry');
+  const files = fs.readdirSync(poetryDir).filter(f => f.endsWith('.json'));
+
+  const authorDir = path.resolve(__dirname, '../data/chinese-poetry-authors');
+  const authoreFiles = fs.readdirSync(authorDir).filter(f => f.endsWith('.json'));
+
   const lunYuAuthor = await prisma.author.findFirst({ where: { name: POETRY_AUTHOR_MAP[PoetryType.lunYu] } });
   if (!lunYuAuthor) {
     await prisma.author.create({ data: { name: POETRY_AUTHOR_MAP[PoetryType.lunYu] } });
@@ -45,9 +49,21 @@ async function authorSeed() {
   }
 
   const authorSet = new Set<string>();
+  const authors: Record<string, string> = {};
+
+  for (const file of authoreFiles) {
+    const filePath = path.join(authorDir, file);
+    const json = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    if (!Array.isArray(json)) continue;
+    for (const item of json) {
+      if (item.name && item.description) {
+        authors[item.name] = item.description;
+      }
+    }
+  }
 
   for (const file of files) {
-    const filePath = path.join(authorDir, file);
+    const filePath = path.join(poetryDir, file);
     const json = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     if (!Array.isArray(json)) continue;
     const fileType = path.basename(file, '.json');
@@ -59,7 +75,7 @@ async function authorSeed() {
       }
     }
   }
-  const authorsToCreate = Array.from(authorSet).map(name => ({ name }));
+  const authorsToCreate = Array.from(authorSet).map(name => ({ name, description: authors[name] || '' }));
   await prisma.author.createMany({
     data: authorsToCreate,
     skipDuplicates: true,
@@ -277,7 +293,7 @@ async function main() {
 
   console.log('Roles and permissions successfully seeded.');
 
-  await authorSeed();
+  await authorSeed(rootUser.id);
 
   await poetrySeed(rootUser.id);
 

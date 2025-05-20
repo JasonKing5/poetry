@@ -107,6 +107,7 @@ enum Dynasty {
 model Author {
   id    Int    @id @default(autoincrement())
   name  String @unique
+  description  String @default("")
   poems Poetry[]
 
   createdAt DateTime @default(now())
