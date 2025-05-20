@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import { toast } from 'sonner';
 import { useUserStore } from '@/store/user'
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || '/api';

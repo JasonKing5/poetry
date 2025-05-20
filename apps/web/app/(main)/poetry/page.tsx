@@ -10,13 +10,6 @@ import { constants } from '@repo/common';
 import { useState } from "react";
 import { useRef } from "react";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
   Pagination,
   PaginationContent,
   PaginationItem,
@@ -29,7 +22,7 @@ import { withLoadingError } from '@/components/withLoadingError';
 
 import PoetryCard from '@/components/PoetryCard';
 
-import { JSX, Suspense, useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 const { POETRY_TYPE_MAP, DYNASTY_MAP } = constants;

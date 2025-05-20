@@ -2,7 +2,7 @@
 
 import { useLogin, useRegister, useResetEmail } from "@/services/user.service"
 import { AuthStatus, LoginResponse, RegisterFormValues, ResetPasswordFormValues } from "@/types/user"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useAuth } from "@/hooks/useAuth"
 import { useRouter } from "next/navigation"
 import { BrainCircuit } from "lucide-react"
@@ -11,6 +11,8 @@ import { loginSchema } from "@/schemas/loginSchema"
 import * as z from "zod"
 import { RegisterForm } from "@/components/form/register-form"
 import { ResetPasswordForm } from "@/components/form/reset-password-form"
+import { User } from "@repo/types";
+import Link from "next/link";
 
 export type LoginFormValues = z.infer<typeof loginSchema>
 
@@ -54,12 +56,12 @@ export default function LoginPage() {
   return (
     <div className="w-full h-full flex flex-1 flex-col justify-center items-center">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <a href="/" className="flex items-center gap-2 self-center font-medium">
+        <Link href="/" className="flex items-center gap-2 self-center font-medium">
           <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <BrainCircuit className="size-4" />
           </div>
           醉诗词
-        </a>
+        </Link>
         {authStatus === AuthStatus.Register && (
           <RegisterForm 
             onSubmit={handleRegister}
