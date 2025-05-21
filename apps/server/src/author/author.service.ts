@@ -5,10 +5,39 @@ import { PrismaService } from '../../prisma/prisma.service';
 export class AuthorService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll() {
-    return await this.prisma.author.findMany({
-      orderBy: { id: 'asc' },
-    });
+  async findAll(name?: string, page: number = 1, pageSize: number = 18, all?: boolean) {
+    const where: any = {};
+    if (name) where.name = { contains: name };
+    if (all) {
+      return await this.prisma.author.findMany({
+        where,
+        orderBy: {
+          id: 'asc',
+        },
+        select: {
+          id: true,
+          name: true,
+        }
+      })
+    }
+    const take = Math.max(1, Math.min(pageSize, 100));
+    const skip = Math.max(0, (page - 1) * take);
+    return {
+      total: await this.prisma.author.count({ where }),
+      list: await this.prisma.author.findMany({
+        where,
+        take,
+        skip,
+        orderBy: {
+          id: 'asc',
+        },
+        select: {
+          id: true,
+          name: true,
+          description: true,
+        }
+      }),
+    };
   }
 
   async findOne(id: number) {

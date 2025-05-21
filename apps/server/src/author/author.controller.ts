@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { AuthorService } from './author.service';
 import { Public } from 'src/common/decorators/public.decorator';
 import { Roles } from 'src/common/decorators/roles.decorator';
@@ -12,8 +12,13 @@ export class AuthorController {
 
   @Get()
   @Public()
-  async findAll() {
-    return await this.authorService.findAll();
+  async findAll(@Query() query: { name?: string, page?: number, pageSize?: number, all?: boolean }) {
+    let { name, page, pageSize, all } = query;
+    if (typeof page === 'string') page = parseInt(page, 10);
+    if (typeof pageSize === 'string') pageSize = parseInt(pageSize, 10);
+    if (typeof page !== 'number' || isNaN(page)) page = 1;
+    if (typeof pageSize !== 'number' || isNaN(pageSize)) pageSize = 18;
+    return await this.authorService.findAll(name, page, pageSize, all);
   }
 
   @Get(':id')

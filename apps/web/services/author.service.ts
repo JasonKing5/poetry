@@ -1,5 +1,12 @@
 import { useGet } from '@/lib/request';
 
-export const useAllAuthors = () => {
-  return useGet('/authors');
+export type GetAllAuthorsProps = {
+  page?: number;
+  pageSize?: number;
+  name?: string;
+  all?: boolean;
+ }
+
+export const useAllAuthors = (params: GetAllAuthorsProps) => {
+  return useGet('/authors', params);
 };

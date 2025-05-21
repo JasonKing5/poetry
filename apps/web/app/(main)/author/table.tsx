@@ -22,6 +22,11 @@ export const columns: ColumnDef<Author>[] = [
     cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
   {
+    accessorKey: "description",
+    header: "描述",
+    cell: ({ row }) => <div className="max-w-2xs truncate text-ellipsis">{row.getValue("description")}</div>,
+  },
+  {
     accessorKey: "createdAt",
     header: "创建时间",
     cell: ({ row }) => <div>{row.getValue("createdAt")}</div>,

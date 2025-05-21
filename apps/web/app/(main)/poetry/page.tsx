@@ -87,7 +87,7 @@ function PoetryPageContent() {
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
   const [titleInput, setTitleInput] = useState(title);
 
-  const { data: authors , element: authorsElement } = withLoadingError(useAllAuthors());
+  const { data: authors , element: authorsElement } = withLoadingError(useAllAuthors({all: true}));
   
   const poetryListRes = usePoetryList({
     page,
