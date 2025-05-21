@@ -1,16 +1,16 @@
 import { useGet } from '@/lib/request'
 
  export type GetPoetryListProps = {
-  page: number;
-  pageSize: number;
-  title: string;
-  type: string;
-  tags: string[];
-  source: string;
-  dynasty: string;
-  submitter: string;
-  author: string;
-  status: string;
+  page?: number;
+  pageSize?: number;
+  title?: string;
+  type?: string;
+  tags?: string[];
+  source?: string;
+  dynasty?: string;
+  submitter?: string;
+  author?: number;
+  status?: string;
  }
 
 export const usePoetryList = (params: GetPoetryListProps) => {

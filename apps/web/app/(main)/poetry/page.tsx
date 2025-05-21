@@ -27,7 +27,7 @@ import { useSearchParams } from 'next/navigation';
 
 const { POETRY_TYPE_MAP, DYNASTY_MAP } = constants;
 
-type PoetryProps = Poetry & {
+export type PoetryProps = Poetry & {
  author: Author,
 };
 
@@ -98,7 +98,7 @@ function PoetryPageContent() {
     source,
     dynasty,
     submitter,
-    author,
+    author: author ? Number(author) : undefined,
     status,
   });
   const { data, element } = withLoadingError(poetryListRes);

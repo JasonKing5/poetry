@@ -34,7 +34,7 @@ export default function AuthorCard({ id, name, description }: AuthorCardProps) {
             {name}
           </div>
         </div>
-        <div className="text-gray-700 leading-relaxed font-serif tracking-wide truncate text-ellipsis">
+        <div className="text-gray-500 leading-relaxed font-serif tracking-wide truncate text-ellipsis text-[14px]">
           {description ? description : '暂无简介'}
         </div>
       </div>
