@@ -38,6 +38,10 @@ $ pnpm run seed
 ```
 
 ```bash
+# Optional actions
+
+$ psql -h localhost -p 5432 -U ifs -d ifs
+
 # Drop tables (Optional, if needed)
 $ DROP TABLE "RolePermission", "UserRole", "Permission", "Poetry", "Author", "Role", "User";
 
