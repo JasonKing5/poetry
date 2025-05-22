@@ -11,7 +11,6 @@ import { loginSchema } from "@/schemas/loginSchema"
 import * as z from "zod"
 import { RegisterForm } from "@/components/form/register-form"
 import { ResetPasswordForm } from "@/components/form/reset-password-form"
-import { User } from "@repo/types";
 import Link from "next/link";
 
 export type LoginFormValues = z.infer<typeof loginSchema>
@@ -24,7 +23,8 @@ export default function LoginPage() {
   const { mutate: loginMutate } = useLogin({
     successMessage: "Login successful",
     onSuccess: (data: LoginResponse) => {
-      setUser(data.user as any)
+      console.log('login success:', data)
+      setUser({...data.user, roles: data.roles.map((role: any) => role.name)})
       navigate.push("/")
     },
   })

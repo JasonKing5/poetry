@@ -16,7 +16,7 @@ export function RegisterForm({
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      username: "",
+      name: "",
       email: "",
       password: "",
       role: "user"
@@ -32,9 +32,9 @@ export function RegisterForm({
         <CardContent className="grid gap-6">
           <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6">
             <div className="grid gap-2">
-              <Label htmlFor="username">Username</Label>
-              <Input id="username" {...register("username")} placeholder="username" />
-              {errors.username && <p className="text-sm text-red-500">{errors.username.message}</p>}
+              <Label htmlFor="name">Username</Label>
+              <Input id="name" {...register("name")} placeholder="name" />
+              {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
             </div>
 
             <div className="grid gap-2">

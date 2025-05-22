@@ -7,5 +7,6 @@ import { useAuth } from './useAuth';
  */
 export function useHasPermission(role: string): boolean {
   const { user } = useAuth();
+  console.log('useHasPermission user', user);
   return user?.roles?.some(r => r === role) || false;
 }
