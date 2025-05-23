@@ -30,11 +30,11 @@
 ```bash
 $ pnpm install
 
-$ pnpm exec prisma generate --schema=prisma/schema.prisma
+$ pnpm run db:generate
 
-$ pnpm dlx prisma db push
+$ pnpm run db:push
 
-$ pnpm run seed
+$ pnpm run db:seed
 ```
 
 ```bash
@@ -56,6 +56,21 @@ $ pnpm run start:dev
 
 # production mode
 $ pnpm run start:prod
+```
+
+```bash
+# DB migration
+
+# 生成并应用迁移文件
+$ npx prisma migrate dev --name add_user_like_poetry
+
+# or
+# 重置数据库并重新应用所有迁移
+$ npx prisma migrate reset
+
+# or
+# 生成迁移文件，但不应用
+$ npx prisma migrate dev --name add_user_like_poetry --create-only
 ```
 
 ## Run tests
