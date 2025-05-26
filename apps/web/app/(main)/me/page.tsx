@@ -1,12 +1,14 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
+import { RequireAuth } from '@/components/RequireAuth';
 
 export default function MePage() {
   const { isAuthenticated, user } = useAuth();
 
   if (!isAuthenticated) {
-    return <div>请先登录</div>;
+    return <RequireAuth children={<></>} />;
   }
 
   return (

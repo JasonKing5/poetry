@@ -25,7 +25,7 @@ interface AppLayoutProps {
 export default function AppLayout({ children }: AppLayoutProps) {
   const isAdmin = useHasPermission('admin');
   const pathname = usePathname();
-  const { user, clearUser } = useAuth();
+  const { user, clearUser, isAuthenticated } = useAuth();
   const router = useRouter();
 
   return (
@@ -69,7 +69,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           >
             作者
           </Link>
-          {/* <Link
+          <Link
             href="/me"
             className={cn(
               "transition-colors",
@@ -79,7 +79,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
             )}
           >
             我的
-          </Link> */}
+          </Link>
           {isAdmin && (
             <Link
               href="/admin"
@@ -95,7 +95,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           )}
         </nav>
         <div className='flex gap-4'>
-          {user ? (
+          {isAuthenticated && user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button 
