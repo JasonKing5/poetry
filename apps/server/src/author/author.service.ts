@@ -44,8 +44,8 @@ export class AuthorService {
     return await this.prisma.author.findUnique({ where: { id } });
   }
 
-  async create(name: string) {
-    return await this.prisma.author.create({ data: { name } });
+  async create(name: string, submitterId: number) {
+    return await this.prisma.author.create({ data: { name, submitterId } });
   }
 
   async update(id: number, name: string) {

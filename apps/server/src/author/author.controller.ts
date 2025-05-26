@@ -30,8 +30,8 @@ export class AuthorController {
   @Post()
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   @Permissions(PermissionEnum.CREATE_AUTHOR)
-  async create(@Body() body: { name: string }) {
-    return await this.authorService.create(body.name);
+  async create(@Body() body: { name: string, submitterId: number }) {
+    return await this.authorService.create(body.name, body.submitterId);
   }
 
   @Put(':id')

@@ -18,15 +18,15 @@ async function authorSeed(submitterId: number) {
   const files = fs.readdirSync(poetryDir).filter(f => f.endsWith('.json'));
 
   const authorDir = path.resolve(__dirname, '../data/chinese-poetry-authors');
-  const authoreFiles = fs.readdirSync(authorDir).filter(f => f.endsWith('.json'));
+  const authorFiles = fs.readdirSync(authorDir).filter(f => f.endsWith('.json'));
 
   const lunYuAuthor = await prisma.author.findFirst({ where: { name: POETRY_AUTHOR_MAP[PoetryType.lunYu] } });
   if (!lunYuAuthor) {
-    await prisma.author.create({ data: { name: POETRY_AUTHOR_MAP[PoetryType.lunYu] } });
+    await prisma.author.create({ data: { name: POETRY_AUTHOR_MAP[PoetryType.lunYu], submitterId } });
   }
   let nullNameAuthor = await prisma.author.findFirst({ where: { name: POETRY_AUTHOR_MAP.noOne } });
   if (!nullNameAuthor) {
-    nullNameAuthor = await prisma.author.create({ data: { name: POETRY_AUTHOR_MAP.noOne } });
+    nullNameAuthor = await prisma.author.create({ data: { name: POETRY_AUTHOR_MAP.noOne, submitterId } });
   }
   NullNameId = nullNameAuthor.id;
 
@@ -51,7 +51,7 @@ async function authorSeed(submitterId: number) {
   const authorSet = new Set<string>();
   const authors: Record<string, string> = {};
 
-  for (const file of authoreFiles) {
+  for (const file of authorFiles) {
     const filePath = path.join(authorDir, file);
     const json = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     if (!Array.isArray(json)) continue;
@@ -75,7 +75,7 @@ async function authorSeed(submitterId: number) {
       }
     }
   }
-  const authorsToCreate = Array.from(authorSet).map(name => ({ name, description: authors[name] || '' }));
+  const authorsToCreate = Array.from(authorSet).map(name => ({ name, description: authors[name] || '', submitterId }));
   await prisma.author.createMany({
     data: authorsToCreate,
     skipDuplicates: true,

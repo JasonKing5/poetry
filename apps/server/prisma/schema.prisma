@@ -14,15 +14,21 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  password String
-  userRoles  UserRole[]
-  submittedPoetries Poetry[] @relation("Poetry_submitter")
-  likedPoems UserLikePoetry[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int              @id @default(autoincrement())
+  email         String           @unique
+  name          String?
+  password      String
+  userRoles     UserRole[]
+  poetry        Poetry[]
+  comments      Comment[]
+  poetryLists   PoetryList[]
+  poetryListItems PoetryListItem[]
+  submittedAuthors Author[]      @relation("AuthorSubmitter")
+  likes         Like[]
+  bookmarks     Bookmark[]
+  isDeleted     Boolean          @default(false)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
 }
 
 model Role {
@@ -106,45 +112,149 @@ enum Dynasty {
 
 // 古代诗人表
 model Author {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  description  String @default("")
-  poems Poetry[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String    @default("")
+  submitter   User      @relation("AuthorSubmitter", fields: [submitterId], references: [id], onDelete: Cascade)
+  submitterId Int
+  status      PoetryStatus @default(pending)
+  isDeleted   Boolean   @default(false)
+  poems       Poetry[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Poetry {
-  id        Int          @id @default(autoincrement())
-  title     String
-  content   String[]
-  type      PoetryType
-  tags      String[]
-  source    PoetrySource
-  dynasty   Dynasty
-  submitter User         @relation("Poetry_submitter", fields: [submitterId], references: [id])
-  submitterId  Int
-  author    Author?      @relation(fields: [authorId], references: [id])
-  authorId  Int?
-  status    PoetryStatus @default(pending)
-  likedUsers UserLikePoetry[]
+  id          Int             @id @default(autoincrement())
+  title       String
+  content     String[]
+  type        PoetryType
+  tags        String[]
+  source      PoetrySource
+  dynasty     Dynasty
+  submitter   User            @relation(fields: [submitterId], references: [id], onDelete: Cascade)
+  submitterId Int
+  author      Author?         @relation(fields: [authorId], references: [id])
+  authorId    Int?
+  status      PoetryStatus    @default(pending)
+  isDeleted   Boolean         @default(false)
+  likes       Like[]          @relation("PoetryLikes")
+  bookmarks   Bookmark[]      @relation("PoetryBookmarks")
+  comments    Comment[]       @relation("PoetryComments")
+  listItems   PoetryListItem[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  @@map("poetry")
 }
 
-// User like Poetry 的中间表
-model UserLikePoetry {
-  id      Int   @id @default(autoincrement())
-  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  Int
-  poetry    Poetry  @relation(fields: [poetryId], references: [id], onDelete: Cascade)
-  poetryId  Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// poetry 列表（收藏夹）
+model PoetryList {
+  id          Int             @id @default(autoincrement())
+  title       String
+  description String?
+  isPublic    Boolean         @default(true)
+  creator     User            @relation(fields: [creatorId], references: [id])
+  creatorId   Int
+  items       PoetryListItem[]
+  likes       Like[]          @relation("PoetryListLikes")
+  bookmarks   Bookmark[]      @relation("PoetryListBookmarks")
+  comments    Comment[]       @relation("PoetryListComments")
+  status      PoetryStatus    @default(pending)
+  isDeleted   Boolean         @default(false)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
 
-  @@unique([userId, poetryId])
-  @@index([userId])
+  @@map("poetry_list")
+  @@index([creatorId])
+}
+
+// poetry 列表项
+model PoetryListItem {
+  id         Int        @id @default(autoincrement())
+  list       PoetryList @relation(fields: [listId], references: [id], onDelete: Cascade)
+  listId     Int
+  poetry     Poetry     @relation(fields: [poetryId], references: [id], onDelete: Cascade)
+  poetryId   Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  note       String?
+  order      Int        @default(0)  // 用于自定义排序
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@unique([listId, poetryId])
+  @@index([listId])
   @@index([poetryId])
+  @@index([userId])
+}
+
+enum TargetType {
+  POETRY
+  LIST
+  COMMENT
+  BOOKMARK
+}
+
+model Comment {
+  id          Int          @id @default(autoincrement())
+  content     String
+  user        User         @relation(fields: [userId], references: [id])
+  userId      Int
+  targetType  TargetType
+  targetId    Int
+  parent      Comment?     @relation("CommentReplies", fields: [parentId], references: [id])
+  parentId    Int?
+  replies     Comment[]    @relation("CommentReplies")
+  poetry      Poetry?      @relation("PoetryComments", fields: [targetId], references: [id], map: "comment_poetry_fk")
+  poetryList  PoetryList?  @relation("PoetryListComments", fields: [targetId], references: [id], map: "comment_poetry_list_fk")
+  likes       Like[]       @relation("CommentLikes")
+  status      PoetryStatus @default(pending)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([targetType, targetId])
+  @@index([parentId])
+  @@map("comment")
+}
+
+model Like {
+  id          Int         @id @default(autoincrement())
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  targetType  TargetType
+  targetId    Int
+  poetry      Poetry?     @relation("PoetryLikes", fields: [targetId], references: [id], onDelete: Cascade, map: "like_poetry_fk")
+  poetryList  PoetryList? @relation("PoetryListLikes", fields: [targetId], references: [id], onDelete: Cascade, map: "like_poetry_list_fk")
+  comment     Comment?    @relation("CommentLikes", fields: [targetId], references: [id], onDelete: Cascade, map: "like_comment_fk")
+  createdAt   DateTime    @default(now())
+
+  @@unique([userId, targetType, targetId])
+  @@index([userId])
+  @@index([targetType, targetId])
+}
+
+enum BookmarkTargetType {
+  POETRY
+  LIST
+}
+
+// 添加收藏模型
+model Bookmark {
+  id          Int               @id @default(autoincrement())
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  targetType  BookmarkTargetType
+  targetId    Int
+  note        String?
+  isPrivate   Boolean           @default(false)
+  poetry      Poetry?           @relation("PoetryBookmarks", fields: [targetId], references: [id], onDelete: Cascade, map: "bookmark_poetry_fk")
+  poetryList  PoetryList?       @relation("PoetryListBookmarks", fields: [targetId], references: [id], onDelete: Cascade, map: "bookmark_poetry_list_fk")
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@unique([userId, targetType, targetId])
+  @@index([userId])
+  @@index([targetType, targetId])
 }
