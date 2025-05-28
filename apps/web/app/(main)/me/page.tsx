@@ -3,9 +3,12 @@
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { RequireAuth } from '@/components/RequireAuth';
+import { useAllLikes } from '@/services/like.service';
+import { Like } from '@repo/types';
 
 export default function MePage() {
   const { isAuthenticated, user } = useAuth();
+  const { data: likesPage } = useAllLikes({ currentUser: true });
 
   if (!isAuthenticated) {
     return <RequireAuth children={<></>} />;
@@ -17,10 +20,10 @@ export default function MePage() {
       <div className="w-full">
         <h2 className="text-2xl font-bold tracking-tight">我喜欢的诗词作品</h2>
         <ul className="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {Array.from({ length: 10 }).map((_, index) => (
-            <li key={index}>
+          {likesPage?.list?.map((like: Like) => (
+            <li key={like.id}>
               <div className="bg-white rounded-lg shadow-sm px-4 py-3 mb-6 border border-gray-100">
-                <h3 className="text-lg font-semibold mb-2">诗词作品 {index + 1}</h3>
+                <h3 className="text-lg font-semibold mb-2">诗词作品 {like.id}</h3>
                 <p className="text-gray-600">描述信息</p>
               </div>
             </li>

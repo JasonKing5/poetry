@@ -3,6 +3,8 @@
 import React from 'react';
 import { constants } from '@repo/common';
 import { useRouter } from "next/navigation"
+import { Heart } from 'lucide-react';
+import { useCreateLike } from '@/services/like.service';
 
 const { DYNASTY_MAP } = constants;
 
@@ -17,6 +19,7 @@ interface PoetryCardProps {
 
 export default function PoetryCard({ id, title, author, dynasty, tags, content }: PoetryCardProps) {
   const navigate = useRouter()
+  const { mutate: likePoetryMutate } = useCreateLike();
   return (
     <div
       className="relative rounded-xl shadow-lg mb-4 border border-[#e5e7eb] overflow-hidden poetry-bg-animate"
@@ -48,10 +51,15 @@ export default function PoetryCard({ id, title, author, dynasty, tags, content }
             ))}
           </div>
         )}
-        <div className="flex flex-wrap gap-2 mt-2">
-          {tags.map(tag => (
-            <span key={tag} className="bg-[#e5ebe7] text-[#4b5e53] text-xs px-2 py-0.5 rounded">{tag}</span>
-          ))}
+        <div className="flex flex-wrap gap-2 mt-2 justify-between">
+          <div className="flex flex-wrap gap-2">
+            {tags.map(tag => (
+              <span key={tag} className="bg-[#e5ebe7] text-[#4b5e53] text-xs px-2 py-0.5 rounded">{tag}</span>
+            ))}
+          </div>
+          <div className="flex items-center gap-2">
+            <Heart className="w-4 h-4 text-[#2563eb]" size={24} color="#2563eb" onClick={() => likePoetryMutate({ targetType: 'POETRY', targetId: String(id) })} />
+          </div>
         </div>
       </div>
       {/* 动态渐变动画 */}

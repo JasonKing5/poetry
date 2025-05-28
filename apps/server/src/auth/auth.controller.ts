@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res, Req, Put } from '@nestjs/common';
+import { Controller, Post, Body, Res, Req, Put, Get } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express'
 import { AuthService } from './auth.service';
@@ -48,7 +48,7 @@ export class AuthController {
   @Post('refresh')
   @Public()
   async refreshToken(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
-    const token = req.cookies['refresh_token'];
+    const token = req.cookies['refreshToken'];
     const { accessToken } = await this.authService.refresh(token)
     res.cookie('token', accessToken, {
       httpOnly: true,

@@ -55,6 +55,7 @@ instance.interceptors.response.use(
 
         try {
           const data = await refreshToken();
+          console.log('axios refresh:', data)
           const setUser = useUserStore.getState().setUser;
           setUser(data.user);
           processQueue();

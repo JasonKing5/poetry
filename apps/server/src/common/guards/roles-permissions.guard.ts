@@ -21,11 +21,14 @@ export class RolesPermissionsGuard implements CanActivate {
     const req = context.switchToHttp().getRequest();
     let user = req.user;
     if (!user) {
-      const authHeader = req.headers['authorization'] || req.headers['Authorization'];
-      if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        throw new UnauthorizedException('Token is invalid or expired');
+      let token = req.cookies?.token;
+      if (!token) {
+        const authHeader = req.headers['authorization'] || req.headers['Authorization'];
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+          throw new UnauthorizedException('Token is invalid or expired');
+        }
+        token = authHeader.replace('Bearer ', '').trim();
       }
-      const token = authHeader.replace('Bearer ', '').trim();
       try {
         user = this.jwtService.verify(token, { secret: process.env.JWT_SECRET });
         req.user = user;

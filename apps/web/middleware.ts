@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
   const url = request.nextUrl;
 
-  if (url.pathname.startsWith('/user')) {
+  if (url.pathname.startsWith('/admin')) {
     if (!token) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
@@ -24,5 +24,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/user/:path*'], // 只保护 /user 路由段
+  matcher: ['/admin/:path*'], // 只保护 /user 路由段
 };
