@@ -45,6 +45,21 @@ export class AuthController {
     };
   }
 
+  @Post('demo/login')
+  @Public()
+  async demoLogin(
+    @Body() body: { email: string; password: string, expiresTime?: number },
+    @Res({ passthrough: true }) res: Response
+  ) {
+    const { user, roles, accessToken } = await this.authService.demoLogin(body.email, body.password, body.expiresTime);
+
+    return {
+      token: accessToken,
+      user,
+      roles,
+    };
+  }
+
   @Post('refresh')
   @Public()
   async refreshToken(@Req() req: Request, @Res({ passthrough: true }) res: Response) {

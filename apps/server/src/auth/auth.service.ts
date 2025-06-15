@@ -69,6 +69,31 @@ export class AuthService {
     };
   }
 
+  async demoLogin(email: string, password: string, expiresTime?: number) {
+    if (!email || !password) {
+      throw new BadRequestException('Email and password are required');
+    }
+    if (password.length < 6) {
+      throw new BadRequestException('Password must be at least 6 characters');
+    }
+
+    const user = await this.userService.findOneByEmailWithPassword(email);
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      throw new BadRequestException('Email or password is incorrect');
+    }
+    const roles = await this.userService.getUserRoles(user.id);
+    const { password: dbPassword, ...reset } = user;
+    const userId = user.id;
+
+    const accessToken = this.generateAccessToken(user.id, roles, expiresTime);
+
+    return {
+      user: reset,
+      roles,
+      accessToken,
+    };
+  }
+
   async refresh(token: string) {
     if (!token) {
       throw new BadRequestException('No refresh token found');
@@ -118,7 +143,7 @@ export class AuthService {
     await this.userService.updatePassword(verifyUser.id, password);
   }
 
-  private generateAccessToken(id: number, roles: any[]) {
+  private generateAccessToken(id: number, roles: any[], expiresTime?: number) {
     const payload: JwtPayload = {
       sub: id,
       roles: roles.map(r => r.name),
@@ -126,7 +151,7 @@ export class AuthService {
     };
     return this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
-      expiresIn: '15m',
+      expiresIn: expiresTime ? expiresTime : '15m',
     });
   }
   
