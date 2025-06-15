@@ -22,7 +22,6 @@ model User {
   poetry        Poetry[]
   comments      Comment[]
   poetryLists   PoetryList[]
-  poetryListItems PoetryListItem[]
   submittedAuthors Author[]      @relation("AuthorSubmitter")
   likes         Like[]
   bookmarks     Bookmark[]
@@ -141,7 +140,6 @@ model Poetry {
   likes       Like[]          @relation("PoetryLikes")
   bookmarks   Bookmark[]      @relation("PoetryBookmarks")
   comments    Comment[]       @relation("PoetryComments")
-  listItems   PoetryListItem[]
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
 
@@ -156,7 +154,6 @@ model PoetryList {
   isPublic    Boolean         @default(true)
   creator     User            @relation(fields: [creatorId], references: [id])
   creatorId   Int
-  items       PoetryListItem[]
   likes       Like[]          @relation("PoetryListLikes")
   bookmarks   Bookmark[]      @relation("PoetryListBookmarks")
   comments    Comment[]       @relation("PoetryListComments")
@@ -172,13 +169,8 @@ model PoetryList {
 // poetry 列表项
 model PoetryListItem {
   id         Int        @id @default(autoincrement())
-  list       PoetryList @relation(fields: [listId], references: [id], onDelete: Cascade)
   listId     Int
-  poetry     Poetry     @relation(fields: [poetryId], references: [id], onDelete: Cascade)
   poetryId   Int
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int
-  note       String?
   order      Int        @default(0)  // 用于自定义排序
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
@@ -186,7 +178,6 @@ model PoetryListItem {
   @@unique([listId, poetryId])
   @@index([listId])
   @@index([poetryId])
-  @@index([userId])
 }
 
 enum TargetType {

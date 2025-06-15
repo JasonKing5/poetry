@@ -8,8 +8,8 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "db:generate": "pnpm dlx prisma generate",
-    "db:push": "pnpm dlx prisma db push",
+    "db:generate": "npx prisma generate",
+    "db:push": "npx prisma db push",
     "db:seed": "ts-node ./prisma/seed.ts",
     "start": "nest start",
     "dev": "nest start --watch",

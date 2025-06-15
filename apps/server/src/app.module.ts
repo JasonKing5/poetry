@@ -8,9 +8,10 @@ import { PoetryPropModule } from './poetry-prop/poetry-prop.module';
 import { MailModule } from './mail/mail.module';
 import { AuthorModule } from './author/author.module';
 import { LikeModule } from './like/like.module';
+import { PoetryListModule } from './poetry-list/poetry-list.module';
 
 @Module({
-  imports: [UserModule, AuthModule, PoetryModule, PoetryPropModule, MailModule, AuthorModule, LikeModule],
+  imports: [UserModule, AuthModule, PoetryModule, PoetryPropModule, MailModule, AuthorModule, LikeModule, PoetryListModule],
   controllers: [AppController],
   providers: [AppService],
 })

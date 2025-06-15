@@ -14,4 +14,7 @@ export enum PermissionEnum {
   UPDATE_AUTHOR = 'updateAuthor',
   VIEW_DETAIL_AUTHOR = 'viewDetailAuthor',
   VIEW_AUTHOR = 'viewAuthor',
+  CREATE_POETRY_LIST = "createPoetryList",
+  UPDATE_POETRY_LIST = "updatePoetryList",
+  DELETE_POETRY_LIST = "deletePoetryList",
 }

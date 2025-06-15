@@ -249,6 +249,25 @@ async function main() {
     create: { name: 'viewUser' },
   });
 
+  console.log('Start seed poetry list permission')
+  const createPoetryListPermission = await prisma.permission.upsert({
+    where: { name: 'createPoetryList' },
+    update: {},
+    create: { name: 'createPoetryList' },
+  });
+
+  const updatePoetryListPermission = await prisma.permission.upsert({
+    where: { name: 'updatePoetryList' },
+    update: {},
+    create: { name: 'updatePoetryList' },
+  });
+
+  const deletePoetryListPermission = await prisma.permission.upsert({
+    where: { name: 'deletePoetryList' },
+    update: {},
+    create: { name: 'deletePoetryList' },
+  });
+
   console.log('Start seed role permission')
   await prisma.rolePermission.createMany({
     data: [
@@ -257,6 +276,9 @@ async function main() {
       { roleId: adminRole.id, permissionId: updateUserPermission.id },
       { roleId: adminRole.id, permissionId: viewDetailUserPermission.id },
       { roleId: adminRole.id, permissionId: viewUserPermission.id },
+      { roleId: adminRole.id, permissionId: createPoetryListPermission.id },
+      { roleId: adminRole.id, permissionId: updatePoetryListPermission.id },
+      { roleId: adminRole.id, permissionId: deletePoetryListPermission.id },
     ],
     skipDuplicates: true,
   });
@@ -265,6 +287,9 @@ async function main() {
     data: [
       { roleId: userRole.id, permissionId: updateUserPermission.id },
       { roleId: userRole.id, permissionId: viewDetailUserPermission.id },
+      { roleId: userRole.id, permissionId: createPoetryListPermission.id },
+      { roleId: userRole.id, permissionId: updatePoetryListPermission.id },
+      { roleId: userRole.id, permissionId: deletePoetryListPermission.id },
     ],
     skipDuplicates: true,
   });
