@@ -215,15 +215,19 @@ model Like {
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int
   targetType  TargetType
-  targetId    Int
-  poetry      Poetry?     @relation("PoetryLikes", fields: [targetId], references: [id], onDelete: Cascade, map: "like_poetry_fk")
-  poetryList  PoetryList? @relation("PoetryListLikes", fields: [targetId], references: [id], onDelete: Cascade, map: "like_poetry_list_fk")
-  comment     Comment?    @relation("CommentLikes", fields: [targetId], references: [id], onDelete: Cascade, map: "like_comment_fk")
+  poetryId    Int?
+  poetryListId Int?
+  commentId   Int?
+  poetry      Poetry?     @relation("PoetryLikes", fields: [poetryId], references: [id], onDelete: Cascade, map: "like_poetry_fk")
+  poetryList  PoetryList? @relation("PoetryListLikes", fields: [poetryListId], references: [id], onDelete: Cascade, map: "like_poetry_list_fk")
+  comment     Comment?    @relation("CommentLikes", fields: [commentId], references: [id], onDelete: Cascade, map: "like_comment_fk")
   createdAt   DateTime    @default(now())
 
-  @@unique([userId, targetType, targetId])
+  @@unique([userId, targetType, poetryId, poetryListId, commentId])
   @@index([userId])
-  @@index([targetType, targetId])
+  @@index([targetType, poetryId])
+  @@index([targetType, poetryListId])
+  @@index([targetType, commentId])
 }
 
 enum BookmarkTargetType {
