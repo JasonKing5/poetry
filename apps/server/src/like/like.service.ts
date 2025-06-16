@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
 import { PrismaService } from '../../prisma/prisma.service';
@@ -169,19 +169,61 @@ export class LikeService {
     return this.prisma.like.findUnique({ where: { id } });
   }
 
-  update(id: number, updateLikeDto: UpdateLikeDto, userId: number | undefined) {
+  async update(id: number, updateLikeDto: UpdateLikeDto, userId: number | undefined) {
     if (!Object.values(TargetType).includes(updateLikeDto.targetType as TargetType)) {
       throw new Error(`Invalid targetType: ${updateLikeDto.targetType}`);
     }
     if (!userId) {
       throw new Error('User not found');
     }
-    return this.prisma.like.update({ where: { id }, data: {
-      ...updateLikeDto,
+  
+    // Prepare the update data
+    const updateData: any = {
       targetType: updateLikeDto.targetType as TargetType,
-      targetId: Number(updateLikeDto.targetId),
       userId,
-    } });
+    };
+  
+    // Set the appropriate ID field based on target type
+    const targetId = Number(updateLikeDto.targetId);
+    switch (updateLikeDto.targetType) {
+      case 'POETRY':
+        updateData.poetryId = targetId;
+        break;
+      case 'LIST':
+        updateData.poetryListId = targetId;
+        break;
+      case 'COMMENT':
+        updateData.commentId = targetId;
+        break;
+      default:
+        throw new Error(`Unsupported target type: ${updateLikeDto.targetType}`);
+    }
+  
+    // First, get the existing like to ensure it exists
+    const existingLike = await this.prisma.like.findUnique({
+      where: { id },
+    });
+  
+    if (!existingLike) {
+      throw new NotFoundException(`Like with ID ${id} not found`);
+    }
+  
+    // Check if a like with the new target already exists
+    const existingLikeForTarget = await this.findExistingLike(
+      userId,
+      updateData.targetType,
+      targetId
+    );
+  
+    if (existingLikeForTarget && existingLikeForTarget.id !== id) {
+      throw new BadRequestException('You have already liked this target');
+    }
+  
+    // Update the like
+    return this.prisma.like.update({
+      where: { id },
+      data: updateData,
+    });
   }
 
   remove(id: number) {
