@@ -9,7 +9,9 @@ export function useAuth() {
   // 登出函数
   const logout = async () => {
     try {
-      await http.post('/auth/signout');
+      await http.post('/auth/logout');
+      console.log('Logout success');
+      window.location.href = '/login';
     } catch (error) {
       console.error('Logout failed:', error);
     } finally {

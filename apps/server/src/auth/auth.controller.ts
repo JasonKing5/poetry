@@ -78,6 +78,28 @@ export class AuthController {
     }
   }
 
+  @Post('logout')
+  async logout(
+    @Res({ passthrough: true }) res: Response
+  ) {
+    // 清除 httpOnly cookie
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+    });
+    
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+    });
+    
+    return { success: true };
+  }
+
   @Post('reset/email')
   @Public()
   async sendEmail(@Body() body: { email: string }) {
