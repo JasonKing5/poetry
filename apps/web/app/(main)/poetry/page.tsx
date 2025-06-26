@@ -19,7 +19,6 @@ import { useAllAuthors } from '@/services/author.service';
 import { withLoadingError } from '@/components/withLoadingError';
 import PoetryCard from '@/components/PoetryCard';
 import { useAllTags } from '@/services/poetry-prop.service';
-import { getUserId } from '@/lib/utils';
 
 const { POETRY_TYPE_MAP, DYNASTY_MAP } = constants;
 
@@ -116,7 +115,6 @@ function PoetryPageContent() {
     submitter,
     author: author ? Number(author) : undefined,
     status,
-    currentUserId: getUserId(),
   });
   const { data, element } = withLoadingError(poetryListRes);
 

@@ -40,12 +40,12 @@ export class PoetryController {
       status, 
       page = 1, 
       pageSize = 20,
-      currentUserId 
     } = query;
 
     // Parse pagination parameters
     const pageNum = typeof page === 'string' ? parseInt(page, 10) : page;
     const pageSizeNum = typeof pageSize === 'string' ? parseInt(pageSize, 10) : pageSize;
+    console.log('poetry findAll:', req.user);
     
     return await this.poetryService.findAll(
       title, 
@@ -58,7 +58,7 @@ export class PoetryController {
       status, 
       isNaN(pageNum) ? 1 : pageNum, 
       isNaN(pageSizeNum) ? 20 : Math.min(pageSizeNum, 100),
-      Number(currentUserId)
+      req.user?.id
     );
   }
 
