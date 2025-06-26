@@ -11,6 +11,7 @@ import { useGet } from '@/lib/request'
   submitter?: string;
   author?: number;
   status?: string;
+  currentUserId?: number | null;
  }
 
 export const usePoetryList = (params: GetPoetryListProps) => {

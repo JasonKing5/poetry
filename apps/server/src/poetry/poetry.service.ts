@@ -20,6 +20,7 @@ export class PoetryService {
     source: true,
     status: true,
     dynasty: true,
+    content: true,
     submitter: {
       select: {
         id: true,
@@ -34,7 +35,6 @@ export class PoetryService {
 
   private SELECT_POETRY_FULL = {
     ...this.SELECT_POETRY_BASE,
-    content: true,
   };
 
   /**

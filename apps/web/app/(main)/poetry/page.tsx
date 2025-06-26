@@ -18,6 +18,8 @@ import { usePoetryList } from '@/services/poetry.service';
 import { useAllAuthors } from '@/services/author.service';
 import { withLoadingError } from '@/components/withLoadingError';
 import PoetryCard from '@/components/PoetryCard';
+import { useAllTags } from '@/services/poetry-prop.service';
+import { getUserId } from '@/lib/utils';
 
 const { POETRY_TYPE_MAP, DYNASTY_MAP } = constants;
 
@@ -35,10 +37,10 @@ export type PoetryProps = {
   tags: string[];
   content: string[];
   author: Author;
-  _count?: {
-    likes: number;
+  likes?: {
+    count: number;
+    isLiked: boolean;
   };
-  isLiked?: boolean;
 };
 
 // API response type
@@ -114,6 +116,7 @@ function PoetryPageContent() {
     submitter,
     author: author ? Number(author) : undefined,
     status,
+    currentUserId: getUserId(),
   });
   const { data, element } = withLoadingError(poetryListRes);
 
@@ -273,8 +276,8 @@ function PoetryPageContent() {
                 dynasty={poetry.dynasty}
                 tags={poetry.tags}
                 content={getShortContent(poetry.content, 8)}
-                likesCount={poetry._count?.likes || 0}
-                isLiked={poetry.isLiked || false}
+                likesCount={poetry.likes?.count || 0}
+                isLiked={poetry.likes?.isLiked || false}
               />
             </li>
           ))
