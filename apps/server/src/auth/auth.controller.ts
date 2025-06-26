@@ -40,6 +40,8 @@ export class AuthController {
     });
 
     return {
+      token: accessToken,
+      refreshToken,
       user,
       roles,
     };
@@ -71,6 +73,9 @@ export class AuthController {
       sameSite: 'lax',
       maxAge: 1000 * 60 * 15, // 15 min
     });
+    return {
+      token: accessToken,
+    }
   }
 
   @Post('reset/email')

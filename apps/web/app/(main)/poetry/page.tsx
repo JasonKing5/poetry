@@ -1,14 +1,10 @@
 'use client';
 
-import { usePoetryStore } from '@/store/poetryStore';
-import { usePoetryList } from '@/services/poetry.service';
-import { useAllAuthors } from '@/services/author.service';
-import { useAllTags } from '@/services/poetry-prop.service';
+import { useState, useEffect, Suspense, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { constants } from '@repo/common';
-import { useState } from "react";
-import { useRef } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -16,24 +12,42 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"
-import { Author, Poetry } from '@repo/types';
+} from "@/components/ui/pagination";
+import { usePoetryStore } from '@/store/poetryStore';
+import { usePoetryList } from '@/services/poetry.service';
+import { useAllAuthors } from '@/services/author.service';
 import { withLoadingError } from '@/components/withLoadingError';
-
 import PoetryCard from '@/components/PoetryCard';
-
-import { Suspense, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
 
 const { POETRY_TYPE_MAP, DYNASTY_MAP } = constants;
 
-export type PoetryProps = Poetry & {
- author: Author,
+// Author type
+type Author = {
+  id: number;
+  name: string;
 };
 
+// Poetry props type
+export type PoetryProps = {
+  id: number;
+  title: string;
+  dynasty: string;
+  tags: string[];
+  content: string[];
+  author: Author;
+  _count?: {
+    likes: number;
+  };
+  isLiked?: boolean;
+};
+
+// API response type
 export type PoetryListResponse = {
   list: PoetryProps[];
   total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
 };
 
 function FilterRow({ label, items, allSelected, onAllClick }: { label: string, items: any[], allSelected: boolean, onAllClick: () => void}) {
@@ -250,7 +264,7 @@ function PoetryPageContent() {
       </div>
       <ul className="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {element ? element : (data as PoetryListResponse)?.list?.length > 0 ? (
-          ((data as PoetryListResponse)?.list as PoetryProps[]).map((poetry) => (
+          (data as PoetryListResponse)?.list.map((poetry) => (
             <li className="w-full" key={poetry.id}>
               <PoetryCard
                 id={poetry.id}
@@ -259,6 +273,8 @@ function PoetryPageContent() {
                 dynasty={poetry.dynasty}
                 tags={poetry.tags}
                 content={getShortContent(poetry.content, 8)}
+                likesCount={poetry._count?.likes || 0}
+                isLiked={poetry.isLiked || false}
               />
             </li>
           ))

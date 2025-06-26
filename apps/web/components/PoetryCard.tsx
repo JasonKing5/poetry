@@ -1,12 +1,22 @@
 'use client'
 
-import React from 'react';
+import { useState } from 'react';
 import { constants } from '@repo/common';
 import { useRouter } from "next/navigation"
 import { Heart } from 'lucide-react';
 import { useCreateLike } from '@/services/like.service';
+import { cn, getUserId } from '@/lib/utils';
 
 const { DYNASTY_MAP } = constants;
+
+// Local type for target type
+const TargetType = {
+  POETRY: 'POETRY',
+  POETRY_LIST: 'POETRY_LIST',
+  COMMENT: 'COMMENT',
+} as const;
+
+type TargetType = typeof TargetType[keyof typeof TargetType];
 
 interface PoetryCardProps {
   id: number;
@@ -15,11 +25,38 @@ interface PoetryCardProps {
   dynasty: string;
   tags: string[];
   content?: string[];
+  likesCount?: number;
+  isLiked?: boolean;
 }
 
-export default function PoetryCard({ id, title, author, dynasty, tags, content }: PoetryCardProps) {
+export default function PoetryCard({ 
+  id, 
+  title, 
+  author, 
+  dynasty, 
+  tags, 
+  content, 
+  likesCount = 0,
+  isLiked: initialIsLiked = false 
+}: PoetryCardProps) {
   const navigate = useRouter()
   const { mutate: likePoetryMutate } = useCreateLike();
+  const [isLiked, setIsLiked] = useState(initialIsLiked);
+  const [localLikesCount, setLocalLikesCount] = useState(likesCount);
+
+  const handleLike = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const newIsLiked = !isLiked;
+    setIsLiked(newIsLiked);
+    setLocalLikesCount(prev => newIsLiked ? prev + 1 : Math.max(0, prev - 1));
+    
+    likePoetryMutate({ 
+      targetType: TargetType.POETRY, 
+      targetId: String(id), 
+      userId: getUserId() 
+    });
+  }
+
   return (
     <div
       className="relative rounded-xl shadow-lg mb-4 border border-[#e5e7eb] overflow-hidden poetry-bg-animate"
@@ -58,7 +95,21 @@ export default function PoetryCard({ id, title, author, dynasty, tags, content }
             ))}
           </div>
           <div className="flex items-center gap-2">
-            <Heart className="w-4 h-4 text-[#2563eb]" size={24} color="#2563eb" onClick={() => likePoetryMutate({ targetType: 'POETRY', targetId: String(id) })} />
+            <div 
+              className="flex items-center gap-1 p-1 rounded hover:bg-gray-100"
+              onClick={handleLike}
+            >
+              <Heart 
+                className={cn(
+                  'w-4 h-4 cursor-pointer',
+                  isLiked ? 'text-red-500 fill-current' : 'text-gray-400 hover:text-red-300'
+                )} 
+                size={20}
+              />
+              {localLikesCount > 0 && (
+                <span className="text-sm text-gray-600">{localLikesCount}</span>
+              )}
+            </div>
           </div>
         </div>
       </div>

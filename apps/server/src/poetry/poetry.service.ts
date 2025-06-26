@@ -27,6 +27,7 @@ export class PoetryService {
         email: true,
       },
     },
+    likes: true,
     createdAt: true,
     updatedAt: true,
   };
@@ -48,7 +49,19 @@ export class PoetryService {
    * @param page 当前页码（从1开始）
    * @param pageSize 每页条数
    */
-  async findAll(title?: string, type?: PoetryType, tags?: string[], source?: string, dynasty?: Dynasty, submitter?: number, author?: string, status?: PoetryStatus, page: number = 1, pageSize: number = 20) {
+  async findAll(
+    title?: string, 
+    type?: PoetryType, 
+    tags?: string[], 
+    source?: string, 
+    dynasty?: Dynasty, 
+    submitter?: number, 
+    author?: string, 
+    status?: PoetryStatus, 
+    page: number = 1, 
+    pageSize: number = 20,
+    currentUserId?: number
+  ) {
     const where: any = {};
     if (type) where.type = type;
     if (title) where.title = { contains: title };
@@ -64,17 +77,34 @@ export class PoetryService {
     // 校正分页参数
     const take = Math.max(1, Math.min(pageSize, 100));
     const skip = Math.max(0, (page - 1) * take);
-    return {
-      total: await this.prisma.poetry.count({ where }),
-      list: await this.prisma.poetry.findMany({
+    const [total, list] = await Promise.all([
+      this.prisma.poetry.count({ where }),
+      this.prisma.poetry.findMany({
         where,
         take,
         skip,
-        orderBy: {
-          id: 'asc',
-        },
-        select: this.SELECT_POETRY_FULL,
+        orderBy: { id: 'asc' },
+        select: this.SELECT_POETRY_BASE,
       }),
+    ]);
+
+    const isLiked = (likes: any) => likes.some((like: any) => like.userId === currentUserId);
+
+    // Format response
+    const formattedList = list.map(poetry => ({
+      ...poetry,
+      likes: {
+        count: poetry.likes.length || 0,
+        isLiked: isLiked(poetry.likes),
+      }
+    }));
+
+    return {
+      total,
+      list: formattedList,
+      page,
+      pageSize,
+      totalPages: Math.ceil(total / pageSize)
     };
   }
 
