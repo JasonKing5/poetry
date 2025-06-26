@@ -88,15 +88,23 @@ export default function PoetryCard({
             ))}
           </div>
         )}
-        <div className="flex flex-wrap gap-2 mt-2 justify-between">
-          <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap items-start gap-2 mt-2 justify-between">
+          <div className="flex flex-wrap items-center gap-2 flex-1 min-h-[40px]">
             {tags.map(tag => (
-              <span key={tag} className="bg-[#e5ebe7] text-[#4b5e53] text-xs px-2 py-0.5 rounded">{tag}</span>
+              <span 
+                key={tag} 
+                className="bg-[#e5ebe7] text-[#4b5e53] text-xs px-2 py-0.5 rounded"
+              >
+                {tag}
+              </span>
             ))}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-start">
+          <div 
+            className="flex flex-col items-center p-1 min-w-[40px]"
+          >
             <div 
-              className="flex items-center gap-1 p-1 rounded hover:bg-gray-100"
+              className="flex items-center justify-center w-6 h-6 rounded hover:bg-gray-100"
               onClick={handleLike}
             >
               <Heart 
@@ -106,10 +114,11 @@ export default function PoetryCard({
                 )} 
                 size={20}
               />
-              {localLikesCount > 0 && (
-                <span className="text-sm text-gray-600">{localLikesCount}</span>
-              )}
             </div>
+            <span className="text-xs text-gray-600 leading-none mt-0.5">
+              {localLikesCount}
+            </span>
+          </div>
           </div>
         </div>
       </div>
