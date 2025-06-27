@@ -23,14 +23,7 @@ interface AppLayoutProps {
 
 export default function AppLayout({ children }: AppLayoutProps) {
   const pathname = usePathname();
-  const { user, clearUser, isAuthenticated } = useAuth();
-  const [showAdminLink, setShowAdminLink] = useState(false);
-
-  useEffect(() => {
-    console.log('useeffect isAdmin', user);
-    const isAdmin = user?.roles?.some(r => r === 'admin') || false;
-    setShowAdminLink(isAdmin);
-  }, [user]);
+  const { user, clearUser, isAuthenticated, isAdmin } = useAuth();
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -84,7 +77,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           >
             我的
           </Link>
-          {showAdminLink && (
+          {isAdmin && (
             <Link
               href="/admin"
               className={cn(

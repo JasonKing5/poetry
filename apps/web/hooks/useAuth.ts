@@ -32,6 +32,7 @@ export function useAuth() {
   return {
     user: user || null,
     isAuthenticated: !!user,
+    isAdmin: user?.roles?.includes('admin') || false,
     setUser,
     clearUser: logout,
     isLoading,
