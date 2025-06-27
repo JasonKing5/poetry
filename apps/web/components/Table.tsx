@@ -10,33 +10,12 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Author } from '@repo/types';
 
-export const columns: ColumnDef<Author>[] = [
-  {
-    accessorKey: "id",
-    header: "ID",
-    cell: ({ row }) => <div>{row.getValue("id")}</div>,
-  },
-  {
-    accessorKey: "name",
-    header: "姓名",
-    cell: ({ row }) => <div>{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "description",
-    header: "描述",
-    cell: ({ row }) => (
-      <div className="max-w-[200px] sm:max-w-[300px] md:max-w-[400px] lg:max-w-[500px] xl:max-w-[600px] 2xl:max-w-[800px] truncate">
-        {row.getValue("description")}
-      </div>
-    ),
-  },
-]
-
-interface AuthorTableProps {
+interface TableProps {
   data: Author[]
+  columns: ColumnDef<Author>[]
 }
 
-export default function AuthorTable({ data = [] }: AuthorTableProps) {
+export default function IfsTable({ data = [], columns = [] }: TableProps) {
   const table = useReactTable({
     data: data || [],
     columns,

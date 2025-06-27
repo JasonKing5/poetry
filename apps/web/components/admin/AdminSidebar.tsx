@@ -51,7 +51,6 @@ export function AdminSidebar() {
           </div>
           <nav className="mt-2 flex-1 space-y-1 px-2">
             {navItems.map((item) => {
-              console.log('item:', item, item.href, pathname);
               const isActive = pathname === item.href;
 
               return (
