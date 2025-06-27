@@ -28,14 +28,19 @@ const navItems: NavItem[] = [
     icon: <Users className="h-5 w-5" />,
   },
   {
-    name: '作者管理',
-    href: '/admin/author',
-    icon: <BookOpen className="h-5 w-5" />,
-  },
-  {
     name: '诗词管理',
     href: '/admin/poetry',
     icon: <BarChart3 className="h-5 w-5" />,
+  },
+  {
+    name: '诗单管理',
+    href: '/admin/poetry-list',
+    icon: <BarChart3 className="h-5 w-5" />,
+  },
+  {
+    name: '作者管理',
+    href: '/admin/author',
+    icon: <BookOpen className="h-5 w-5" />,
   },
 ];
 
