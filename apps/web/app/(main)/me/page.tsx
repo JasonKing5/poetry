@@ -1,40 +1,56 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { RequireAuth } from '@/components/RequireAuth';
 import { useAllLikes } from '@/services/like.service';
-import { Like } from '@repo/types';
+import { Like, Poetry, Author } from '@repo/types';
+import { withLoadingError } from '@/components/withLoadingError';
+import PoetryCard from '@/components/PoetryCard';
 
 export default function MePage() {
   const { isAuthenticated, user } = useAuth();
-  const { data: likesPage } = useAllLikes({ currentUser: true });
+  const { data: likesPage, element: likesLoadingElement } = withLoadingError(useAllLikes({ currentUser: true }));
 
+  if (likesLoadingElement) {
+    return likesLoadingElement;
+  }
   if (!isAuthenticated) {
     return <RequireAuth children={<></>} />;
   }
 
   return (
-    <div className="flex items-center gap-2 w-full">
-      {/* 我喜欢的诗词作品列表 */}
-      <div className="w-full">
-        <h2 className="text-2xl font-bold tracking-tight">我喜欢的诗词作品</h2>
-        <ul className="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {likesPage?.list?.map((like: Like) => (
-            <li key={like.id}>
-              <div className="bg-white rounded-lg shadow-sm px-4 py-3 mb-6 border border-gray-100">
-                <h3 className="text-lg font-semibold mb-2">诗词作品 {like.id}</h3>
-                <p className="text-gray-600">描述信息</p>
-              </div>
-            </li>
-          ))}
-        </ul> 
+    <div className="flex items-center justify-center gap-2 w-full">
+      <div className="max-w-5xl w-full">
+        {/* 我喜欢的诗词作品列表 */}
+        <div className="w-full">
+          <h2 className="text-2xl font-bold tracking-tight mb-4">我喜欢的诗词作品</h2>
+          <ul className="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {likesPage?.list?.length > 0 ? (
+              likesPage?.list.map((like: Like & { poetry: Poetry & { author: Author } }) => (
+                <li className="w-full" key={like.id}>
+                  <PoetryCard
+                    id={like.poetry?.id}
+                    mode="simple"
+                    title={like.poetry?.title}
+                    author={String(like.poetry?.author?.name)}
+                    dynasty={like.poetry?.dynasty}
+                    tags={like.poetry?.tags}
+                    // content={getShortContent(like.poetry?.content, 8)}
+                    // likesCount={like.poetry?.likes?.count || 0}
+                    // isLiked={like.poetry?.likes?.isLiked || false}
+                  />
+                </li>
+              ))
+            ) : <div className='min-h-40 flex justify-center items-center'>无结果</div>
+          }
+          </ul> 
+        </div>
+        {/* 我喜欢的诗词作者列表 */}
+        
+        {/* 我发布的诗词作品列表 */}
+        
+        {/* 我创建的诗词单子列表 */}
       </div>
-      {/* 我喜欢的诗词作者列表 */}
-      
-      {/* 我发布的诗词作品列表 */}
-      
-      {/* 我创建的诗词单子列表 */}
       
     </div>
   );

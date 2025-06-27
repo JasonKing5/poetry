@@ -20,6 +20,7 @@ type TargetType = typeof TargetType[keyof typeof TargetType];
 
 interface PoetryCardProps {
   id: number;
+  mode?: 'simple' | 'full';
   title: string;
   author: string;
   dynasty: string;
@@ -30,7 +31,8 @@ interface PoetryCardProps {
 }
 
 export default function PoetryCard({ 
-  id, 
+  id,
+  mode = 'full',
   title, 
   author, 
   dynasty, 
@@ -71,7 +73,7 @@ export default function PoetryCard({
         backgroundSize: 'cover',
         zIndex: 1
       }} />
-      <div className="relative p-6 z-10">
+      {mode === 'full' && <div className="relative p-6 z-10">
         <div className="flex flex-col items-start mb-2">
         <div
           className="text-lg font-bold text-[#374151] mr-2 cursor-pointer transition hover:text-[#2563eb]"
@@ -121,7 +123,18 @@ export default function PoetryCard({
           </div>
           </div>
         </div>
-      </div>
+      </div>}
+      {mode === 'simple' && <div className="relative p-6 z-10">
+        <div className="flex flex-row items-center gap-2 justify-between">
+        <div
+          className="text-lg font-bold text-[#374151] mr-2 cursor-pointer transition hover:text-[#2563eb] flex-1 truncate"
+          onClick={() => navigate.push(`/poetry/${id}`)}
+        >
+          {title}
+        </div>
+        <div className="text-sm text-gray-500 flex flex-row items-center gap-2">{author} · {DYNASTY_MAP[dynasty as keyof typeof DYNASTY_MAP]}</div>
+        </div>
+      </div>}
       {/* 动态渐变动画 */}
       <style jsx>{`
         .poetry-bg-animate {

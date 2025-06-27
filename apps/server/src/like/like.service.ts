@@ -8,7 +8,7 @@ import { TargetType } from '@prisma/client';
 export class LikeService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createLikeDto: CreateLikeDto) {
+  async create(createLikeDto: CreateLikeDto, userId: number) {
     console.log('like service createLikeDto', createLikeDto);
     
     // 验证 targetType 是否有效
@@ -18,7 +18,7 @@ export class LikeService {
 
     // 验证用户是否存在
     const user = await this.prisma.user.findUnique({
-      where: { id: Number(createLikeDto.userId) },
+      where: { id: userId },
     });
     if (!user) {
       throw new NotFoundException('User not found');
@@ -117,7 +117,7 @@ export class LikeService {
     }
   }
 
-  async findAll(targetType?: TargetType, targetId?: number, page: number = 1, pageSize: number = 20, userId?: number) {
+  async findAll(targetType?: TargetType, targetId?: number, page: number = 1, pageSize: number = 20, userId?: number, currentUser?: boolean) {
     const skip = (page - 1) * pageSize;
     const where: any = {};
   
@@ -137,17 +137,41 @@ export class LikeService {
       }
     }
   
-    if (userId) {
+    if (!userId) {
+      return {
+        list: [],
+        total: 0,
+        page,
+        pageSize,
+        totalPages: 0,
+      };
+    }
+
+    if (currentUser) {
       where.userId = userId;
     }
-  
-    const [items, total] = await Promise.all([
+
+    const [list, total] = await Promise.all([
       this.prisma.like.findMany({
         where,
         skip,
         take: pageSize,
         include: {
-          user: true,
+          poetry: {
+            select: {
+              id: true,
+              title: true,
+              authorId: true,
+              dynasty: true,
+              tags: true,
+              author: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
         },
         orderBy: {
           createdAt: 'desc',
@@ -157,7 +181,7 @@ export class LikeService {
     ]);
   
     return {
-      items,
+      list,
       total,
       page,
       pageSize,
