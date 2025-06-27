@@ -12,7 +12,7 @@ const { DYNASTY_MAP } = constants;
 // Local type for target type
 const TargetType = {
   POETRY: 'POETRY',
-  POETRY_LIST: 'POETRY_LIST',
+  LIST: 'LIST',
   COMMENT: 'COMMENT',
 } as const;
 
@@ -47,9 +47,8 @@ export default function PoetryListCard({
     setLocalLikesCount(prev => newIsLiked ? prev + 1 : Math.max(0, prev - 1));
     
     likePoetryMutate({ 
-      targetType: TargetType.POETRY, 
-      targetId: String(id), 
-      userId: getUserId() 
+      targetType: TargetType.LIST, 
+      targetId: String(id),
     });
   }
 

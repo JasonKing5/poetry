@@ -13,7 +13,7 @@ export class LikeService {
     
     // 验证 targetType 是否有效
     if (!Object.values(TargetType).includes(createLikeDto.targetType as TargetType)) {
-      throw new Error(`Invalid targetType: ${createLikeDto.targetType}`);
+      throw new BadRequestException(`Invalid targetType: ${createLikeDto.targetType}`);
     }
 
     // 验证用户是否存在
