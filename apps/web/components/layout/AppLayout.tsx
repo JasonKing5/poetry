@@ -1,13 +1,12 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { useHasPermission } from '@/hooks/useHasPermission';
 import { Settings, LogOut } from 'lucide-react';
 import {
   DropdownMenu,
@@ -23,9 +22,15 @@ interface AppLayoutProps {
 }
 
 export default function AppLayout({ children }: AppLayoutProps) {
-  const isAdmin = useHasPermission('admin');
   const pathname = usePathname();
   const { user, clearUser, isAuthenticated } = useAuth();
+  const [showAdminLink, setShowAdminLink] = useState(false);
+
+  useEffect(() => {
+    console.log('useeffect isAdmin', user);
+    const isAdmin = user?.roles?.some(r => r === 'admin') || false;
+    setShowAdminLink(isAdmin);
+  }, [user]);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -79,7 +84,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           >
             我的
           </Link>
-          {isAdmin && (
+          {showAdminLink && (
             <Link
               href="/admin"
               className={cn(

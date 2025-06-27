@@ -10,17 +10,19 @@ type AdminLayoutProps = {
 };
 
 export function AdminLayout({ children }: AdminLayoutProps) {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
+    if (isLoading) return;
+    
     if (!isAuthenticated) {
       router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
     } else if (!user?.roles?.includes('admin')) {
       router.push('/unauthorized');
     }
-  }, [user, router, pathname]);
+  }, [user, router, pathname, isLoading]);
 
   return (
     <div className="flex h-full">
