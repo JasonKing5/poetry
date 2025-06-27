@@ -8,11 +8,11 @@ import {
   getCoreRowModel,
 } from "@tanstack/react-table"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Author } from '@repo/types';
+import { Author, User } from '@repo/types';
 
 interface TableProps {
-  data: Author[]
-  columns: ColumnDef<Author>[]
+  data: Author[] | User[]
+  columns: ColumnDef<Author | User>[]
 }
 
 export default function IfsTable({ data = [], columns = [] }: TableProps) {

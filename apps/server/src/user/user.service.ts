@@ -7,7 +7,18 @@ import * as bcrypt from 'bcrypt';
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
-  private readonly SELECT_USER = { id: true, email: true, name: true, createdAt: true, updatedAt: true };
+  private readonly SELECT_USER = { 
+    id: true, 
+    email: true, 
+    name: true, 
+    createdAt: true, 
+    updatedAt: true, 
+    userRoles: {
+      include: {
+        role: true,
+      },
+    },
+  };
 
   async create(email: string, password: string, name?: string) {
     if (!email || !password) {
@@ -101,10 +112,13 @@ export class UserService {
     const where: Record<string, any> = {};
     if (email) where.email = email;
     if (name) where.name = name;
-    return await this.prisma.user.findMany({
-      where,
-      select: this.SELECT_USER
-    });
+    return {
+      list: await this.prisma.user.findMany({
+        where,
+        select: this.SELECT_USER
+      }),
+      total: await this.prisma.user.count({ where })
+    };
   }
   async findOne(id: number) {
     if (!id) {

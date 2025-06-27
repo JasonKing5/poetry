@@ -20,7 +20,6 @@ export class UserController {
 
   @Get()
   // @Roles(RoleEnum.ADMIN)
-  @Public()
   // @Permissions(PermissionEnum.VIEW_USER)
   async findAll(@Query() query: { email?: string, name?: string }) {
     return await this.userService.findAll(query.email, query.name);

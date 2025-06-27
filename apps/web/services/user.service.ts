@@ -28,8 +28,8 @@ export const useGetUser = (id: string) => {
   return useGet(`/users/${id}`);
 }
 
-export const useGetAllUsers = () => {
-  return useGet('/users');
+export const useGetAllUsers = (options: any) => {
+  return useGet('/users', options);
 }
 
 export const useUpdateUser = (id: string, user: any) => {
