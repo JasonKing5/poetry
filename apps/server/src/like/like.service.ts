@@ -124,16 +124,18 @@ export class LikeService {
     if (targetType) {
       where.targetType = targetType;
       // 根据目标类型设置对应的 ID 字段
-      switch (targetType) {
-        case 'POETRY':
-          where.poetryId = targetId;
-          break;
-        case 'LIST':
-          where.poetryListId = targetId;
-          break;
-        case 'COMMENT':
-          where.commentId = targetId;
-          break;
+      if (targetId) {
+        switch (targetType) {
+          case 'POETRY':
+            where.poetryId = targetId;
+            break;
+          case 'LIST':
+            where.poetryListId = targetId;
+            break;
+          case 'COMMENT':
+            where.commentId = targetId;
+            break;
+        }
       }
     }
   

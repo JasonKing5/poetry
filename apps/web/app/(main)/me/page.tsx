@@ -9,7 +9,7 @@ import PoetryCard from '@/components/PoetryCard';
 
 export default function MePage() {
   const { isAuthenticated, user } = useAuth();
-  const { data: likesPage, element: likesLoadingElement } = withLoadingError(useAllLikes({ currentUser: true }));
+  const { data: likesPage, element: likesLoadingElement } = withLoadingError(useAllLikes({ currentUser: true, targetType: 'POETRY' }));
 
   if (likesLoadingElement) {
     return likesLoadingElement;

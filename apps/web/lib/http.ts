@@ -13,22 +13,20 @@ const instance: AxiosInstance = axios.create({
 });
 
 let isRefreshing = false;
-let refreshQueue: ((token?: string) => void)[] = [];
+let refreshQueue: (() => void)[] = [];
 
-const processQueue = (token?: string) => {
-  refreshQueue.forEach((cb) => cb(token));
+const processQueue = () => {
+  refreshQueue.forEach((cb) => cb());
   refreshQueue = [];
 };
 
 const refreshToken = async () => {
   try {
     const res = await axios.post(`${API_BASE}/auth/refresh`, {}, { withCredentials: true });
-    if (res.status === 200 && res.data?.code === 0) {
-      console.log('axios res:', res.data, res)
-      return res.data;
-    } else {
-      throw new Error("Failed to refresh token");
+    if (res.status === 201) {
+      return;
     }
+    throw new Error("Failed to refresh token");
   } catch (err) {
     throw err;
   }
@@ -54,10 +52,8 @@ instance.interceptors.response.use(
         isRefreshing = true;
 
         try {
-          const data = await refreshToken();
-          console.log('axios refresh:', data)
-          const setUser = useUserStore.getState().setUser;
-          setUser(data.user);
+          await refreshToken();
+          // 处理队列中的请求并返回当前请求的新实例
           processQueue();
           return instance(originalRequest);
         } catch (err) {
@@ -71,7 +67,9 @@ instance.interceptors.response.use(
       }
 
       return new Promise((resolve) => {
-        refreshQueue.push(() => resolve(instance(originalRequest)));
+        refreshQueue.push(() => {
+          resolve(instance(originalRequest));
+        });
       });
     }
 

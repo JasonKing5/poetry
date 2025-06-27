@@ -29,7 +29,7 @@ export class AuthController {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 1000 * 60 * 15, // 15 min
+      maxAge: 1000 * 60 * 1, // 15 min
     });
 
     res.cookie('refreshToken', refreshToken, {
@@ -40,8 +40,6 @@ export class AuthController {
     });
 
     return {
-      token: accessToken,
-      refreshToken,
       user,
       roles,
     };
@@ -73,9 +71,6 @@ export class AuthController {
       sameSite: 'lax',
       maxAge: 1000 * 60 * 15, // 15 min
     });
-    return {
-      token: accessToken,
-    }
   }
 
   @Post('logout')
