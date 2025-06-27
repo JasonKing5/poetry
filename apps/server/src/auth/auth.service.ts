@@ -56,7 +56,6 @@ export class AuthService {
     }
     const roles = await this.userService.getUserRoles(user.id);
     const { password: dbPassword, ...reset } = user;
-    const userId = user.id;
 
     const accessToken = this.generateAccessToken(user.id, roles);
     const refreshToken = this.generateRefreshToken(user.id);
@@ -83,7 +82,6 @@ export class AuthService {
     }
     const roles = await this.userService.getUserRoles(user.id);
     const { password: dbPassword, ...reset } = user;
-    const userId = user.id;
 
     const accessToken = this.generateAccessToken(user.id, roles, expiresTime);
 
@@ -101,7 +99,9 @@ export class AuthService {
     const payload = this.jwtService.verify(token, {
       secret: process.env.JWT_REFRESH_SECRET,
     });
-    const accessToken = this.generateAccessToken(payload.sub, []); // 这里你也可以重新查角色
+
+    const roles = await this.userService.getUserRoles(payload.sub);
+    const accessToken = this.generateAccessToken(payload.sub, roles);
     return {
       accessToken,
     };
