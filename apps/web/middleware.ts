@@ -12,11 +12,11 @@ export function middleware(request: NextRequest) {
 
     try {
       const decoded = decodeJwt(token);
-      if (decoded.roles.some(r => r === 'admin')) {
-        return NextResponse.redirect(new URL('/', request.url));
+      if (!decoded.roles.some(r => r === 'admin')) {
+        return NextResponse.redirect(new URL('/unauthorized', request.url));
       }
     } catch (e) {
-      return NextResponse.redirect(new URL('/login', request.url));
+      return NextResponse.redirect(new URL('/unauthorized', request.url));
     }
   }
 

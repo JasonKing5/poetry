@@ -24,17 +24,11 @@ export const columns: ColumnDef<Author>[] = [
   {
     accessorKey: "description",
     header: "描述",
-    cell: ({ row }) => <div className="max-w-2xs truncate text-ellipsis">{row.getValue("description")}</div>,
-  },
-  {
-    accessorKey: "createdAt",
-    header: "创建时间",
-    cell: ({ row }) => <div>{row.getValue("createdAt")}</div>,
-  },
-  {
-    accessorKey: "updatedAt",
-    header: "更新时间",
-    cell: ({ row }) => <div>{row.getValue("updatedAt")}</div>,
+    cell: ({ row }) => (
+      <div className="max-w-[200px] sm:max-w-[300px] md:max-w-[400px] lg:max-w-[500px] xl:max-w-[600px] 2xl:max-w-[800px] truncate">
+        {row.getValue("description")}
+      </div>
+    ),
   },
 ]
 
@@ -42,9 +36,9 @@ interface AuthorTableProps {
   data: Author[]
 }
 
-export default function AuthorTable({ data }: AuthorTableProps) {
+export default function AuthorTable({ data = [] }: AuthorTableProps) {
   const table = useReactTable({
-    data,
+    data: data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
@@ -67,7 +61,7 @@ export default function AuthorTable({ data }: AuthorTableProps) {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows?.length > 0 ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
@@ -80,7 +74,7 @@ export default function AuthorTable({ data }: AuthorTableProps) {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  暂无数据
+                  {data.length === 0 ? '暂无数据' : '加载中...'}
                 </TableCell>
               </TableRow>
             )}

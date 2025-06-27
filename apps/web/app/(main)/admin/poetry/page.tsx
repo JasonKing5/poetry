@@ -1,13 +1,9 @@
-import { Metadata } from 'next';
+'use client'
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart3, Users, BookOpen, Settings } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: '控制台 - 管理后台',
-  description: '系统管理控制台',
-};
-
-export default function AdminDashboardPage() {
+export default function PoetryPage() {
   // 这里可以添加数据获取逻辑
   const stats = [
     { name: '总用户数11', value: '1,234', icon: Users },

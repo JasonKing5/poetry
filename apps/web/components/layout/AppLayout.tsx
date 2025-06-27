@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -26,7 +26,6 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const isAdmin = useHasPermission('admin');
   const pathname = usePathname();
   const { user, clearUser, isAuthenticated } = useAuth();
-  const router = useRouter();
 
   return (
     <div className="flex flex-col min-h-screen">
