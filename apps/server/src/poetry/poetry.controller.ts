@@ -45,7 +45,6 @@ export class PoetryController {
     // Parse pagination parameters
     const pageNum = typeof page === 'string' ? parseInt(page, 10) : page;
     const pageSizeNum = typeof pageSize === 'string' ? parseInt(pageSize, 10) : pageSize;
-    console.log('poetry findAll:', req.user);
     
     return await this.poetryService.findAll(
       title, 

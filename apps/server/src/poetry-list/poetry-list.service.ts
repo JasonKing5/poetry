@@ -10,21 +10,20 @@ export class PoetryListService {
   private SELECT_POETRY_LIST_BASE = {
     id: true,
     title: true,
-    description: true,
     creator: {
       select: {
         id: true,
         name: true,
-        email: true,
       },
     },
-    isPublic: true,
-    createdAt: true,
-    updatedAt: true,
   };
 
   private SELECT_POETRY_LIST_FULL = {
     ...this.SELECT_POETRY_LIST_BASE,
+    description: true,
+    isPublic: true,
+    createdAt: true,
+    updatedAt: true,
     items: {
       select: {
         poetry: {
@@ -45,7 +44,6 @@ export class PoetryListService {
               select: {
                 id: true,
                 name: true,
-                email: true,
               },
             },
             createdAt: true,
@@ -65,10 +63,21 @@ export class PoetryListService {
     });
   }
 
-  findAll() {
-    return this.prisma.poetryList.findMany({
-      select: this.SELECT_POETRY_LIST_BASE,
-    });
+  async findAll(page: number, pageSize: number, title?: string, currentUserId?: number) {
+    const where: any = {};
+    if (title) where.title = { contains: title };
+    return {
+      list: await this.prisma.poetryList.findMany({
+        select: this.SELECT_POETRY_LIST_BASE,
+        where,
+        orderBy: {
+          id: 'asc',
+        },
+        take: pageSize,
+        skip: (page - 1) * pageSize,
+      }),
+      total: await this.prisma.poetryList.count({ where }),
+    };
   }
 
   findOne(id: number) {

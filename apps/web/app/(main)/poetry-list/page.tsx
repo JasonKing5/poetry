@@ -4,7 +4,6 @@ import { useState, useEffect, Suspense, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { constants } from '@repo/common';
 import {
   Pagination,
   PaginationContent,
@@ -14,28 +13,23 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { usePoetryStore } from '@/store/poetryStore';
-import { usePoetryList } from '@/services/poetry.service';
+import { usePoetryListPage } from '@/services/poetry-list.service';
 import { useAllAuthors } from '@/services/author.service';
 import { withLoadingError } from '@/components/withLoadingError';
-import PoetryCard from '@/components/PoetryCard';
+import PoetryListCard from '@/components/PoetryListCard';
 import { useAllTags } from '@/services/poetry-prop.service';
 
-const { POETRY_TYPE_MAP, DYNASTY_MAP } = constants;
-
-// Author type
-type Author = {
+// Creator type
+type Creator = {
   id: number;
   name: string;
 };
 
 // Poetry props type
-export type PoetryProps = {
+export type PoetryListProps = {
   id: number;
   title: string;
-  dynasty: string;
-  tags: string[];
-  content: string[];
-  author: Author;
+  creator: Creator;
   likes?: {
     count: number;
     isLiked: boolean;
@@ -44,81 +38,26 @@ export type PoetryProps = {
 
 // API response type
 export type PoetryListResponse = {
-  list: PoetryProps[];
+  list: PoetryListProps[];
   total: number;
   page: number;
   pageSize: number;
   totalPages: number;
 };
 
-function FilterRow({ label, items, allSelected, onAllClick }: { label: string, items: any[], allSelected: boolean, onAllClick: () => void}) {
-  return (
-    <div className="flex items-center gap-2 w-full">
-      <span className="text-gray-700 mr-2 min-w-fit">{label}</span>
-      <Button
-        variant={allSelected ? "default" : "outline"}
-        size="sm"
-        onClick={onAllClick}
-        className={
-          (allSelected
-            ? "bg-primary text-white border-primary "
-            : "") +
-          "hover:bg-primary/90 hover:text-white cursor-pointer transition"
-        }
-      >全部</Button>
-      <div className="flex-1 overflow-x-auto">
-        <div className="flex items-center gap-2 flex-nowrap">
-          {items.map(item => (
-            <Button
-              key={item.key}
-              variant={item.selected ? "default" : "outline"}
-              size="sm"
-              onClick={item.onClick}
-              className={
-                (item.selected
-                  ? "bg-primary text-white border-primary "
-                  : "") +
-                "hover:bg-primary/90 hover:text-white cursor-pointer transition"
-              }
-              style={{
-                maxWidth: 96,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap"
-              }}
-              title={item.label}
-            >{item.label}</Button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // 新增：将页面内容提取为子组件
-function PoetryPageContent() {
+function PoetryListPageContent() {
   const searchParams = useSearchParams();
-  const { page, pageSize, title, type, tags, source, dynasty, submitter, author, status, setFilters, resetFilters } = usePoetryStore();
+  const { page, pageSize, title, setFilters, resetFilters } = usePoetryStore();
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
   const [titleInput, setTitleInput] = useState(title);
 
-  const { data: authors , element: authorsElement } = withLoadingError(useAllAuthors({all: true}));
-  
-  const poetryListRes = usePoetryList({
+  const poetryListRes = usePoetryListPage({
     page,
     pageSize,
     title,
-    type,
-    tags,
-    source,
-    dynasty,
-    submitter,
-    author: author ? Number(author) : undefined,
-    status,
   });
   const { data, element } = withLoadingError(poetryListRes);
-
-  const { data: allTags, element: tagsElement } = withLoadingError(useAllTags());
 
   const handleDebouncedTitleChange = (value: string) => {
     if (debounceRef.current) {
@@ -146,11 +85,7 @@ function PoetryPageContent() {
 
   // 页面初始化时，如果URL有type参数，则同步到store
   useEffect(() => {
-    const urlType = searchParams.get('type');
     const urlTitle = searchParams.get('title');
-    if (urlType) {
-      setFilters({ type: urlType, page: 1 });
-    }
     if (urlTitle) {
       setFilters({ title: urlTitle, page: 1 });
       setTitleInput(urlTitle); // 保持input同步
@@ -161,13 +96,6 @@ function PoetryPageContent() {
     setTitleInput(title);
   }, [title]);
 
-  if (authorsElement) {
-    return authorsElement;
-  }
-  if (tagsElement) {
-    return tagsElement;
-  }
-
   return (
     <div className="w-full flex justify-center">
       <div className="max-w-5xl w-full">
@@ -177,7 +105,7 @@ function PoetryPageContent() {
             <span
               className="text-gray-700 whitespace-nowrap mr-2"
               style={{ fontWeight: 500, fontSize: 16, minWidth: 'fit-content' }}
-            >{`诗词 ${element ? 0 : data.total}`}</span>
+            >{`诗词合集 ${element ? 0 : data.total}`}</span>
           <Button variant="outline" className='hover:bg-primary/90 hover:text-white cursor-pointer transition' onClick={handleReset}>重置</Button>
         </div>
         {/* 筛选项 */}
@@ -204,76 +132,16 @@ function PoetryPageContent() {
               查询
             </Button>
           </div>
-          {/* 朝代 */}
-          <FilterRow
-            label="朝代"
-            items={Object.entries(DYNASTY_MAP).map(([key, value]) => ({
-              key,
-              label: value,
-              selected: dynasty === key,
-              onClick: () => handleValueChange('dynasty', key),
-            }))}
-            allSelected={!dynasty}
-            onAllClick={() => handleValueChange('dynasty', "")}
-          />
-          {/* 作者 */}
-          <FilterRow
-            label="诗人"
-            items={(authors as Author[]).map(({ id, name }) => ({
-              key: String(id),
-              label: name,
-              selected: author == String(id),
-              onClick: () => handleValueChange('author', String(id)),
-            }))}
-            allSelected={!author}
-            onAllClick={() => handleValueChange('author', "")}
-          />
-          {/* 分类（标签）多选 */}
-          <FilterRow
-            label="分类"
-            items={(allTags as string[]).map((tag) => ({
-              key: tag,
-              label: tag,
-              selected: tags?.includes(tag),
-              onClick: () => {
-                let newTags = Array.isArray(tags) ? [...tags] : [];
-                if (newTags.includes(tag)) {
-                  newTags = newTags.filter(t => t !== tag);
-                } else {
-                  newTags.push(tag);
-                }
-                handleValueChange('tags', newTags);
-              },
-              multi: true,
-            }))}
-            allSelected={!tags || tags.length === 0}
-            onAllClick={() => handleValueChange('tags', [])}
-          />
-          {/* 类型 */}
-          <FilterRow
-            label="类型"
-            items={Object.entries(POETRY_TYPE_MAP).map(([key, value]) => ({
-              key,
-              label: value,
-              selected: type === key,
-              onClick: () => handleValueChange('type', key),
-            }))}
-            allSelected={!type}
-            onAllClick={() => handleValueChange('type', "")}
-          />
         </div>
       </div>
-      <ul className="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <ul className="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
         {element ? element : (data as PoetryListResponse)?.list?.length > 0 ? (
           (data as PoetryListResponse)?.list.map((poetry) => (
             <li className="w-full" key={poetry.id}>
-              <PoetryCard
+              <PoetryListCard
                 id={poetry.id}
                 title={poetry.title}
-                author={poetry.author.name}
-                dynasty={poetry.dynasty}
-                tags={poetry.tags}
-                content={getShortContent(poetry.content, 8)}
+                creator={poetry.creator.name}
                 likesCount={poetry.likes?.count || 0}
                 isLiked={poetry.likes?.isLiked || false}
               />
@@ -352,10 +220,10 @@ function PoetryPageContent() {
 }
 
 // 外层组件用 Suspense 包裹
-export default function PoetryPage() {
+export default function PoetryListPage() {
   return (
     <Suspense>
-      <PoetryPageContent />
+      <PoetryListPageContent />
     </Suspense>
   );
 }

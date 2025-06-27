@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Request } from '@nestjs/common';
 import { PoetryListService } from './poetry-list.service';
 import { CreatePoetryListDto } from './dto/create-poetry-list.dto';
 import { UpdatePoetryListDto } from './dto/update-poetry-list.dto';
@@ -21,8 +21,16 @@ export class PoetryListController {
 
   @Get()
   @Public()
-  async findAll() {
-    return await this.poetryListService.findAll();
+  async findAll(@Query() query: { page?: number, pageSize?: number, title?: string }, @Request() req: any) {
+    const { 
+      title, 
+      page = 1, 
+      pageSize = 20,
+    } = query;
+    // Parse pagination parameters
+    const pageNum = typeof page === 'string' ? parseInt(page, 10) : page;
+    const pageSizeNum = typeof pageSize === 'string' ? parseInt(pageSize, 10) : pageSize;
+    return await this.poetryListService.findAll(isNaN(pageNum) ? 1 : pageNum, isNaN(pageSizeNum) ? 20 : Math.min(pageSizeNum, 100), title, req.user?.id);
   }
 
   @Get(':id')

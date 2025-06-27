@@ -48,12 +48,23 @@ export default function AppLayout({ children }: AppLayoutProps) {
             href="/poetry"
             className={cn(
               "transition-colors",
-              pathname.startsWith("/poetry") 
+              pathname === "/poetry" 
                 ? "text-blue-600 font-bold" 
                 : "text-gray-700 hover:text-blue-400"
             )}
           >
             诗词
+          </Link>
+          <Link
+            href="/poetry-list"
+            className={cn(
+              "transition-colors",
+              pathname === "/poetry-list" 
+                ? "text-blue-600 font-bold" 
+                : "text-gray-700 hover:text-blue-400"
+            )}
+          >
+            诗单
           </Link>
           <Link
             href="/author"
