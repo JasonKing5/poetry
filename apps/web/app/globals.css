@@ -1,6 +1,29 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@layer utilities {
+  .card-ink {
+    @apply relative rounded-xl overflow-hidden;
+    background: linear-gradient(135deg, rgba(248, 245, 242, 0.4) 0%, rgba(232, 230, 223, 0.5) 100%);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      border-color: rgba(4, 4, 4, 0.2);
+    }
+  }
+  
+  .dark .card-ink {
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.4) 0%, rgba(50, 50, 50, 0.5) 100%);
+    border-color: rgba(255, 255, 255, 0.1);
+
+    :hover {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 html,

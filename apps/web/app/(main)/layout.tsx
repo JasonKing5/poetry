@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat`}>
         <Providers>
           <AppLayout>
             {children}

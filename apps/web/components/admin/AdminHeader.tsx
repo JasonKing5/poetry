@@ -34,7 +34,7 @@ export function AdminHeader({ user, onToggleSidebar }: AdminHeaderProps) {
           >
             <Menu className="h-5 w-5" />
           </Button>
-          <h2 className="text-lg font-medium text-gray-900">
+          <h2 className="text-xl font-medium text-gray-900">
             {getHeaderTitle()}
           </h2>
         </div>

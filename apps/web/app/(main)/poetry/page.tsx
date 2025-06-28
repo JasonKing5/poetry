@@ -171,7 +171,7 @@ function PoetryPageContent() {
   return (
     <div className="w-full flex justify-center">
       <div className="max-w-5xl w-full">
-      <div className="bg-white rounded-lg shadow-sm px-4 py-3 mb-6 border border-gray-100">
+      <div className="card-ink bg-white rounded-lg shadow-sm px-4 py-3 mb-6 border border-gray-100">
         {/* 搜索栏 */}
         <div className="flex justify-between items-center gap-2 mb-4">
             <span

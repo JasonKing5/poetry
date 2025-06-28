@@ -54,11 +54,7 @@ export default function PoetryListCard({
 
   return (
     <div
-      className="relative rounded-xl shadow-lg mb-4 border border-[#e5e7eb] overflow-hidden poetry-bg-animate"
-      style={{
-        background: 'linear-gradient(120deg, #f8f9f9 60%, #e5ebe7 100%)',
-        boxShadow: '0 4px 24px 0 rgba(120,120,100,0.08), 0 1.5px 4px 0 rgba(120,120,100,0.10)'
-      }}
+      className="card-ink relative rounded-xl shadow-lg mb-4 overflow-hidden poetry-bg-animate"
     >
       {/* 宣纸纹理叠加 */}
       <div className="absolute inset-0 pointer-events-none opacity-25" style={{
@@ -69,7 +65,7 @@ export default function PoetryListCard({
       {mode === 'full' && <div className="relative p-6 z-10">
         <div className="flex flex-col items-start mb-2">
           <div
-            className="text-lg font-bold text-[#374151] mr-2 cursor-pointer transition hover:text-[#2563eb]"
+            className="text-xl font-bold text-[#374151] mr-2 cursor-pointer transition hover:text-[#2563eb]"
             onClick={() => navigate.push(`/poetry/${id}`)}
           >
             {title}
@@ -104,7 +100,7 @@ export default function PoetryListCard({
       {mode === 'simple' && <div className="relative p-6 z-10">
         <div className="flex flex-row items-center gap-2 justify-between">
         <div
-          className="text-lg font-bold text-[#374151] mr-2 cursor-pointer transition hover:text-[#2563eb] flex-1 truncate"
+          className="text-xl font-bold text-[#374151] mr-2 cursor-pointer transition hover:text-[#2563eb] flex-1 truncate"
           onClick={() => navigate.push(`/poetry/${id}`)}
         >
           {title}

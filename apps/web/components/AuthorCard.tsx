@@ -13,11 +13,7 @@ export default function AuthorCard({ id, name, description }: AuthorCardProps) {
   const navigate = useRouter()
   return (
     <div
-      className="relative rounded-xl shadow-lg mb-4 border border-[#e5e7eb] overflow-hidden author-bg-animate"
-      style={{
-        background: 'linear-gradient(120deg, #f8f9f9 60%, #e5ebe7 100%)',
-        boxShadow: '0 4px 24px 0 rgba(120,120,100,0.08), 0 1.5px 4px 0 rgba(120,120,100,0.10)'
-      }}
+      className="card-ink relative rounded-xl shadow-lg mb-4 border border-[#e5e7eb] overflow-hidden author-bg-animate"
     >
       {/* 宣纸纹理叠加 */}
       <div className="absolute inset-0 pointer-events-none opacity-25" style={{
@@ -28,7 +24,7 @@ export default function AuthorCard({ id, name, description }: AuthorCardProps) {
       <div className="relative p-6 z-10">
         <div className="flex flex-col items-start mb-2">
           <div
-            className="text-lg font-bold text-[#374151] mr-2 cursor-pointer transition hover:text-[#2563eb]"
+            className="text-xl font-bold text-[#374151] mr-2 cursor-pointer transition hover:text-[#2563eb]"
             onClick={() => navigate.push(`/author/${id}`)}
           >
             {name}

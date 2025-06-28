@@ -267,7 +267,7 @@ export default function Home() {
               style={{ background: item.bg }}
               onClick={() => handleSelect(item.filter)}
             >
-              <div className="text-lg md:text-xl font-semibold text-center mb-1 md:mb-2">{item.title}</div>
+              <div className="text-xl md:text-xl font-semibold text-center mb-1 md:mb-2">{item.title}</div>
               <div className="text-center text-sm md:text-base opacity-90">{item.desc}</div>
             </div>
           ))}
