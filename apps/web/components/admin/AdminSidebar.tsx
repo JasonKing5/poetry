@@ -48,7 +48,7 @@ export function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="hidden h-screen w-38 border-r bg-white md:flex md:flex-shrink-0 md:flex-col pr-4">
+    <div className="card-ink hidden w-38 h-60 md:flex md:flex-shrink-0 md:flex-col">
       <div className="flex h-0 flex-1 flex-col">
         <div className="flex flex-1 flex-col overflow-y-auto">
           <div className="flex flex-shrink-0 items-center px-4">
@@ -65,7 +65,7 @@ export function AdminSidebar() {
                   className={cn(
                     'group flex items-center rounded-md px-2 py-2 text-sm font-medium',
                     isActive
-                      ? 'bg-gray-100 text-gray-900'
+                      ? 'bg-gray-300 text-gray-900'
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                   )}
                 >

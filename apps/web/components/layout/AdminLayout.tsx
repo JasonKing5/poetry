@@ -25,7 +25,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   }, [user, router, pathname, isLoading]);
 
   return (
-    <div className="flex h-full">
+    <div className="flex flex-1">
       <AdminSidebar />
       <div className="flex-1 flex flex-col overflow-hidden pl-4">
         {children}

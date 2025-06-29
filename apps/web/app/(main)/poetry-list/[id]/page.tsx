@@ -17,11 +17,11 @@ export default function PoetryDetailPage() {
 
   return (
     <div className="w-full flex justify-center">
-      <div className='max-w-5xl w-full flex flex-col items-center justify-center'>
+      <div className='max-w-5xl w-full flex flex-col items-center justify-center py-2'>
         <h1 className="text-2xl font-bold mb-2">{data.title}</h1>
         <p className="text-gray-600 mb-1">作者：{data.author.name}</p>
         <p className="text-gray-600 mb-1">朝代：{DYNASTY_MAP[data.dynasty as keyof typeof DYNASTY_MAP] || data.dynasty}</p>
-        <div className="flex flex-wrap gap-2 mt-2">
+        <div className="card-ink flex flex-wrap gap-2 mt-2">
           {Array.isArray(data.content) && data.content.length > 0 && (
             <div className="text-gray-800 mb-2 leading-relaxed flex flex-col items-center justify-center">
               {data.content.map((line: string, idx: number) => (

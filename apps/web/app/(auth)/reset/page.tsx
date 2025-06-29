@@ -26,13 +26,12 @@ function ResetPassword() {
   }
 
   return (
-    <div className="flex min-h-svh min-w-svw flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
+    <div className="flex min-h-svh min-w-svw flex-col items-center justify-center">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <Link href="/" className="flex items-center gap-2 self-center font-medium">
-          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            <BrainCircuit className="size-4" />
+        <Link href="/" className="flex items-center gap-2 self-center font-medium text-3xl">
+          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[url('/logo.png')] bg-center bg-contain">
           </div>
-          Highland Population Cohort Database
+          醉诗词
         </Link>
         <UpdatePasswordForm
           // @ts-ignore
@@ -40,8 +39,8 @@ function ResetPassword() {
           onLogin={() => navigate.push("/login")}
         />
         <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary  ">
-          By clicking continue, you agree to our <a href="#" className="underline underline-offset-4">Terms of Service</a>{" "}
-          and <a href="#" className="underline underline-offset-4">Privacy Policy</a>.
+          点击继续，代表您同意 <a href="/terms-of-service" className="underline underline-offset-4">服务条款</a>{" "}
+          和 <a href="/privacy-policy" className="underline underline-offset-4">隐私政策</a>.
         </div>
       </div>
     </div>

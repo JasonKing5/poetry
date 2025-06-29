@@ -11,8 +11,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Author, User } from '@repo/types';
 
 interface TableProps {
-  data: Author[] | User[]
-  columns: ColumnDef<Author | User>[]
+  data: (Author | User)[]
+  columns: ColumnDef<any>[]
 }
 
 export default function IfsTable({ data = [], columns = [] }: TableProps) {

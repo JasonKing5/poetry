@@ -1,13 +1,10 @@
 'use client'
 
 import { useState } from 'react';
-import { constants } from '@repo/common';
 import { useRouter } from "next/navigation"
 import { Heart } from 'lucide-react';
 import { useCreateLike } from '@/services/like.service';
-import { cn, getUserId } from '@/lib/utils';
-
-const { DYNASTY_MAP } = constants;
+import { cn } from '@/lib/utils';
 
 // Local type for target type
 const TargetType = {
@@ -54,7 +51,7 @@ export default function PoetryListCard({
 
   return (
     <div
-      className="card-ink relative rounded-xl shadow-lg mb-4 overflow-hidden poetry-bg-animate"
+      className="card-ink relative rounded-xl shadow-lg overflow-hidden"
     >
       {/* 宣纸纹理叠加 */}
       <div className="absolute inset-0 pointer-events-none opacity-25" style={{
@@ -108,21 +105,6 @@ export default function PoetryListCard({
         <div className="text-sm text-gray-500 flex flex-row items-center gap-2">{`创建者：${creator}`}</div>
         </div>
       </div>}
-      {/* 动态渐变动画 */}
-      <style jsx>{`
-        .poetry-bg-animate {
-          animation: poetryGradientMove 10s ease-in-out infinite alternate;
-          background-size: 200% 200%;
-        }
-        @keyframes poetryGradientMove {
-          0% {
-            background-position: 0% 50%;
-          }
-          100% {
-            background-position: 100% 50%;
-          }
-        }
-      `}</style>
     </div>
   );
 }

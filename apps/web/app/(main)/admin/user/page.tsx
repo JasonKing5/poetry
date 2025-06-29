@@ -25,7 +25,7 @@ export default function UserPage() {
 
   const { list, total } = pageData || {};
 
-  const columns: ColumnDef<User>[] = [
+  const columns: ColumnDef<User & { userRoles: any[] }>[] = [
     {
       accessorKey: "id",
       header: "ID",
@@ -46,7 +46,7 @@ export default function UserPage() {
       header: "角色",
       cell: ({ row }) => {
         console.log('roles', row.getValue("userRoles"))
-        const roles = row.getValue("userRoles")?.map((role: any) => role.role.name);
+        const roles = (row.getValue("userRoles") as any[])?.map((role: any) => role.role.name);
         return <div>{roles?.join(", ")}</div>;
       },
     },

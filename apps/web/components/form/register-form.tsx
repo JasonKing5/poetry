@@ -25,14 +25,14 @@ export function RegisterForm({
 
   return (
     <div className="flex flex-col gap-6">
-      <Card>
+      <Card className="card-ink">
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Create an account</CardTitle>
+          <CardTitle className="text-xl">创建账号</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-6">
           <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6">
             <div className="grid gap-2">
-              <Label htmlFor="name">Username</Label>
+              <Label htmlFor="name">用户名</Label>
               <Input id="name" {...register("name")} placeholder="name" />
               {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
             </div>
@@ -56,14 +56,14 @@ export function RegisterForm({
             </div> */}
 
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Registering..." : "Register"}
+              {isSubmitting ? "注册中..." : "注册"}
             </Button>
           </form>
 
           <div className="text-center text-sm">
-            Already have an account?{" "}
+            已有账号？{" "}
             <a onClick={onLogin} className="underline underline-offset-4">
-              Login
+              登录
             </a>
           </div>
         </CardContent>

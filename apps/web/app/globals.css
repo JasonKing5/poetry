@@ -22,6 +22,10 @@
       border-color: rgba(255, 255, 255, 0.2);
     }
   }
+
+  .main-bg-ink {
+    @apply bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat;
+  }
 }
 
 @custom-variant dark (&:is(.dark *));

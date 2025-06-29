@@ -19,9 +19,9 @@ export function ResetPasswordForm({
 
   return (
     <div className={"flex flex-col gap-6"} >
-      <Card>
+      <Card className="card-ink">
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Reset your password</CardTitle>
+          <CardTitle className="text-xl">重置密码</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6">
@@ -36,9 +36,9 @@ export function ResetPasswordForm({
             </Button>
 
             <div className="text-center text-sm">
-              Already to login? {" "}
+              已有账号？ {" "}
               <a onClick={onLogin} className="underline underline-offset-4">
-                Login
+                登录
               </a>
             </div>
             {/* {isSuccess && <p className="text-green-600 text-sm mt-2">邮件已发送，请查收！</p>} */}

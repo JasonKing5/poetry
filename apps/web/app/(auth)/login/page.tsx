@@ -56,14 +56,13 @@ export default function LoginPage() {
   return (
     <div className="w-full h-full flex flex-1 flex-col justify-center items-center">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <Link href="/" className="flex items-center gap-2 self-center font-medium">
-          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            <BrainCircuit className="size-4" />
+        <Link href="/" className="flex items-center gap-2 self-center font-medium text-3xl">
+          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[url('/logo.png')] bg-center bg-contain">
           </div>
           醉诗词
         </Link>
         {authStatus === AuthStatus.Register && (
-          <RegisterForm 
+          <RegisterForm
             onSubmit={handleRegister}
             onLogin={() => setAuthStatus(AuthStatus.Login)}
           />
@@ -84,8 +83,8 @@ export default function LoginPage() {
           />
         )}
         <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary  ">
-          点击继续，代表您同意 <a href="#" className="underline underline-offset-4">服务条款</a>{" "}
-          和 <a href="#" className="underline underline-offset-4">隐私政策</a>.
+          点击继续，代表您同意 <a href="/terms-of-service" className="underline underline-offset-4">服务条款</a>{" "}
+          和 <a href="/privacy-policy" className="underline underline-offset-4">隐私政策</a>.
         </div>
       </div>
     </div>

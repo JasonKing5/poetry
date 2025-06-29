@@ -26,7 +26,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const { user, clearUser, isAuthenticated, isAdmin } = useAuth();
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col h-screen">
       <header className="flex items-center justify-between px-4 shadow bg-white">
         <Link href="/" className="flex items-center gap-2 text-xl font-bold">
           <Image src="/logo.png" width={30} height={30} alt="Logo" />
@@ -155,7 +155,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           )}
         </div>
       </header>
-      <main className="flex-1 p-6">{children}</main>
+      <main className="flex-1 p-6 main-bg-ink overflow-auto">{children}</main>
       <footer className="bg-white shadow p-4 text-center text-sm text-gray-500 flex items-center justify-center gap-8">
         <div>
           ICP备案：

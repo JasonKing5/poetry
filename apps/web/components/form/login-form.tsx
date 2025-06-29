@@ -33,7 +33,7 @@ export function LoginForm({
   return (
     <div className={cn("flex flex-col gap-6")} {...rest}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Card>
+        <Card className="card-ink">
           <CardHeader className="text-center">
             <CardTitle className="text-xl">欢迎回来</CardTitle>
             <CardDescription>
@@ -67,7 +67,7 @@ export function LoginForm({
                   {errors.password && <p className="text-xs text-red-500">{errors.password.message}</p>}
                 </div>
                 <Button type="submit" className="w-full" disabled={isSubmitting}>
-                  {isSubmitting ? "Logging in..." : "Login"}
+                  {isSubmitting ? "登录中..." : "登录"}
                 </Button>
               </div>
 

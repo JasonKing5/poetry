@@ -23,7 +23,7 @@ export default function PoetryDetailPage() {
         <p className="text-gray-600 mb-1">朝代：{DYNASTY_MAP[data.dynasty as keyof typeof DYNASTY_MAP] || data.dynasty}</p>
         <div className="flex flex-wrap gap-2 mt-2">
           {Array.isArray(data.content) && data.content.length > 0 && (
-            <div className="text-gray-800 mb-2 leading-relaxed flex flex-col items-center justify-center">
+            <div className="text-gray-800 mb-2 leading-relaxed flex flex-col items-center justify-center text-xl">
               {data.content.map((line: string, idx: number) => (
                 <div key={idx}>{line}</div>
               ))}
