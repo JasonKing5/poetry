@@ -151,7 +151,7 @@ export class AuthService {
     };
     return this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
-      expiresIn: expiresTime ? expiresTime : '1m',
+      expiresIn: expiresTime ? expiresTime : '15m',
     });
   }
   

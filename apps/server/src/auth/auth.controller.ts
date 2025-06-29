@@ -29,7 +29,7 @@ export class AuthController {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 1000 * 60 * 1, // 15 min
+      maxAge: 1000 * 60 * 15, // 15 min
     });
 
     res.cookie('refreshToken', refreshToken, {
