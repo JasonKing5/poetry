@@ -176,7 +176,7 @@ export default function Home() {
     <div className='w-full flex flex-col justify-center'>
       <div className="w-full flex justify-center">
         <div
-          className="relative flex w-full max-w-6xl h-28 md:h-36 bg-[#b6b08a]/90 border-[3px] border-white rounded-xl shadow-lg overflow-hidden"
+          className="relative flex w-full max-w-6xl h-28 md:h-36 bg-[#b6b08a]/90 rounded-xl shadow-lg overflow-hidden"
         >
           <div className="flex-1 flex flex-col justify-center items-center px-4 md:px-8 py-2 md:py-4">
             <div className="text-white text-base md:text-[1.35rem] lg:text-2xl font-semibold tracking-wide text-left leading-relaxed drop-shadow-lg mb-1 md:mb-2">
