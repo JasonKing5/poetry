@@ -50,11 +50,11 @@ export class LikeService {
 
     // 根据目标类型设置对应的 ID 字段
     switch (targetType) {
-      case 'POETRY':
+      case 'POEM':
         data.poetryId = targetId;
         break;
-      case 'LIST':
-        data.poetryListId = targetId;
+      case 'COLLECTION':
+        data.collectionId = targetId;
         break;
       case 'COMMENT':
         data.commentId = targetId;
@@ -72,11 +72,11 @@ export class LikeService {
 
     // 根据目标类型设置查询条件
     switch (targetType) {
-      case 'POETRY':
+      case 'POEM':
         where.poetryId = targetId;
         break;
-      case 'LIST':
-        where.poetryListId = targetId;
+      case 'COLLECTION':
+        where.collectionId = targetId;
         break;
       case 'COMMENT':
         where.commentId = targetId;
@@ -88,12 +88,12 @@ export class LikeService {
 
   private async validateTargetExists(targetType: TargetType, targetId: number) {
     switch (targetType) {
-      case 'POETRY':
-        const poetry = await this.prisma.poetry.findUnique({
+      case 'POEM':
+        const poem = await this.prisma.poem.findUnique({
           where: { id: targetId },
         });
-        if (!poetry) {
-          throw new NotFoundException('Poetry not found');
+        if (!poem) {
+          throw new NotFoundException('Poem not found');
         }
         break;
       case 'COMMENT':
@@ -104,12 +104,12 @@ export class LikeService {
           throw new NotFoundException('Comment not found');
         }
         break;
-      case 'LIST':
-        const poetryList = await this.prisma.poetryList.findUnique({
+      case 'COLLECTION':
+        const collection = await this.prisma.collection.findUnique({
           where: { id: targetId },
         });
-        if (!poetryList) {
-          throw new NotFoundException('Poetry list not found');
+        if (!collection) {
+          throw new NotFoundException('Collection not found');
         }
         break;
       default:
@@ -126,11 +126,11 @@ export class LikeService {
       // 根据目标类型设置对应的 ID 字段
       if (targetId) {
         switch (targetType) {
-          case 'POETRY':
+          case 'POEM':
             where.poetryId = targetId;
             break;
-          case 'LIST':
-            where.poetryListId = targetId;
+          case 'COLLECTION':
+            where.collectionId = targetId;
             break;
           case 'COMMENT':
             where.commentId = targetId;
@@ -159,13 +159,12 @@ export class LikeService {
         skip,
         take: pageSize,
         include: {
-          poetry: {
+          poem: {
             select: {
               id: true,
               title: true,
               authorId: true,
               dynasty: true,
-              tags: true,
               author: {
                 select: {
                   id: true,

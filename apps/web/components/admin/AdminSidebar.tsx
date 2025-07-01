@@ -29,12 +29,12 @@ const navItems: NavItem[] = [
   },
   {
     name: '诗词管理',
-    href: '/admin/poetry',
+    href: '/admin/poem',
     icon: <BarChart3 className="h-5 w-5" />,
   },
   {
-    name: '诗单管理',
-    href: '/admin/poetry-list',
+    name: '合集管理',
+    href: '/admin/collection',
     icon: <BarChart3 className="h-5 w-5" />,
   },
   {

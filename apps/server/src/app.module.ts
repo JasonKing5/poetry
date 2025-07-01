@@ -4,12 +4,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { PoetryModule } from './poetry/poetry.module';
+import { PoetryModule } from './poem/poem.module';
 import { PoetryPropModule } from './poetry-prop/poetry-prop.module';
 import { MailModule } from './mail/mail.module';
 import { AuthorModule } from './author/author.module';
 import { LikeModule } from './like/like.module';
-import { PoetryListModule } from './poetry-list/poetry-list.module';
+import { CollectionModule } from './collection/collection.module';
 import { AuthMiddleware } from './common/middlewares/auth.middleware';
 import { AuthGuard } from './common/guards/auth.guard';
 import { JwtModule } from '@nestjs/jwt';
@@ -20,7 +20,7 @@ import { JwtModule } from '@nestjs/jwt';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '15m' },
     }),
-    UserModule, AuthModule, PoetryModule, PoetryPropModule, MailModule, AuthorModule, LikeModule, PoetryListModule],
+    UserModule, AuthModule, PoetryModule, PoetryPropModule, MailModule, AuthorModule, LikeModule, CollectionModule],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
 })

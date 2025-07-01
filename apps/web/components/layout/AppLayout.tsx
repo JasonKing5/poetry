@@ -45,10 +45,10 @@ export default function AppLayout({ children }: AppLayoutProps) {
             首页
           </Link>
           <Link
-            href="/poetry"
+            href="/poem"
             className={cn(
               "transition-colors",
-              pathname === "/poetry" 
+              pathname === "/poem" 
                 ? "text-blue-600 font-bold" 
                 : "text-gray-700 hover:text-blue-400"
             )}
@@ -56,15 +56,15 @@ export default function AppLayout({ children }: AppLayoutProps) {
             诗词
           </Link>
           <Link
-            href="/poetry-list"
+            href="/collection"
             className={cn(
               "transition-colors",
-              pathname === "/poetry-list" 
+              pathname === "/collection" 
                 ? "text-blue-600 font-bold" 
                 : "text-gray-700 hover:text-blue-400"
             )}
           >
-            诗单
+            合集
           </Link>
           <Link
             href="/author"

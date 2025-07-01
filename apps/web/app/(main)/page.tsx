@@ -38,7 +38,7 @@ const carouselItems = [
   }
 ]
 
-const poetrySelections = [
+const poemSelections = [
   {
     title: "诗 经",
     desc: "关关雎鸠，在河之洲。窈窕淑女，君子好逑。",
@@ -77,7 +77,7 @@ const poetrySelections = [
   },
 ];
 
-const poetryContentList = [
+const poemContentList = [
   {
     content: "遂古之初，谁传道之？",
     author: "屈原",
@@ -169,7 +169,7 @@ export default function Home() {
 
   const handleSelect = (filter: Record<string, string>) => {
     const params = new URLSearchParams(filter).toString();
-    router.push(`/poetry?${params}`);
+    router.push(`/poem?${params}`);
   };
 
   return (
@@ -258,9 +258,9 @@ export default function Home() {
       </div>
 
       <div className="w-full max-w-6xl mx-auto mt-6 md:mt-10">
-        <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">诗单精选</h2>
+        <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">合集精选</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-4 md:mb-6">
-          {poetrySelections.map((item) => (
+          {poemSelections.map((item) => (
             <div
               key={item.title}
               className="rounded-xl text-white p-4 md:p-6 flex flex-col justify-between min-h-[90px] md:min-h-[120px] cursor-pointer transition-all duration-200 hover:scale-[1.035] hover:brightness-110 hover:shadow-2xl"
@@ -277,13 +277,13 @@ export default function Home() {
       <div className="w-full max-w-6xl mx-auto mt-10">
         <h2 className="text-xl md:text-2xl font-bold mb-4 pb-2">诗句精选</h2>
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
-          {poetryContentList.map((item) => (
+          {poemContentList.map((item) => (
             <li
               key={item.title}
               className="flex flex-col md:flex-row md:justify-between md:items-center px-3 md:px-5 py-3 rounded-xl bg-white/80 hover:bg-gray-100 shadow-sm hover:shadow-md cursor-pointer transition-all duration-200"
               onClick={() => {
                 const params = new URLSearchParams({ title: item.title }).toString();
-                window.location.href = `/poetry?${params}`;
+                window.location.href = `/poem?${params}`;
               }}
             >
               <span className="text-base md:text-lg text-gray-900">{item.content}</span>

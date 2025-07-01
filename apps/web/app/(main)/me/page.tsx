@@ -3,13 +3,13 @@
 import { useAuth } from '@/hooks/useAuth';
 import { RequireAuth } from '@/components/RequireAuth';
 import { useAllLikes } from '@/services/like.service';
-import { Like, Poetry, Author } from '@repo/types';
+import { Like, Poem, Author } from '@repo/types';
 import { withLoadingError } from '@/components/withLoadingError';
-import PoetryCard from '@/components/PoetryCard';
+import PoemCard from '@/components/PoemCard';
 
 export default function MePage() {
   const { isAuthenticated, user } = useAuth();
-  const { data: likesPage, element: likesLoadingElement } = withLoadingError(useAllLikes({ currentUser: true, targetType: 'POETRY' }));
+  const { data: likesPage, element: likesLoadingElement } = withLoadingError(useAllLikes({ currentUser: true, targetType: 'POEM' }));
 
   if (likesLoadingElement) {
     return likesLoadingElement;
@@ -26,18 +26,14 @@ export default function MePage() {
           <h2 className="text-2xl font-bold tracking-tight mb-4">我喜欢的诗词作品</h2>
           <ul className="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {likesPage?.list?.length > 0 ? (
-              likesPage?.list.map((like: Like & { poetry: Poetry & { author: Author } }) => (
+              likesPage?.list.map((like: Like & { poem: Poem & { author: Author } }) => (
                 <li className="w-full" key={like.id}>
-                  <PoetryCard
-                    id={like.poetry?.id}
+                  <PoemCard
+                    id={like.poem?.id}
                     mode="simple"
-                    title={like.poetry?.title}
-                    author={String(like.poetry?.author?.name)}
-                    dynasty={like.poetry?.dynasty}
-                    tags={like.poetry?.tags}
-                    // content={getShortContent(like.poetry?.content, 8)}
-                    // likesCount={like.poetry?.likes?.count || 0}
-                    // isLiked={like.poetry?.likes?.isLiked || false}
+                    title={like.poem?.title}
+                    author={String(like.poem?.author?.name)}
+                    dynasty={like.poem?.dynasty}
                   />
                 </li>
               ))

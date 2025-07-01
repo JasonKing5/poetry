@@ -2,16 +2,16 @@
 
 import { useParams } from 'next/navigation';
 import { useGet } from '@/lib/request';
-import { Author, Poetry } from '@repo/types';
+import { Author } from '@repo/types';
 import { withLoadingError } from '@/components/withLoadingError';
-import { usePoetryList } from '@/services/poetry.service'
-import { PoetryListResponse, PoetryProps } from '../../poetry/page';
-import PoetryCard from '@/components/PoetryCard';
+import { PoemListResponse, PoemProps } from '../../poem/page';
+import PoemCard from '@/components/PoemCard';
+import { usePoemList } from '@/services/poem.service';
 
 export default function AuthorDetailPage() {
   const { id } = useParams(); // 获取路由参数
   const { data, element } = withLoadingError(useGet<Author>(`/authors/${id}`));
-  const { data: poetryPageRes, element: poetryElement } = withLoadingError(usePoetryList({ author: Number(id), pageSize: 12 }));
+  const { data: poemPageRes, element: poemElement } = withLoadingError(usePoemList({ author: Number(id), pageSize: 12 }));
 
   const getShortContent = (content: string[], length: number) => {
     if (content.length <= length) {
@@ -39,16 +39,15 @@ export default function AuthorDetailPage() {
         <div className='flex flex-col gap-2'>
           <div className='text-xl'>主要作品</div>
           <ul className="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {poetryElement ? poetryElement : (poetryPageRes as PoetryListResponse)?.list?.length > 0 ? (
-              ((poetryPageRes as PoetryListResponse)?.list as PoetryProps[]).map((poetry) => (
-                <li className="w-full" key={poetry.id}>
-                  <PoetryCard
-                    id={poetry.id}
-                    title={poetry.title}
-                    author={poetry.author.name}
-                    dynasty={poetry.dynasty}
-                    tags={poetry.tags}
-                    content={getShortContent(poetry.content, 8)}
+            {poemElement ? poemElement : (poemPageRes as PoemListResponse)?.list?.length > 0 ? (
+              ((poemPageRes as PoemListResponse)?.list as PoemProps[]).map((poem) => (
+                <li className="w-full" key={poem.id}>
+                  <PoemCard
+                    id={poem.id}
+                    title={poem.title}
+                    author={poem.author.name}
+                    dynasty={poem.dynasty}
+                    content={getShortContent(poem.content, 8)}
                   />
                 </li>
               ))

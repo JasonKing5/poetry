@@ -8,7 +8,7 @@ export class PoetryPropService {
   private lunarResult = null as any;
 
   async findAllAuthor() {
-    const authors = await this.prisma.poetry.findMany({
+    const authors = await this.prisma.poem.findMany({
       select: {
         authorId: true
       },
@@ -18,7 +18,7 @@ export class PoetryPropService {
   }
 
   async findAllType() {
-    const types = await this.prisma.poetry.findMany({
+    const types = await this.prisma.poem.findMany({
       select: {
         type: true
       },
@@ -28,13 +28,14 @@ export class PoetryPropService {
   }
 
   async findAllTags() {
-    const tags = await this.prisma.poetry.findMany({
-      select: {
-        tags: true
-      },
-      distinct: ['tags']
-    });
-    return Array.from(new Set(tags.flatMap((tag: { tags: string[] }) => tag.tags).filter(Boolean)));
+    // const tags = await this.prisma.poem.findMany({
+    //   select: {
+    //     tags: true
+    //   },
+    //   distinct: ['tags']
+    // });
+    // return Array.from(new Set(tags.flatMap((tag: { tags: string[] }) => tag.tags).filter(Boolean)));
+    return [];
   }
 
   async findLunar() {
