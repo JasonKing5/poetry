@@ -32,8 +32,8 @@ export const useGetAllUsers = (options: any) => {
   return useGet('/users', options);
 }
 
-export const useUpdateUser = (id: string, user: any) => {
-  return usePut(`/users/${id}`);
+export const useUpdateUser = (options: any) => {
+  return usePut(`/users`, options);
 }
 
 export const useDeleteUser = (id: string) => {

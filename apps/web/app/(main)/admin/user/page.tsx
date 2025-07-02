@@ -14,6 +14,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import { Button } from '@/components/ui/button';
+import { useUpdateUser } from '@/services/user.service';
+import { toast } from 'sonner';
 
 export default function UserPage() {
   const { page, pageSize, setFilters } = useUserStore();
@@ -24,6 +27,24 @@ export default function UserPage() {
   }
 
   const { list, total } = pageData || {};
+
+  // const { mutate: updateUser } = useUpdateUser({
+  //   onSuccess: () => {
+  //     toast.success('更新成功');
+  //   }
+  // });
+
+  const handleDelete = (id: number) => {
+    console.log('delete', id);
+  };
+
+  const handleUpdate = (id: number) => {
+    console.log('update', id);
+    // updateUser({
+    //   id,
+    //   name: "test",
+    // });
+  };
 
   const columns: ColumnDef<User & { userRoles: any[] }>[] = [
     {
@@ -62,8 +83,25 @@ export default function UserPage() {
     },
     {
       accessorKey: "isDeleted",
-      header: "删除",
-      cell: ({ row }) => <div>{row.getValue("isDeleted")}</div>,
+      header: "操作",
+      cell: ({ row }) => {
+        return (
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => handleUpdate(row.getValue("id"))}
+            >
+              编辑
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => handleDelete(row.getValue("id"))}
+            >
+              删除
+            </Button>
+          </div>
+        );
+      },
     },
   ]
 

@@ -32,11 +32,10 @@ export class UserController {
     return await this.userService.findOne(Number(id));
   }
 
-  @Put(':id')
-  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
-  @Permissions(PermissionEnum.UPDATE_USER)
-  async update(@Param('id') id: number, @Body() body: { email?: string; name?: string }) {
-    return await this.userService.update(Number(id), body.email, body.name);
+  @Put()
+  @Roles(RoleEnum.ADMIN)
+  async update(@Body() body: { id: number; email?: string; name?: string }) {
+    return await this.userService.update(Number(body.id), body.email, body.name);
   }
 
   @Delete(':id')
