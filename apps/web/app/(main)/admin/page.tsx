@@ -1,15 +1,15 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BarChart3, Users, BookOpen, Settings } from 'lucide-react';
+import { BarChart3, Users, BookOpen, Heart } from 'lucide-react';
 
 export default function AdminDashboardPage() {
   // 这里可以添加数据获取逻辑
   const stats = [
     { name: '总用户数', value: '1,234', icon: Users },
     { name: '今日新增', value: '56', icon: BarChart3 },
-    { name: '内容数量', value: '5,678', icon: BookOpen },
-    { name: '系统状态', value: '运行中', icon: Settings },
+    { name: '诗词总量', value: '5,678', icon: BookOpen },
+    { name: '点赞总量', value: '3,561,234', icon: Heart },
   ];
 
   return (
@@ -25,7 +25,7 @@ export default function AdminDashboardPage() {
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
-            <Card key={stat.name}>
+            <Card key={stat.name} className="card-ink">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                   {stat.name}
@@ -40,18 +40,18 @@ export default function AdminDashboardPage() {
         })}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-8">
+        <Card className="card-ink col-span-6">
           <CardHeader>
             <CardTitle>数据概览</CardTitle>
           </CardHeader>
           <CardContent className="pl-2">
             <div className="h-[300px] flex items-center justify-center text-muted-foreground">
-              图表区域 - 可以放置统计图表
+              图表区域
             </div>
           </CardContent>
         </Card>
-        <Card className="col-span-3">
+        <Card className="card-ink col-span-2">
           <CardHeader>
             <CardTitle>最近活动</CardTitle>
           </CardHeader>
