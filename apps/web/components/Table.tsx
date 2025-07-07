@@ -8,10 +8,10 @@ import {
   getCoreRowModel,
 } from "@tanstack/react-table"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Author, User } from '@repo/types';
+import { Author, User, Poem } from '@repo/types';
 
 interface TableProps {
-  data: (Author | User)[]
+  data: (Author | User | Poem)[]
   columns: ColumnDef<any>[]
 }
 
