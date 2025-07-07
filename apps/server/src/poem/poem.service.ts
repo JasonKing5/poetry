@@ -101,6 +101,13 @@ export class PoetryService {
     };
   }
 
+  async findPoems(poemIds: number[]) {
+    return await this.prisma.poem.findMany({
+      where: { id: { in: poemIds } },
+      select: this.SELECT_POETRY_BASE,
+    });
+  }
+
   async findOne(id: number) {
     return await this.prisma.poem.findUnique({
       where: { id },

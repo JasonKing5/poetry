@@ -25,34 +25,33 @@ export class CollectionService {
     isPublic: true,
     createdAt: true,
     updatedAt: true,
-    items: {
-      select: {
-        poetry: {
-          select: {
-            id: true,
-            title: true,
-            author: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
-            type: true,
-            tags: true,
-            source: true,
-            dynasty: true,
-            submitter: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
-            createdAt: true,
-            updatedAt: true,
-          },
-        },
-      },
-    },
+    // items: {
+    //   select: {
+    //     poem: {
+    //       select: {
+    //         id: true,
+    //         title: true,
+    //         author: {
+    //           select: {
+    //             id: true,
+    //             name: true,
+    //           },
+    //         },
+    //         type: true,
+    //         source: true,
+    //         dynasty: true,
+    //         submitter: {
+    //           select: {
+    //             id: true,
+    //             name: true,
+    //           },
+    //         },
+    //         createdAt: true,
+    //         updatedAt: true,
+    //       },
+    //     },
+    //   },
+    // },
   };
 
   create(createCollectionDto: CreateCollectionDto) {
@@ -103,6 +102,11 @@ export class CollectionService {
 
   findOne(id: number) {
     return this.prisma.collection.findUnique({ where: { id }, select: this.SELECT_COLLECTION_FULL });
+  }
+
+  async findPoems(id: number) {
+    const poemIds = await this.prisma.collectionPoem.findMany({ where: { collectionId: id }, select: { poemId: true }, orderBy: { order: 'asc' } });
+    return poemIds?.map(item => item.poemId) || [];
   }
 
   update(id: number, updateCollectionDto: UpdateCollectionDto) {

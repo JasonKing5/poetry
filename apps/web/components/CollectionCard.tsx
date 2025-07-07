@@ -63,7 +63,7 @@ export default function CollectionCard({
         <div className="flex flex-col items-start mb-2">
           <div
             className="text-xl font-bold text-[#374151] mr-2 cursor-pointer transition hover:text-[#2563eb]"
-            onClick={() => navigate.push(`/poem/${id}`)}
+            onClick={() => navigate.push(`/collection/${id}`)}
           >
             {title}
           </div>
@@ -98,7 +98,7 @@ export default function CollectionCard({
         <div className="flex flex-row items-center gap-2 justify-between">
         <div
           className="text-xl font-bold text-[#374151] mr-2 cursor-pointer transition hover:text-[#2563eb] flex-1 truncate"
-          onClick={() => navigate.push(`/poem/${id}`)}
+          onClick={() => navigate.push(`/collection/${id}`)}
         >
           {title}
         </div>

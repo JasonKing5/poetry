@@ -12,3 +12,7 @@ import { useGet } from '@/lib/request'
 export const useCollectionPage = (params: GetCollectionPageProps) => {
  return useGet('/collection', {params});
 }
+
+export const useCollectionPoems = (id: number) => {
+ return useGet(`/collection/${id}/poems`);
+}

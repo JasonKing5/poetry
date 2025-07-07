@@ -7,10 +7,11 @@ import { Permissions } from 'src/common/decorators/permissions.decorator';
 import { PermissionEnum } from 'src/common/enums/permission.enum';
 import { RoleEnum } from 'src/common/enums/role.enum';
 import { Public } from 'src/common/decorators/public.decorator';
+import { PoetryService } from 'src/poem/poem.service';
 
 @Controller('collection')
 export class CollectionController {
-  constructor(private readonly collectionService: CollectionService) {}
+  constructor(private readonly collectionService: CollectionService, private readonly poemService: PoetryService) {}
 
   @Post()
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
@@ -37,6 +38,13 @@ export class CollectionController {
   @Public()
   async findOne(@Param('id') id: string) {
     return await this.collectionService.findOne(+id);
+  }
+
+  @Get(':id/poems')
+  @Public()
+  async findPoems(@Param('id') id: string) {
+    const poemIds = await this.collectionService.findPoems(+id);
+    return await this.poemService.findPoems(poemIds);
   }
 
   @Patch(':id')
