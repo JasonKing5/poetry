@@ -10,5 +10,5 @@ import { useGet } from '@/lib/request'
  }
 
 export const useCollectionPage = (params: GetCollectionPageProps) => {
- return useGet('/collection', params);
+ return useGet('/collection', {params});
 }

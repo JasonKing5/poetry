@@ -14,5 +14,5 @@ import { useGet } from '@/lib/request'
  }
 
 export const usePoemList = (params: GetPoemListProps) => {
- return useGet('/poem', params);
+ return useGet('/poem', {params});
 }

@@ -8,5 +8,5 @@ export type GetAllAuthorsProps = {
  }
 
 export const useAllAuthors = (params: GetAllAuthorsProps) => {
-  return useGet('/authors', params);
+  return useGet('/authors', {params});
 };

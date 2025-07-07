@@ -27,5 +27,5 @@ export const useCreateLike = () => {
 }
 
 export const useAllLikes = (params: GetAllLikesProps) => {
-  return useGet<PaginatedResponse<Like>>('/likes', params);
+  return useGet<PaginatedResponse<Like>>('/likes', {params});
 };
