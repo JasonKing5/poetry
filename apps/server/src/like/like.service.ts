@@ -51,7 +51,7 @@ export class LikeService {
     // 根据目标类型设置对应的 ID 字段
     switch (targetType) {
       case 'POEM':
-        data.poetryId = targetId;
+        data.poemId = targetId;
         break;
       case 'COLLECTION':
         data.collectionId = targetId;
@@ -73,7 +73,7 @@ export class LikeService {
     // 根据目标类型设置查询条件
     switch (targetType) {
       case 'POEM':
-        where.poetryId = targetId;
+        where.poemId = targetId;
         break;
       case 'COLLECTION':
         where.collectionId = targetId;
@@ -127,7 +127,7 @@ export class LikeService {
       if (targetId) {
         switch (targetType) {
           case 'POEM':
-            where.poetryId = targetId;
+            where.poemId = targetId;
             break;
           case 'COLLECTION':
             where.collectionId = targetId;
@@ -153,33 +153,64 @@ export class LikeService {
       where.userId = userId;
     }
 
-    const [list, total] = await Promise.all([
-      this.prisma.like.findMany({
-        where,
-        skip,
-        take: pageSize,
-        include: {
-          poem: {
-            select: {
-              id: true,
-              title: true,
-              authorId: true,
-              dynasty: true,
-              author: {
-                select: {
-                  id: true,
-                  name: true,
+    let list: any[] = [];
+    let total: number = 0;
+    if (targetType === 'POEM') {
+      [list, total] = await Promise.all([
+        this.prisma.like.findMany({
+          where,
+          skip,
+          take: pageSize,
+          include: {
+            poem: {
+              select: {
+                id: true,
+                title: true,
+                authorId: true,
+                dynasty: true,
+                author: {
+                  select: {
+                    id: true,
+                    name: true,
+                  },
                 },
               },
             },
           },
-        },
-        orderBy: {
-          createdAt: 'desc',
-        },
-      }),
-      this.prisma.like.count({ where }),
-    ]);
+          orderBy: {
+            createdAt: 'desc',
+          },
+        }),
+        this.prisma.like.count({ where }),
+      ]);
+    } else if (targetType === 'COLLECTION') {
+      [list, total] = await Promise.all([
+        this.prisma.like.findMany({
+          where,
+          skip,
+          take: pageSize,
+          include: {
+            collection: {
+              select: {
+                id: true,
+                title: true,
+                creatorId: true,
+                creator: {
+                  select: {
+                    id: true,
+                    name: true,
+                  },
+                },
+              },
+            },
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
+        }),
+        this.prisma.like.count({ where }),
+      ]);
+    }
   
     return {
       list,
@@ -211,8 +242,8 @@ export class LikeService {
     // Set the appropriate ID field based on target type
     const targetId = Number(updateLikeDto.targetId);
     switch (updateLikeDto.targetType) {
-      case 'POETRY':
-        updateData.poetryId = targetId;
+      case 'POEM':
+        updateData.poemId = targetId;
         break;
       case 'LIST':
         updateData.poetryListId = targetId;
