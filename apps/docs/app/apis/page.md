@@ -12,7 +12,7 @@ curl -X POST "http://localhost:4000/api/auth/register" \
 ```bash
 curl -X POST "http://localhost:4000/api/auth/login" \
   -H "Content-Type: application/json" \
-  --data-raw '{"email":"root@example.com","password":"123456"}'
+  --data-raw '{"email":"root@codefe.com","password":"123456"}'
 ```
 
 ## Login (user)

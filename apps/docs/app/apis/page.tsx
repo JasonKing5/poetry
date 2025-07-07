@@ -10,7 +10,7 @@ export default function APIs() {
     },
     {
       name: 'Login',
-      curl: 'curl -X POST "/api/auth/login --data-raw \"{\"email\":\"root@example.com\",\"password\":\"123456\"}\""'
+      curl: 'curl -X POST "/api/auth/login --data-raw \"{\"email\":\"root@codefe.com\",\"password\":\"123456\"}\""'
     },
     {
       name: 'Login',

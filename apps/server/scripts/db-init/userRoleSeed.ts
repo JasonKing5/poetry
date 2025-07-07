@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { POETRY_AUTHOR_MAP } from './constant';
 
+
 const prisma = new PrismaClient();
 
 export async function userRoleSeed() {
@@ -97,15 +98,20 @@ export async function userRoleSeed() {
   });
 
   console.log('Start seed root user')
+  const rootEmail = process.env.ROOT_EMAIL || 'root@example.com';
+  const rootPassword = process.env.ROOT_PASSWORD || '123456';
+  
   const rootUser = await prisma.user.upsert({
-    where: { email: 'root@example.com' },
+    where: { email: rootEmail },
     update: {},
     create: {
-      email: 'root@example.com',
+      email: rootEmail,
       name: 'root',
-      password: await bcrypt.hash('123456', 10),
+      password: await bcrypt.hash(rootPassword, 10),
     },
   });
+  
+  console.log(`Root user created/updated with email: ${rootEmail}`);
 
   await prisma.userRole.upsert({
     where: {
