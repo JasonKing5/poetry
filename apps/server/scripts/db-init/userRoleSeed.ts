@@ -1,9 +1,5 @@
-import { PrismaClient, PoetryType, PoetrySource, PoetryStatus, Dynasty } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
-import * as fs from 'fs';
-import * as path from 'path';
-import { POETRY_AUTHOR_MAP } from './constant';
-
 
 const prisma = new PrismaClient();
 
