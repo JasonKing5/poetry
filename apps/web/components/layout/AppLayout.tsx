@@ -102,7 +102,15 @@ export default function AppLayout({ children }: AppLayoutProps) {
             </Link>
           )}
         </nav>
-        <div className='flex gap-4'>
+        <div className='flex gap-4 items-center'>
+          {/* 添加微信客服 */}
+          <div className="relative group">
+            <Image src="/wechat.png" width={30} height={30} alt="Wechat" className="cursor-pointer" />
+            <div className="absolute right-0 mt-2 w-64 p-2 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <Image src="/poetry_service1.png" width={300} height={300} alt="微信客服二维码" className="w-full h-auto mt-2" />
+              <p className="text-lg text-center mt-1 text-gray-600">扫码添加客服微信</p>
+            </div>
+          </div>
           {isAuthenticated && user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
