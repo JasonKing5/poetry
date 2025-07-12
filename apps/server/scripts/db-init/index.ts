@@ -4,6 +4,7 @@ import * as path from 'path';
 import { userRoleSeed } from './userRoleSeed';
 import { authorSeed } from './authorSeed';
 import { poetrySeed } from './poetrySeed';
+import { embedPoemsSeed } from './embadding';
 
 const prisma = new PrismaClient();
 
@@ -25,6 +26,8 @@ async function main() {
   const nullNameId = await authorSeed(poetryDir, authorDir, authorFiles, files, rootUser.id);
 
   await poetrySeed(poetryDir, files, rootUser.id, nullNameId);
+
+  await embedPoemsSeed();
 
   console.log('All successfully seeded.');
 }

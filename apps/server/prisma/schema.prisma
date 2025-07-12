@@ -130,7 +130,7 @@ model Poem {
   type        PoetryType
   source      PoetrySource
   dynasty     Dynasty
-  embedding   Float[]?
+  embedding   Float[]
   submitter   User            @relation(fields: [submitterId], references: [id], onDelete: Cascade)
   submitterId Int
   author      Author?         @relation(fields: [authorId], references: [id])

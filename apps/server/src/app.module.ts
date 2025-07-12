@@ -13,6 +13,7 @@ import { CollectionModule } from './collection/collection.module';
 import { AuthMiddleware } from './common/middlewares/auth.middleware';
 import { AuthGuard } from './common/guards/auth.guard';
 import { JwtModule } from '@nestjs/jwt';
+import { EmbeddingService } from './embedding/embedding.service';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { JwtModule } from '@nestjs/jwt';
     }),
     UserModule, AuthModule, PoetryModule, PoetryPropModule, MailModule, AuthorModule, LikeModule, CollectionModule],
   controllers: [AppController],
-  providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
+  providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }, EmbeddingService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
