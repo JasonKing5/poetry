@@ -60,6 +60,22 @@ export class PoetryController {
     );
   }
 
+  @Get('/search')
+  @Public()
+  async search(@Query() query: { 
+    input: string,
+    limit?: number,
+  }) {
+    const { 
+      input,
+      limit = 10,
+    } = query;
+    console.log('input: ', input);
+    console.log('limit: ', limit);
+
+    return await this.poetryService.search(input, limit);
+  }
+
   @Get('/:id')
   @Public()
   async findOne(@Param('id') id: number) {

@@ -6,10 +6,10 @@ def embed_text(text: str) -> list[float]:
   """
   对单个文本生成 embedding 向量
   """
-  return model.encode(text).tolist()
+  return model.encode(text, normalize_embeddings=True)
 
 def embed_text_batch(texts: list[str]) -> list[list[float]]:
   """
   对一组文本生成 embedding 向量
   """
-  return model.encode(texts, normalize_embeddings=True).tolist()
+  return model.encode(texts, normalize_embeddings=True)

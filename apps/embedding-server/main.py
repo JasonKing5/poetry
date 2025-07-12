@@ -18,9 +18,7 @@ class EmbedRequest(BaseModel):
   text: str
 
 class EmbedResponse(BaseModel):
-  code: int
-  message: str
-  data: list[float]
+  embedding: list[float]
 
 class BatchRequest(BaseModel):
   texts: list[str]
@@ -33,12 +31,14 @@ class HealthCheckResponse(BaseModel):
 
 @app.post("/embed", response_model=EmbedResponse)
 def embed(req: EmbedRequest):
-  vector = embed_text(req.text)
-  return EmbedResponse(code=200, message="success", data=vector)
+  print('text: ', req.text)
+  vector = embed_text(req.text).tolist()
+  print('vector: ', len(vector))
+  return EmbedResponse(embedding=vector)
 
 @app.post("/embed-batch", response_model=BatchResponse)
 def embed_batch(req: BatchRequest):
-  vectors = embed_text_batch(req.texts)
+  vectors = embed_text_batch(req.texts).tolist()
   return BatchResponse(embeddings=vectors)
 
 @app.get("/healthz", response_model=HealthCheckResponse)

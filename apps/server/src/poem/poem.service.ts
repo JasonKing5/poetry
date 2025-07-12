@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Dynasty, PoetrySource, PoetryStatus, PoetryType } from '@prisma/client';
+import axios from 'axios';
 
 @Injectable()
 export class PoetryService {
@@ -99,6 +100,40 @@ export class PoetryService {
       pageSize,
       totalPages: Math.ceil(total / pageSize)
     };
+  }
+
+  async search(input: string, limit: number = 10) {
+    const res = await axios.post(`${process.env.EMBEDDING_SERVER_URL}/embed`, { text: input });
+    const inputVector = res?.data?.embedding || [];
+
+    if (!inputVector.length) {
+      throw new Error('Failed to generate embedding for the input text');
+    }
+
+    console.log('search service inputVector: ', inputVector.length);
+    console.log('search service limit: ', limit, typeof limit);
+
+    // Convert the input vector to a PostgreSQL array string
+    const pgVector = `[${inputVector.join(',')}]`;
+
+    const poems = await this.prisma.$queryRaw`
+      SELECT
+        p.id,
+        p.title,
+        a.name as author,
+        p.dynasty,
+        p.content,
+        p.embedding <=> ${pgVector}::vector as distance
+      FROM "Poem" p
+      LEFT JOIN "Author" a ON p."authorId" = a.id
+      WHERE p.embedding IS NOT NULL
+      ORDER BY distance
+      LIMIT ${limit}
+    `;
+
+    console.log('search service poems: ', poems);
+
+    return poems;
   }
 
   async findPoems(poemIds: number[]) {
