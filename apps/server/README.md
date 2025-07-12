@@ -12,8 +12,19 @@ $ pnpm run db:init
 
 ```bash
 # Optional actions
+$ CREATE DATABASE poetry;
 
-$ psql -h localhost -p 5432 -U ifs -d ifs
+$ CREATE USER poetry WITH PASSWORD 'poetry';
+
+$ GRANT ALL PRIVILEGES ON DATABASE poetry TO poetry;
+
+$ \c poetry
+
+$ CREATE EXTENSION IF NOT EXISTS vector;
+
+$ ALTER TABLE "Poem" ADD COLUMN "embedding" vector(384);
+
+$ psql -h localhost -p 5432 -U poetry -d poetry
 
 $ DROP TABLE "RolePermission", "UserRole", "Permission", "Poem", "Author", "Role", "User", "Bookmark", "Like", "CollectionPoem", "Collection", "Comment";
 
