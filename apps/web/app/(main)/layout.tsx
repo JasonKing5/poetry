@@ -4,6 +4,7 @@ import { Providers } from '@/providers'
 import "@/app/globals.css";
 import AppLayout from "@/components/layout/AppLayout";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import SmartSearchButton from '@/components/SmartSearchButton';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,6 +32,7 @@ export default function RootLayout({
           <TooltipProvider>
             <AppLayout>
               {children}
+              <SmartSearchButton />
             </AppLayout>
           </TooltipProvider>
         </Providers>

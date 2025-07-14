@@ -262,6 +262,7 @@ function PoemPageContent() {
             <li className="w-full" key={poem.id}>
               <PoemCard
                 id={poem.id}
+                mode="full"
                 title={poem.title}
                 author={poem.author.name}
                 dynasty={poem.dynasty}
