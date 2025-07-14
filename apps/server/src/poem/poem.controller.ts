@@ -60,16 +60,16 @@ export class PoetryController {
     );
   }
 
-  @Get('/search')
+  @Post('/search')
   @Public()
-  async search(@Query() query: { 
+  async search(@Body() body: { 
     input: string,
     limit?: number,
   }) {
     const { 
       input,
       limit = 10,
-    } = query;
+    } = body;
     console.log('input: ', input);
     console.log('limit: ', limit);
 

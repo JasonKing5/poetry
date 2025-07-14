@@ -2,6 +2,9 @@
 
 This Turborepo starter is maintained by the Turborepo core team.
 
+[Open this Turborepo's architecture in Excalidraw](https://excalidraw.com/#json=BXdW3Ha_-rlHfuynM5bEH,dgbJkQqdQ8I2YfZNwsjHdg)
+
+
 ## Using this example
 
 Run the following command:
