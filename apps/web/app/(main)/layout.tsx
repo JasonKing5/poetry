@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Providers } from '@/providers'
 import "@/app/globals.css";
 import AppLayout from "@/components/layout/AppLayout";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,9 +28,11 @@ export default function RootLayout({
     <html lang="zh">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers>
-          <AppLayout>
-            {children}
-          </AppLayout>
+          <TooltipProvider>
+            <AppLayout>
+              {children}
+            </AppLayout>
+          </TooltipProvider>
         </Providers>
       </body>
     </html>

@@ -30,7 +30,7 @@ export class ChatService {
       LEFT JOIN "Author" a ON p."authorId" = a.id
       WHERE p.embedding IS NOT NULL
       ORDER BY distance
-      LIMIT 10
+      LIMIT 3
     `;
 
     return poems;
