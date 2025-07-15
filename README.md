@@ -4,6 +4,20 @@ This Turborepo starter is maintained by the Turborepo core team.
 
 [Open this Turborepo's architecture in Excalidraw](https://excalidraw.com/#json=BXdW3Ha_-rlHfuynM5bEH,dgbJkQqdQ8I2YfZNwsjHdg)
 
+## DB
+
+```bash
+# 启动数据库
+docker compose up -d
+
+# 查看数据库容器日志
+docker logs -f pg
+
+# 进入数据库容器
+docker exec -it pg psql -U postgres -d poetry
+```
+
+
 
 ## Using this example
 

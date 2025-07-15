@@ -99,9 +99,9 @@ export default function SmartChatWindow({ onClose }: { onClose: () => void }) {
               {msg.role === 'user' ? msg.text : Array.isArray(msg.text) ? 
               (
                 <>
-                <span>找到以下结果：</span>
+                <span>找到以下诗词：</span>
                 {msg.text.map((item: any, idx: number) => (
-                  <div key={idx} className='flex flex-col items-center gap-1 mt-4'>
+                  <div key={idx} className='flex flex-col items-start gap-1 mt-4'>
                     <div className='flex items-center gap-1 flex-wrap'>
                       <span>《{item.title}》</span>
                       <span>【{DYNASTY_MAP[item.dynasty as keyof typeof DYNASTY_MAP]}】</span>
