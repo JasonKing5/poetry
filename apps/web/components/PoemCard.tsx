@@ -172,7 +172,7 @@ export default function PoemCard({
           <div className="absolute top-2 right-2 bg-white border border-blue-300 px-3 py-1 rounded-xl shadow-md text-right flex items-center gap-1">
             <BadgeCheck size={18} className="text-blue-600"/>
             <div className="font-bold text-blue-600 leading-tight">
-              {((1 - distance) * 100).toFixed(1)}%
+              {((1 - distance) * 100).toFixed(2)}%
             </div>
           </div>
         </div>

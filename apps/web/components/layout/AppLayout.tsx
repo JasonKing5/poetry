@@ -78,6 +78,17 @@ export default function AppLayout({ children }: AppLayoutProps) {
             作者
           </Link>
           <Link
+            href="/search"
+            className={cn(
+              "transition-colors",
+              pathname.startsWith("/search") 
+                ? "text-blue-600 font-bold" 
+                : "text-gray-700 hover:text-blue-400"
+            )}
+          >
+            AI搜索
+          </Link>
+          <Link
             href="/me"
             className={cn(
               "transition-colors",

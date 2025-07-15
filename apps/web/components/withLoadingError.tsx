@@ -1,6 +1,18 @@
 import React from "react";
 import styles from "./withLoadingError.module.css";
 
+export const Loading = () => {
+  return (
+    <div className={styles.centerScreen}>
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className={styles.spin} style={{marginBottom: 16}}>
+        <circle cx="24" cy="24" r="20" stroke="#1976d2" strokeWidth="4" opacity="0.2"/>
+        <path d="M44 24c0-11.046-8.954-20-20-20" stroke="#1976d2" strokeWidth="4" strokeLinecap="round"/>
+      </svg>
+      <div>加载中…</div>
+    </div>
+  )
+}
+
 export function withLoadingError(hookResult: { data: any, isLoading: boolean, error: any }) {
   const { data, isLoading, error } = hookResult;
 
@@ -21,15 +33,7 @@ export function withLoadingError(hookResult: { data: any, isLoading: boolean, er
   if (isLoading) {
     return {
       data: null,
-      element: (
-        <div className={styles.centerScreen}>
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className={styles.spin} style={{marginBottom: 16}}>
-            <circle cx="24" cy="24" r="20" stroke="#1976d2" strokeWidth="4" opacity="0.2"/>
-            <path d="M44 24c0-11.046-8.954-20-20-20" stroke="#1976d2" strokeWidth="4" strokeLinecap="round"/>
-          </svg>
-          <div>加载中…</div>
-        </div>
-      )
+      element: Loading()
     };
   }
   if (error) {

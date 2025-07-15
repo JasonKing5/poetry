@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Sparkles } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import PoemCard from '@/components/PoemCard';
+import { Loading } from '@/components/withLoadingError';
 // import { ChatRequest, ChatResponse } from '@repo/types';
 // import { v4 as uuid } from 'uuid';
 
@@ -16,6 +17,7 @@ export default function SemanticSearchPage() {
   const { mutate: searchMutate } = useSearch();
   const handleSearch = async () => {
     if (!query.trim()) return
+    setResults([])
     setLoading(true)
     searchMutate({
       input: query,
@@ -46,7 +48,7 @@ export default function SemanticSearchPage() {
             <span className="flex items-center gap-2">搜索<Sparkles className={loading ? "animate-pulse" : ""} /></span>
           </Button>
         </div>
-        {loading && <p className="text-gray-500">正在搜索中...</p>}
+        {loading && <Loading />}
         <ul className="space-y-4">
         {/* <span className="text-sm text-white bg-blue-500 px-2 py-0.5 rounded-full whitespace-nowrap">
                 相似度：{((1 - item.distance) * 100).toFixed(2)}%
