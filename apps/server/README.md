@@ -1,72 +1,72 @@
 ## Project setup
 
 ```bash
-$ pnpm install
+pnpm install
 
-$ pnpm run db:generate
+pnpm run db:generate
 
-$ pnpm run db:push
+pnpm run db:push
 
-$ pnpm run db:init
+pnpm run db:init
 ```
 
 ```bash
 # Optional actions
-$ CREATE DATABASE poetry;
+CREATE DATABASE poetry;
 
-$ CREATE USER poetry WITH PASSWORD 'poetry';
+CREATE USER poetry WITH PASSWORD 'poetry';
 
-$ GRANT ALL PRIVILEGES ON DATABASE poetry TO poetry;
+GRANT ALL PRIVILEGES ON DATABASE poetry TO poetry;
 
-$ \c poetry
+\c poetry
 
-$ CREATE EXTENSION IF NOT EXISTS vector;
+CREATE EXTENSION IF NOT EXISTS vector;
 
-$ ALTER TABLE "Poem" ADD COLUMN "embedding" vector(384);
+ALTER TABLE "Poem" ADD COLUMN "embedding" vector(384);
 
-$ psql -h localhost -p 5432 -U poetry -d poetry
+psql -h localhost -p 5432 -U postgres -d poetry
 
-$ DROP TABLE "RolePermission", "UserRole", "Permission", "Poem", "Author", "Role", "User", "Bookmark", "Like", "CollectionPoem", "Collection", "Comment";
+DROP TABLE "RolePermission", "UserRole", "Permission", "Poem", "Author", "Role", "User", "Bookmark", "Like", "CollectionPoem", "Collection", "Comment";
 
 ## Compile and run the project
 
 ```bash
 # development
-$ pnpm run start
+pnpm run start
 
 # watch mode
-$ pnpm run start:dev
+pnpm run start:dev
 
 # production mode
-$ pnpm run start:prod
+pnpm run start:prod
 ```
 
 ```bash
 # DB migration
 
 # 生成并应用迁移文件
-$ npx prisma migrate dev --name add_user_like_poetry
+npx prisma migrate dev --name add_user_like_poetry
 
 # or
 # 重置数据库并重新应用所有迁移
-$ npx prisma migrate reset
+npx prisma migrate reset
 
 # or
 # 生成迁移文件，但不应用
-$ npx prisma migrate dev --name add_user_like_poetry --create-only
+npx prisma migrate dev --name add_user_like_poetry --create-only
 ```
 
 ## Run tests
 
 ```bash
 # unit tests
-$ pnpm run test
+pnpm run test
 
 # e2e tests
-$ pnpm run test:e2e
+pnpm run test:e2e
 
 # test coverage
-$ pnpm run test:cov
+pnpm run test:cov
 ```
 
 ## Deployment
@@ -74,12 +74,12 @@ $ pnpm run test:cov
 If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+pnpm install -g @nestjs/mau
+mau deploy
 
 # or
-$ pnpm run build
-$ pm2 start dist/src/main.js
+pnpm run build
+pm2 start dist/src/main.js
 ```
 
 With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.

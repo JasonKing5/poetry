@@ -1,31 +1,8 @@
-# Turborepo starter
+# Poetry
 
-This Turborepo starter is maintained by the Turborepo core team.
+A poetry app built with Turborepo + React + NestJS + NextJS + PostgreSQL + Prisma + Docker + TailwindCSS + TypeScript + ESLint + Prettier
 
-[Open this Turborepo's architecture in Excalidraw](https://excalidraw.com/#json=BXdW3Ha_-rlHfuynM5bEH,dgbJkQqdQ8I2YfZNwsjHdg)
-
-## DB
-
-```bash
-# 启动数据库
-docker compose up -d
-
-# 查看数据库容器日志
-docker logs -f pg
-
-# 进入数据库容器
-docker exec -it pg psql -U postgres -d poetry
-```
-
-
-
-## Using this example
-
-Run the following command:
-
-```sh
-npx create-turbo@latest
-```
+[Live demo](https://poetry.codefe.cn/)
 
 ## What's inside?
 
@@ -33,9 +10,13 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
+- `server`: a [NestJS](https://nestjs.com/) app
 - `web`: another [Next.js](https://nextjs.org/) app
+- `docs`: a [Next.js](https://nextjs.org/) app
+- `chat`: a [FastAPI](https://fastapi.tiangolo.com/) app
 - `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
+- `@repo/types`: a stub TypeScript library shared by both `server`, `web`, `docs`, and `ui` applications
+- `@repo/common`: a stub TypeScript library shared by both `server`, `web`, `docs`, and `ui` applications
 - `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
@@ -48,54 +29,123 @@ This Turborepo has some additional tools already setup for you:
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
 - [ESLint](https://eslint.org/) for code linting
 - [Prettier](https://prettier.io) for code formatting
+- [Prisma](https://prisma.io) for database
+- [PostgreSQL](https://www.postgresql.org) for database
 
-### Build
+## Project setup
 
-To build all apps and packages, run the following command:
+### Environment
 
+- Node.js >= 20
+- Python >= 3.10
+- TypeScript >= 5
+- PostgreSQL >= 16
+- Docker >= 25
+
+### Database
+
+```bash
+docker compose up -d
+
+# watch logs
+docker logs -f pg
+
+# psql
+docker exec -it pg psql -U postgres -d poetry
+# or
+psql -h localhost -p 5432 -U postgres -d poetry
 ```
-cd my-turborepo
-pnpm build
+
+### Prisma
+
+```bash
+cd apps/server
+
+pnpm run db:generate
+
+pnpm run db:push
+
+pnpm run db:init
 ```
 
-### Develop
+## Develop
 
 To develop all apps and packages, run the following command:
 
+```bash
+pnpm install
 ```
-cd my-turborepo
+
+```bash
 pnpm dev
 ```
 
-### Remote Caching
+or
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+### NestJS
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
+```bash
+cd apps/server
+pnpm run dev
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+### NextJS
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
+```bash
+cd apps/web
+pnpm run dev
 ```
-npx turbo link
+
+### FastAPI
+
+```bash
+cd apps/chat
+make run
 ```
 
-## Useful Links
+## Build
 
-Learn more about the power of Turborepo:
+To build all apps and packages, run the following command:
 
-- [Tasks](https://turborepo.com/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turborepo.com/docs/core-concepts/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+```bash
+pnpm build
+```
+
+or
+
+### NestJS
+
+```bash
+cd apps/server
+pnpm run build
+```
+
+### NextJS
+
+```bash
+cd apps/web
+pnpm run build
+```
+
+### FastAPI
+
+```bash
+cd apps/chat
+make build
+```
+
+## Deploy
+
+```bash
+# 构建并启动所有服务
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+
+# 查看服务状态
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml ps
+
+# 查看日志
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml logs -f
+
+# 停止服务
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml down
+```

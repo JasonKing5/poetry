@@ -10,7 +10,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "db:generate": "npx prisma generate",
     "db:push": "npx prisma db push",
-    "db:push:reset": "npx prisma db push --force-reset",
+    "db:reset": "npx prisma db push --force-reset",
     "db:init": "ts-node ./scripts/db-init/index.ts",
     "start": "nest start",
     "dev": "nest start --watch",

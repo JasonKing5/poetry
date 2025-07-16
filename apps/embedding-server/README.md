@@ -1,22 +1,49 @@
 # Embedding Server
 
+## Project setup
+
+```bash
+python -m venv .venv
+
+source .venv/bin/activate
+
+pip install -r requirements.txt
+```
+
 ## Run
 
 ```bash
-$ make run
-```
+uvicorn main:app --host 0.0.0.0 --port 4001 --reload
 
-## Test
+or
 
-```bash
-$ curl -X POST http://localhost:4001/embed -H "Content-Type: application/json" -d '{"text": "春眠不觉晓"}'
+make run
 ```
 
 ## Deploy
 
 ```bash
-$ pnpm run build
-$ pm2 start dist/src/main.js
+pm2 start "source .venv/bin/activate && uvicorn main:app --host 0.0.0.0 --port 4001" --name "poetry-embedding-server"
+
+# 查看日志
+pm2 logs poetry-embedding-server
+
+# 查看状态
+pm2 status
+
+# 停止服务
+pm2 stop poetry-embedding-server
+
+# 删除服务
+pm2 delete poetry-embedding-server
+```
+
+## Test
+
+```bash
+curl -X GET http://localhost:4001/health
+
+curl -X POST http://localhost:4001/embed -H "Content-Type: application/json" -d '{"text": "春眠不觉晓"}'
 ```
 
 ## Resources
