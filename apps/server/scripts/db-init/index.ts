@@ -27,7 +27,7 @@ async function main() {
 
   await poetrySeed(poetryDir, files, rootUser.id, nullNameId);
 
-  await embedPoemsSeed();
+  // await embedPoemsSeed();
 
   console.log('All successfully seeded.');
 }

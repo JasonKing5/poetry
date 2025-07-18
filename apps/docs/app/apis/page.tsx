@@ -39,7 +39,8 @@ export default function APIs() {
   ];
 
   const prefix = 'http://localhost:4000/api'
-  const token = localStorage.getItem('token');
+  const token = 'token';
+  // const token = window?.localStorage?.getItem('token');
 
   const formatCurl = (curl: string) => {
     curl = curl.replace('/api', prefix);

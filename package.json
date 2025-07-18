@@ -3,10 +3,12 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "clean": "turbo run clean",
     "dev": "turbo run dev",
     "dev:embed": "cd apps/embedding-server && make run",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "test": "turbo run test",
     "check-types": "turbo run check-types"
   },
   "devDependencies": {

@@ -1,13 +1,13 @@
 
-## 👉 项目初始化脚本说明：项目名 ifs，开启 Docker，使用 TurboRepo 架构，包含：
+## 👉 项目初始化脚本说明：项目名 poetry，开启 Docker，使用 TurboRepo 架构，包含：
 - apps/web: Next.js + Tailwind + React Query + Axios + react-hook-form + Zod
 - apps/docs: 文档站（可选）
 - packages/ui: 可共享的 UI 组件包
 - Docker 支持一键启动
 
 ## Step 1: 初始化 TurboRepo 项目结构（更正）
-pnpm dlx create-turbo@latest ifs
-cd ifs
+pnpm dlx create-turbo@latest poetry
+cd poetry
 
 ## ✅ 脚手架会自动生成以下内容：
 - apps/web: Next.js + Tailwind 项目
@@ -45,7 +45,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: ifs_db
+      POSTGRES_DB: poetry
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
@@ -59,7 +59,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/ifs_db
+      DATABASE_URL: postgres://postgres:postgres@db:5432/poetry
     volumes:
       - ./apps/server:/app
 

@@ -13,7 +13,7 @@ This Turborepo includes the following packages/apps:
 - `server`: a [NestJS](https://nestjs.com/) app
 - `web`: another [Next.js](https://nextjs.org/) app
 - `docs`: a [Next.js](https://nextjs.org/) app
-- `chat`: a [FastAPI](https://fastapi.tiangolo.com/) app
+- `embedding-server`: a [FastAPI](https://fastapi.tiangolo.com/) app
 - `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
 - `@repo/types`: a stub TypeScript library shared by both `server`, `web`, `docs`, and `ui` applications
 - `@repo/common`: a stub TypeScript library shared by both `server`, `web`, `docs`, and `ui` applications
@@ -137,15 +137,21 @@ make build
 ## Deploy
 
 ```bash
-# 构建并启动所有服务
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+# build
+docker-compose up -d --build
 
-# 查看服务状态
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml ps
+# images
+docker images | grep poetry
 
-# 查看日志
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml logs -f
+# save images
+docker load -i poetry-apps.tar
 
-# 停止服务
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml down
+# status
+docker-compose ps
+
+# logs
+docker-compose logs -f
+
+# stop
+docker-compose down
 ```

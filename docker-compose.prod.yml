@@ -4,8 +4,8 @@ services:
   # server (NestJS)
   server:
     build:
-      context: ./apps/server
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/server/Dockerfile
     container_name: poetry-server
     restart: always
     ports:
@@ -22,8 +22,8 @@ services:
   # web (Next.js)
   web:
     build:
-      context: ./apps/web
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/web/Dockerfile
     container_name: poetry-web
     restart: always
     ports:
@@ -37,22 +37,22 @@ services:
       - poetry-network
 
   # embedding-server (FastAPI)
-  embedding-server:
-    build:
-      context: ./apps/embedding-server
-      dockerfile: Dockerfile
-    container_name: poetry-embedding-server
-    restart: always
-    ports:
-      - "4001:4001"
-    environment:
-      - PYTHONUNBUFFERED=1
-    volumes:
-      - embedding_models:/root/.cache/huggingface/hub
-    depends_on:
-      - postgres
-    networks:
-      - poetry-network
+  # embedding-server:
+  #   build:
+  #     context: .
+  #     dockerfile: apps/embedding-server/Dockerfile
+  #   container_name: poetry-embedding-server
+  #   restart: always
+  #   ports:
+  #     - "4001:4001"
+  #   environment:
+  #     - PYTHONUNBUFFERED=1
+  #   volumes:
+  #     - embedding_models:/root/.cache/huggingface/hub
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - poetry-network
 
 volumes:
   embedding_models:
