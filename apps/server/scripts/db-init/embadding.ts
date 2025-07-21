@@ -17,6 +17,9 @@ async function getPoemsCountForEmbedding() {
   return await prisma.poem.count({
     where: {
       isDeleted: false,
+      // id: {
+      //   lt: 101
+      // }
     },
   });
 }
