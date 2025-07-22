@@ -138,20 +138,24 @@ make build
 
 ```bash
 # build
-docker-compose up -d --build
+docker compose up -d --build
+# or
+sudo DOCKER_DEFAULT_PLATFORM=linux/amd64 docker compose build
+# or
+sudo docker compose build server
 
 # images
 docker images | grep poetry
 
-# save images
-docker load -i poetry-apps.tar
+# run
+sudo docker compose up -d
 
 # status
-docker-compose ps
+sudo docker compose ps
 
 # logs
-docker-compose logs -f
+sudo docker compose logs -f
 
 # stop
-docker-compose down
+sudo docker compose down
 ```

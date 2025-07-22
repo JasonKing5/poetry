@@ -39,7 +39,7 @@ services:
     networks:
       - poetry-network
 
-  # # server (NestJS)
+  # server (NestJS)
   server:
     build:
       context: .
@@ -57,7 +57,7 @@ services:
     networks:
       - poetry-network
 
-  # # web (Next.js)
+  # web (Next.js)
   web:
     build:
       context: .
