@@ -51,13 +51,13 @@ services:
     environment:
       - NODE_ENV=production
       - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/poetry
-      - EMBEDDING_SERVICE_URL=http://embedding-server:4001
+      - EMBEDDING_SERVER_URL=http://embedding-server:4001
     depends_on:
       - postgres
     networks:
       - poetry-network
 
-  # web (Next.js)
+  # # web (Next.js)
   web:
     build:
       context: .

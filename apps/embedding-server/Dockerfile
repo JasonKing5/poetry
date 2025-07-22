@@ -1,4 +1,4 @@
-FROM python:3.12-slim AS production
+FROM python:3.12-slim
 
 # 设置工作目录
 WORKDIR /app
@@ -16,13 +16,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # 复制项目文件
-COPY --from=development /app/requirements.txt .
+COPY apps/embedding-server/requirements.txt .
 
 # 安装 Python 依赖
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 复制源代码
-COPY --from=development /app/ .
+COPY apps/embedding-server/ .
 
 # 预下载模型
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('BAAI/bge-small-zh')"
