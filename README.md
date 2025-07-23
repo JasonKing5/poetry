@@ -138,11 +138,9 @@ make build
 
 ```bash
 # build
-docker compose up -d --build
+sudo docker compose up -d --build
 # or
-sudo DOCKER_DEFAULT_PLATFORM=linux/amd64 docker compose build
-# or
-sudo docker compose build server
+sudo docker compose up -d --build server
 
 # images
 docker images | grep poetry

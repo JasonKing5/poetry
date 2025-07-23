@@ -21,23 +21,24 @@ services:
     networks:
       - poetry-network
 
-  # # embedding-server (FastAPI)
-  # embedding-server:
-  #   build:
-  #     context: .
-  #     dockerfile: apps/embedding-server/Dockerfile
-  #   container_name: poetry-embedding-server
-  #   restart: always
-  #   ports:
-  #     - "4001:4001"
-  #   environment:
-  #     - PYTHONUNBUFFERED=1
-  #   volumes:
-  #     - embedding_models:/root/.cache/huggingface/hub
-  #   depends_on:
-  #     - postgres
-  #   networks:
-  #     - poetry-network
+  # embedding-server (FastAPI)
+  embedding-server:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: apps/embedding-server/Dockerfile
+    container_name: poetry-embedding-server
+    restart: always
+    ports:
+      - "4001:4001"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - embedding_models:/root/.cache/huggingface/hub
+    depends_on:
+      - postgres
+    networks:
+      - poetry-network
 
   # server (NestJS)
   server:
