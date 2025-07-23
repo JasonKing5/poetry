@@ -39,40 +39,40 @@ services:
   #   networks:
   #     - poetry-network
 
-  # # server (NestJS)
-  # server:
-  #   build:
-  #     context: .
-  #     dockerfile: apps/server/Dockerfile
-  #   container_name: poetry-server
-  #   restart: always
-  #   ports:
-  #     - "4000:4000"
-  #   environment:
-  #     - NODE_ENV=production
-  #     - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/poetry
-  #     - EMBEDDING_SERVER_URL=http://embedding-server:4001
-  #   depends_on:
-  #     - postgres
-  #   networks:
-  #     - poetry-network
+  # server (NestJS)
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    container_name: poetry-server
+    restart: always
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/poetry
+      - EMBEDDING_SERVER_URL=http://embedding-server:4001
+    depends_on:
+      - postgres
+    networks:
+      - poetry-network
 
-  # # web (Next.js)
-  # web:
-  #   build:
-  #     context: .
-  #     dockerfile: apps/web/Dockerfile
-  #   container_name: poetry-web
-  #   restart: always
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     - NODE_ENV=production
-  #     - NEXT_PUBLIC_API_URL=http://server:4000
-  #   depends_on:
-  #     - server
-  #   networks:
-  #     - poetry-network
+  # web (Next.js)
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: poetry-web
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://server:4000
+    depends_on:
+      - server
+    networks:
+      - poetry-network
 
 volumes:
   data:
