@@ -1,6 +1,18 @@
 from sentence_transformers import SentenceTransformer
+import os
 
-model = SentenceTransformer("BAAI/bge-small-zh")
+is_docker = os.path.exists('/.dockerenv')
+
+print('embedding is_docker: ', is_docker)
+
+if not is_docker:
+  model = SentenceTransformer("BAAI/bge-small-zh")
+
+  if not os.path.exists("models/bge-small-zh"):
+    model.save("models/bge-small-zh")
+
+else:
+  model = SentenceTransformer("/app/models/bge-small-zh")
 
 def embed_text(text: str) -> list[float]:
   """
