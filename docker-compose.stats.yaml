@@ -7,10 +7,8 @@ services:
     ports:
       - "3001:3000"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/umami
+      DATABASE_URL: postgresql://postgres:postgres@poetry-db:5432/umami
       APP_SECRET: umami
-    depends_on:
-      - postgres
     networks:
       - poetry-network
 
