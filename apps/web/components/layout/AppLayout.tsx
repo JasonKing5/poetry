@@ -30,6 +30,15 @@ interface AppLayoutProps {
   children: ReactNode;
 }
 
+interface FooterLinkProps {
+  title: string;
+  items: {
+    label: string;
+    to?: string;
+    href?: string;
+  }[]
+}
+
 export default function AppLayout({ children }: AppLayoutProps) {
   const pathname = usePathname();
   const { user, clearUser, isAuthenticated, isAdmin } = useAuth();
@@ -95,6 +104,92 @@ export default function AppLayout({ children }: AppLayoutProps) {
       )}
     </nav>
   );
+
+  const footerLinkData: FooterLinkProps[]  = [
+    {
+      title: '醉诗词',
+      items: [
+        {
+          label: '诗词',
+          to: '/poem',
+        },
+        {
+          label: '合集',
+          to: 'collection',
+        },
+        {
+          label: 'AI搜索',
+          to: 'search',
+        }
+      ],
+    },
+    {
+      title: '团队',
+      items: [
+        {
+          label: '庄生',
+          href: 'https://space.bilibili.com/286327785',
+        },
+        {
+          label: '帝心',
+          href: 'https://space.bilibili.com/110937561',
+        },
+      ],
+    },
+    {
+      title: '更多',
+      items: [
+        {
+          label: 'CodeFE',
+          href: 'https://www.codefe.cn/',
+        },
+        {
+          label: '鸿蒙学苑',
+          href: 'https://hm.codefe.cn/',
+        },
+        {
+          label: '醉诗词',
+          href: 'https://poetry.codefe.cn/',
+        },
+      ],
+    },
+  ]
+
+  // 优化后的 Footer Links 渲染，专业且美观
+  const footerLinks = () => {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-sm text-gray-600">
+        {footerLinkData.map((section) => (
+          <div key={section.title} className="space-y-2">
+            <h3 className="font-semibold text-gray-900 mb-1 text-base">{section.title}</h3>
+            <ul className="space-y-1">
+              {section.items.map((link) => (
+                <li key={link.label}>
+                  {link.to ? (
+                    <Link
+                      href={link.to}
+                      className="hover:text-blue-600 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-blue-600 transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -267,7 +362,8 @@ export default function AppLayout({ children }: AppLayoutProps) {
         </div>
       </main>
       <footer className="bg-white shadow p-4 text-center text-sm text-gray-500">
-        <div className="container mx-auto flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
+        {footerLinks()}
+        <div className="container mx-auto flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mt-2">
           <div>
             ICP备案：
             <a

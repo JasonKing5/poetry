@@ -58,13 +58,13 @@ export default function SmartSearchButton() {
 
   return (
     <>
-      <div className="fixed bottom-16 right-6 z-50 group">
+      <div className="fixed bottom-45 right-6 z-50 group">
         <div className="relative">
           {/* Tooltip */}
           {showTooltip && (
             <div className="absolute right-16 bottom-1/2 translate-y-1/2 bg-white shadow-lg rounded-lg p-3 w-48 z-50">
               <div className="flex items-start">
-                <Info className="w-4 h-4 text-blue-500 mt-0.5 mr-2 flex-shrink-0" />
+                {/* <Info className="w-4 h-4 text-blue-500 mt-0.5 mr-2 flex-shrink-0" /> */}
                 <p className="text-xs text-gray-600">点击 AI智能搜索，可快速找到您需要的内容～</p>
               </div>
               <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 w-2 h-4 bg-white -mr-1 rotate-45"></div>
