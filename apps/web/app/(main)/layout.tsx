@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Providers } from '@/providers'
 import "@/app/globals.css";
+import Script from "next/script";
 import AppLayout from "@/components/layout/AppLayout";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import SmartSearchButton from '@/components/SmartSearchButton';
@@ -36,6 +37,12 @@ export default function RootLayout({
             </AppLayout>
           </TooltipProvider>
         </Providers>
+        <Script
+          src="https://analytics.codefe.cn/script.js"
+          async
+          defer
+          data-website-id="5591c5cd-9139-4779-acca-d4fef1aecf37"
+        />
       </body>
     </html>
   );
