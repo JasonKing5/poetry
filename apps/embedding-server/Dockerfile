@@ -1,37 +1,27 @@
-FROM python:3.12-slim
-
-# 设置工作目录
+FROM python:3.12-slim AS base
 WORKDIR /app
 
-# 设置环境变量
+# 环境变量
 ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
-# 安装系统依赖
-RUN rm -f /etc/apt/sources.list.d/* \
- && echo "deb http://mirrors.aliyun.com/debian bookworm main contrib non-free" > /etc/apt/sources.list \
- && echo "deb http://mirrors.aliyun.com/debian-security bookworm-security main" >> /etc/apt/sources.list \
- && echo "deb http://mirrors.aliyun.com/debian bookworm-updates main contrib non-free" >> /etc/apt/sources.list \
- && apt-get update \
- && apt-get install -y --no-install-recommends gcc python3-dev \
- && rm -rf /var/lib/apt/lists/*
-
-# 复制项目文件
+# ---- 安装系统依赖 & Python 依赖 ----
+# 把 apt 与 pip 操作合并到单层，结束后清理
 COPY apps/embedding-server/requirements.txt .
+RUN set -eux; \
+    apt-get update && \
+    apt-get install -y --no-install-recommends gcc python3-dev && \
+    pip install --no-cache-dir -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html && \
+    apt-get purge -y gcc python3-dev && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
 
-# 安装 Python 依赖
-RUN pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
-
-# 复制源代码
+# ---- 复制代码 ----
 COPY apps/embedding-server/ .
 
-# 预下载模型
-# RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('BAAI/bge-small-zh')"
-
-# 暴露端口
+# ---- 运行配置 ----
+# 模型缓存目录挂卷，避免写进镜像
+VOLUME /root/.cache/huggingface/hub
 EXPOSE 4001
-
-# 生产模式命令
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "4001"]

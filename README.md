@@ -137,10 +137,18 @@ make build
 ## Deploy
 
 ```bash
-# build
+# build & run
 sudo docker compose up -d --build
 # or
 sudo docker compose up -d --build server
+
+# build images
+sudo docker compose build
+
+# push images
+docker push ghcr.io/jasonking5/poetry-server:latest
+docker push ghcr.io/jasonking5/poetry-web:latest
+docker push ghcr.io/jasonking5/poetry-embedding-server:latest
 
 # images
 docker images | grep poetry
@@ -156,4 +164,19 @@ sudo docker compose logs -f
 
 # stop
 sudo docker compose down
+
+# remove images
+sudo docker rmi ghcr.io/jasonking5/poetry-server:latest
+sudo docker rmi ghcr.io/jasonking5/poetry-web:latest
+sudo docker rmi ghcr.io/jasonking5/poetry-embedding-server:latest
+
+# remove all unused images
+docker image prune -a
+
+# remove volumes
+sudo docker volume rm poetry-data
+sudo docker volume rm poetry-embedding-models
+
+# remove networks
+sudo docker network rm poetry-network
 ```
