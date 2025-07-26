@@ -23,6 +23,7 @@ services:
 
   # embedding-server (FastAPI)
   embedding-server:
+    image: ghcr.io/jasonking5/poetry-embedding-server:latest
     platform: linux/amd64
     build:
       context: .
@@ -42,6 +43,7 @@ services:
 
   # server (NestJS)
   server:
+    image: ghcr.io/jasonking5/poetry-server:latest
     platform: linux/amd64
     build:
       context: .
@@ -61,6 +63,7 @@ services:
 
   # web (Next.js)
   web:
+    image: ghcr.io/jasonking5/poetry-web:latest
     platform: linux/amd64
     build:
       context: .
