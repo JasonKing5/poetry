@@ -356,14 +356,16 @@ export default function AppLayout({ children }: AppLayoutProps) {
         </div>
       </header>
       {/* Add padding top to account for fixed header */}
-      <main className="flex-1 pt-22 pb-6 px-4 md:px-6 main-bg-ink overflow-auto">
+      <main
+        className="flex-1 pt-22 pb-6 px-4 md:px-6 main-bg-ink overflow-auto"
+      >
         <div className="container mx-auto">
           {children}
         </div>
       </main>
-      <footer className="bg-white shadow p-4 text-center text-sm text-gray-500">
+      <footer className="bg-white-50 p-4 text-center text-sm text-gray-500">
         {footerLinks()}
-        <div className="container mx-auto flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mt-2">
+        <div className="mx-auto flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mt-2">
           <div>
             ICP备案：
             <a

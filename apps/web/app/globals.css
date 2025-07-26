@@ -24,7 +24,7 @@
   }
 
   .main-bg-ink {
-    @apply bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat;
+    @apply bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat bg-fixed;
   }
 }
 

@@ -42,37 +42,37 @@ const poemSelections = [
   {
     title: "诗 经",
     desc: "关关雎鸠，在河之洲。窈窕淑女，君子好逑。",
-    bg: "#4b5c6b",
+    bg: "#4b5c6b78",
     filter: { type: "shiJing" }
   },
   {
     title: "楚 辞",
     desc: "帝高阳之苗裔兮，朕皇考曰伯庸。",
-    bg: "#3e6b4b",
+    bg: "#3e6b4b78",
     filter: { type: "chuCi" }
   },
   {
     title: "论 语",
     desc: "学而时习之，不亦说乎？",
-    bg: "#4b6b7d",
+    bg: "#4b6b7d78",
     filter: { type: "lunYu" }
   },
   {
     title: "唐诗三百首",
     desc: "錦瑟無端五十絃，一絃一柱思華年。",
-    bg: "#6b4b3e",
+    bg: "#6b4b3e78",
     filter: { type: "tangShi" }
   },
   {
     title: "宋词三百首",
     desc: "回首向来萧瑟处, 归去, 也无风雨也无晴。",
-    bg: "#7d7c4b",
+    bg: "#7d7c4b78",
     filter: { type: "songCi" }
   },
   {
     title: "元曲三百首",
     desc: "无男儿只一身，担寂寞受孤闷；",
-    bg: "#5c4b6b",
+    bg: "#5c4b6b78",
     filter: { type: "yuanQu" }
   },
 ];
@@ -176,7 +176,7 @@ export default function Home() {
     <div className='w-full flex flex-col justify-center'>
       <div className="w-full flex justify-center">
         <div
-          className="relative flex w-full max-w-6xl h-28 md:h-36 bg-[#b6b08a]/90 rounded-xl shadow-lg overflow-hidden"
+          className="relative flex w-full max-w-6xl h-28 md:h-36 bg-[#b6b08a]/60 rounded-xl shadow-lg overflow-hidden"
         >
           <div className="flex-1 flex flex-col justify-center items-center px-4 md:px-8 py-2 md:py-4">
             <div className="text-white text-base md:text-[1.35rem] lg:text-2xl font-semibold tracking-wide text-left leading-relaxed drop-shadow-lg mb-1 md:mb-2">
@@ -186,7 +186,7 @@ export default function Home() {
               —— 苏轼 · 宋 《浣溪沙·细雨斜风作晓寒》
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center w-1/3 md:w-1/4 min-w-[90px] md:min-w-[120px] bg-[#a6a07a]/80 border-l border-white px-2 md:px-4">
+          <div className="flex flex-col items-center justify-center w-1/3 md:w-1/4 min-w-[90px] md:min-w-[120px] border-l border-white px-2 md:px-4">
             {lunarLoadingElement ? lunarLoadingElement : 
             <>
               <div className="text-white text-base md:text-lg font-bold mb-0.5 md:mb-1">{lunarInfo?.gregoriandate}</div>

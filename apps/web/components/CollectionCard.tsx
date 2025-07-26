@@ -55,8 +55,8 @@ export default function CollectionCard({
     >
       {/* 宣纸纹理叠加 */}
       <div className="absolute inset-0 pointer-events-none opacity-25" style={{
-        backgroundImage: 'url("https://img.alicdn.com/imgextra/i2/6000000000427/O1CN01v8wQ2n1pQb5Qy5p7z_!!6000000000427-2-tps-800-800.png")',
-        backgroundSize: 'cover',
+        // backgroundImage: 'url("https://img.alicdn.com/imgextra/i2/6000000000427/O1CN01v8wQ2n1pQb5Qy5p7z_!!6000000000427-2-tps-800-800.png")',
+        // backgroundSize: 'cover',
         zIndex: 1
       }} />
       {mode === 'full' && <div className="relative p-6 z-10">
