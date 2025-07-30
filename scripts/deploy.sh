@@ -9,14 +9,6 @@ else
     echo "⚠️  .env file not found, using default values"
 fi
 
-echo "➡️ Building project..."
-
-cd apps/server
-pnpm run db:generate
-
-cd ../../
-pnpm run build
-
 echo "➡️ Uploading build output..."
 
 # local test

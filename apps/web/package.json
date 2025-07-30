@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack --port 3000",
-    "build": "next build",
+    "build": "NODE_ENV=production next build",
     "clean": "rm -rf .next",
     "start": "next start",
     "start:prod": "NODE_ENV=production next start",
