@@ -20,8 +20,8 @@ pnpm run build
 echo "➡️ Uploading build output..."
 
 # local test
-rsync -avz --delete apps/web/.next/ ~/code/demo/poetry/apps/web/.next/
+# rsync -avz --delete apps/web/.next/ ~/code/demo/poetry/apps/web/.next/
 
-# rsync -avz --delete apps/web/.next/ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/apps/web/.next/
+rsync -avz --delete apps/web/.next/ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/apps/web/.next/
 
 echo "✅ Upload completed. You can now restart PM2 or nginx if needed."
