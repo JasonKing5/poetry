@@ -4,6 +4,8 @@ import * as cookieParser from 'cookie-parser';
 import { JwtService } from '@nestjs/jwt';
 import { RolesPermissionsGuard } from './common/guards/roles-permissions.guard';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
