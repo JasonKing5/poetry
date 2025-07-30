@@ -8,6 +8,7 @@
     "build": "next build",
     "clean": "rm -rf .next",
     "start": "next start",
+    "start:prod": "NODE_ENV=production pnpm start",
     "lint": "next lint --max-warnings 0",
     "check-types": "tsc --noEmit"
   },
