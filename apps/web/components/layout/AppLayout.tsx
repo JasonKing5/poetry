@@ -148,8 +148,8 @@ export default function AppLayout({ children }: AppLayoutProps) {
           href: 'https://hm.codefe.cn/',
         },
         {
-          label: '醉诗词',
-          href: 'https://poetry.codefe.cn/',
+          label: '游戏乐园',
+          href: 'https://games.codefe.cn/',
         },
       ],
     },
