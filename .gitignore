@@ -13,7 +13,7 @@ node_modules
 .env.production.local
 
 /data
-/apps/embedding-server/models
+models
 
 # Testing
 coverage
