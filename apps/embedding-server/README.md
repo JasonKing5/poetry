@@ -7,8 +7,10 @@ python -m venv .venv
 
 source .venv/bin/activate
 
+pip install torch==2.2.1+cpu -f https://download.pytorch.org/whl/cpu/torch_stable.html
+
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-pip install -r requirements.txt
+pip install -r requirements.txt --no-deps
 ```
 
 ## Run
