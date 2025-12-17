@@ -16,7 +16,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           src="https://analytics.codefe.cn/script.js"
           async
           defer
-          data-website-id="5591c5cd-9139-4779-acca-d4fef1aecf37"
+          data-website-id="1f32c8c2-8a60-482c-99b7-d6db36cd43a8"
         />
       </body>
     </html>
