@@ -56,7 +56,7 @@ docker exec -it pg psql -U postgres -d poetry
 psql -h localhost -p 5432 -U postgres -d poetry
 ```
 
-### Prisma
+### DB
 
 ```bash
 cd apps/server
@@ -80,103 +80,20 @@ pnpm install
 pnpm dev
 ```
 
-or
-
-### NestJS
-
-```bash
-cd apps/server
-pnpm run dev
-```
-
-### NextJS
-
-```bash
-cd apps/web
-pnpm run dev
-```
-
-### FastAPI
-
-```bash
-cd apps/chat
-make run
-```
-
 ## Build
 
-To build all apps and packages, run the following command:
-
-```bash
-pnpm build
-```
-
-or
-
-### NestJS
-
 ```bash
 cd apps/server
 pnpm run build
-```
 
-### NextJS
-
-```bash
 cd apps/web
 pnpm run build
-```
-
-### FastAPI
-
-```bash
-cd apps/chat
-make build
 ```
 
 ## Deploy
 
 ```bash
-# build & run
-sudo docker compose up -d --build
-# or
-sudo docker compose up -d --build server
+pm2 start pnpm --name poetry-web --cwd /home/ubuntu/repo/poetry/apps/web --max-memory-restart 500M -- run start:prod
 
-# build images
-sudo docker compose build
-
-# push images
-docker push ghcr.io/jasonking5/poetry-server:latest
-docker push ghcr.io/jasonking5/poetry-web:latest
-docker push ghcr.io/jasonking5/poetry-embedding-server:latest
-
-# images
-docker images | grep poetry
-
-# run
-sudo docker compose up -d
-
-# status
-sudo docker compose ps
-
-# logs
-sudo docker compose logs -f
-
-# stop
-sudo docker compose down
-
-# remove images
-sudo docker rmi ghcr.io/jasonking5/poetry-server:latest
-sudo docker rmi ghcr.io/jasonking5/poetry-web:latest
-sudo docker rmi ghcr.io/jasonking5/poetry-embedding-server:latest
-
-# remove all unused images
-docker image prune -a
-
-# remove volumes
-sudo docker volume rm poetry-data
-sudo docker volume rm poetry-embedding-models
-
-# remove networks
-sudo docker network rm poetry-network
+pm2 start pnpm --name poetry-server --cwd /home/ubuntu/repo/poetry/apps/server --max-memory-restart 500M -- run start:prod
 ```
