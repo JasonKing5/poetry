@@ -16,6 +16,7 @@
     "db:migrate:deploy": "npx prisma migrate deploy",
     "db:migrate:status": "npx prisma migrate status",
     "db:migrate:reset": "npx prisma migrate reset",
+    "db:migrate:baseline": "npx prisma migrate resolve --applied 20260115051623_init",
     "data:init": "ts-node ./scripts/db-init/index.ts",
     "data:migrate": "ts-node ./scripts/migrations/index.ts",
     "start": "nest start",

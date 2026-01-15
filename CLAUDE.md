@@ -29,14 +29,44 @@ This is a full-stack poetry management and exploration platform called "Poetry".
 - `pnpm clean` - Clean build artifacts
 
 ### Database Operations
-- `docker compose up -d` - Start PostgreSQL database with pgvector extension
-- `pnpm run db:generate` (in `apps/server`) - Generate Prisma client
-- `pnpm run db:push` (in `apps/server`) - Push schema to database
-- `pnpm run db:init` (in `apps/server`) - Initialize database with seed data
 
-#### Data Migrations
-Data migration scripts are located in `apps/server/scripts/migrations/` and follow these conventions:
+#### Development Environment
+**Schema Migrations (Prisma):**
+- `pnpm run db:migrate:dev` - Create and apply new migrations (interactive)
+- `pnpm run db:generate` - Generate Prisma client after schema changes
+- `pnpm run db:migrate:status` - Check migration status
 
+**Data Migrations:**
+- `pnpm run data:migrate` - Execute all data migration scripts
+- `pnpm run data:init` - Initialize database with seed data (development only)
+
+**Legacy Commands (fallback):**
+- `pnpm run db:push` - Direct schema push (bypasses migration history)
+- `pnpm run db:reset` - Force reset database (destructive)
+
+#### Production Environment
+**Schema Migrations (Prisma):**
+- `pnpm run db:migrate:deploy` - Apply existing migrations to production database
+- `pnpm run db:generate` - Generate Prisma client (required after deploy)
+- `pnpm run db:migrate:status` - Verify migration status
+
+**Data Migrations:**
+- `pnpm run data:migrate` - Execute data migration scripts (idempotent)
+
+**Important Notes for Production:**
+1. NEVER run `db:migrate:dev` in production - creates new migrations
+2. NEVER run `data:init` in production - overwrites production data
+3. ALWAYS run migrations during deployment, before starting the application
+4. Test migrations in staging environment first
+
+**Production Deployment Workflow:**
+1. Build application: `pnpm run build`
+2. Apply schema migrations: `pnpm run db:migrate:deploy`
+3. Generate Prisma client: `pnpm run db:generate`
+4. Run data migrations: `pnpm run data:migrate`
+5. Start application: `pnpm run start:prod`
+
+#### Data Migration Details
 **Naming Convention:**
 - Format: `YYYYMMDDHHMMSS_descriptive_name.ts`
 - Example: `20260115053000_add_dynasty_to_authors.ts`
