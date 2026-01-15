@@ -4,6 +4,7 @@ export type GetAllAuthorsProps = {
   page?: number;
   pageSize?: number;
   name?: string;
+  dynasty?: string;
   all?: boolean;
  }
 

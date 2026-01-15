@@ -25,6 +25,7 @@ const { POETRY_TYPE_MAP, DYNASTY_MAP } = constants;
 type Author = {
   id: number;
   name: string;
+  dynasty?: string;
 };
 
 // Poem props type
@@ -101,7 +102,7 @@ function PoemPageContent() {
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
   const [titleInput, setTitleInput] = useState(title);
 
-  const { data: authors , element: authorsElement } = withLoadingError(useAllAuthors({all: true}));
+  const { data: authors , element: authorsElement } = withLoadingError(useAllAuthors({all: true, dynasty: dynasty || undefined}));
   
   const poemListRes = usePoemList({
     page,
@@ -126,7 +127,14 @@ function PoemPageContent() {
   };
 
   const handleValueChange = (type: string, value: string | string[]) => {
-    setFilters({ [type]: value, page: 1 });
+    const updates: any = { [type]: value, page: 1 };
+
+    // 当朝代变化时，如果已选择了作者，清空作者选择
+    if (type === 'dynasty' && value && author) {
+      updates.author = '';
+    }
+
+    setFilters(updates);
   };
 
   const handleReset = () => {
@@ -242,18 +250,6 @@ function PoemPageContent() {
             allSelected={!tags || tags.length === 0}
             onAllClick={() => handleValueChange('tags', [])}
           /> */}
-          {/* 类型 */}
-          <FilterRow
-            label="类型"
-            items={Object.entries(POETRY_TYPE_MAP).map(([key, value]) => ({
-              key,
-              label: value,
-              selected: type === key,
-              onClick: () => handleValueChange('type', key),
-            }))}
-            allSelected={!type}
-            onAllClick={() => handleValueChange('type', "")}
-          />
         </div>
       </div>
       <ul className="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

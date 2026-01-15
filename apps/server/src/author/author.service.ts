@@ -1,13 +1,15 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import { Dynasty } from '@prisma/client';
 
 @Injectable()
 export class AuthorService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(name?: string, page: number = 1, pageSize: number = 18, all?: boolean) {
+  async findAll(name?: string, page: number = 1, pageSize: number = 18, all?: boolean, dynasty?: Dynasty) {
     const where: any = {};
     if (name) where.name = { contains: name };
+    if (dynasty) where.dynasty = dynasty;
     if (all) {
       return await this.prisma.author.findMany({
         where,
@@ -17,6 +19,7 @@ export class AuthorService {
         select: {
           id: true,
           name: true,
+          dynasty: true,
         }
       })
     }
@@ -35,6 +38,7 @@ export class AuthorService {
           id: true,
           name: true,
           description: true,
+          dynasty: true,
         }
       }),
     };

@@ -5,6 +5,7 @@ import { Roles } from 'src/common/decorators/roles.decorator';
 import { RoleEnum } from 'src/common/enums/role.enum';
 import { Permissions } from 'src/common/decorators/permissions.decorator';
 import { PermissionEnum } from 'src/common/enums/permission.enum';
+import { Dynasty } from '@prisma/client';
 
 @Controller('authors')
 export class AuthorController {
@@ -12,13 +13,13 @@ export class AuthorController {
 
   @Get()
   @Public()
-  async findAll(@Query() query: { name?: string, page?: number, pageSize?: number, all?: boolean }) {
-    let { name, page, pageSize, all } = query;
+  async findAll(@Query() query: { name?: string, page?: number, pageSize?: number, all?: boolean, dynasty?: Dynasty }) {
+    let { name, page, pageSize, all, dynasty } = query;
     if (typeof page === 'string') page = parseInt(page, 10);
     if (typeof pageSize === 'string') pageSize = parseInt(pageSize, 10);
     if (typeof page !== 'number' || isNaN(page)) page = 1;
     if (typeof pageSize !== 'number' || isNaN(pageSize)) pageSize = 18;
-    return await this.authorService.findAll(name, page, pageSize, all);
+    return await this.authorService.findAll(name, page, pageSize, all, dynasty);
   }
 
   @Get(':id')

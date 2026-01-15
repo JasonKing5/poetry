@@ -116,6 +116,7 @@ model Author {
   id          Int       @id @default(autoincrement())
   name        String    @unique
   description String    @default("")
+  dynasty     Dynasty?
   submitter   User      @relation("AuthorSubmitter", fields: [submitterId], references: [id], onDelete: Cascade)
   submitterId Int
   status      PoetryStatus @default(pending)
