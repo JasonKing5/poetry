@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useAuthorStore } from '@/store/authorStore';
 import { useAllAuthors } from '@/services/author.service';
 import Table from '@/components/Table'
@@ -7,15 +8,28 @@ import { Author } from '@repo/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { PaginationWrapper } from "@/components/PaginationWrapper"
 import { Button } from '@/components/ui/button';
-import { ArrowUp, ArrowDown, ChevronsUp, ChevronsDown } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { ArrowUp, ArrowDown, ChevronsUp, ChevronsDown, Search, X } from 'lucide-react';
 import { toast } from 'sonner';
 import axios from '@/lib/http';
 
 export default function AuthorPage() {
-  const { page, pageSize, setFilters } = useAuthorStore();
+  const { page, pageSize, name, setFilters } = useAuthorStore();
+  const [nameInput, setNameInput] = useState(name);
+  const [isComposing, setIsComposing] = useState(false);
 
   // 所有hooks必须在顶部调用
-  const { data: pageData, isLoading, error, refetch } = useAllAuthors({ page, pageSize });
+  const { data: pageData, isLoading, error, refetch } = useAllAuthors({ page, pageSize, name });
+
+  const handleSearch = () => {
+    // 触发搜索，重置到第一页
+    setFilters({ name: nameInput, page: 1 });
+  };
+
+  const clearSearch = () => {
+    setNameInput('');
+    // 不清除store中的搜索状态，用户需要手动点击搜索按钮
+  };
 
   const handleMoveAction = async (id: number, action: 'up' | 'down' | 'top' | 'bottom') => {
     try {
@@ -148,6 +162,49 @@ export default function AuthorPage() {
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
+      {/* 搜索栏 */}
+      <div className="flex gap-2 w-full max-w-4xl mb-6">
+        <div className="relative flex-1">
+          <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+            <Search className="h-4 w-4 text-gray-400" />
+          </div>
+          <Input
+            type="text"
+            placeholder="搜索作者姓名..."
+            value={nameInput}
+            onChange={(e) => setNameInput(e.target.value)}
+            onCompositionStart={() => setIsComposing(true)}
+            onCompositionEnd={() => setIsComposing(false)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !isComposing) {
+                handleSearch();
+              }
+            }}
+            className="pl-10 pr-10"
+          />
+          {nameInput && (
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearSearch}
+                className="h-6 w-6 p-0"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
+        </div>
+        <Button onClick={handleSearch}>
+          搜索
+        </Button>
+      </div>
+      {name && (
+        <div className="w-full max-w-4xl mt-2 text-sm text-gray-500 mb-2">
+          搜索: "{name}"，共找到 {total} 条结果
+        </div>
+      )}
+
       <Table data={list as Author[]} columns={columns} />
 
       <div className="flex gap-2 mt-4">
