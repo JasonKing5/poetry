@@ -10,6 +10,7 @@ export class CollectionService {
   private SELECT_COLLECTION_BASE = {
     id: true,
     title: true,
+    order: true,
     creator: {
       select: {
         id: true,
@@ -75,7 +76,10 @@ export class CollectionService {
         where,
         take,
         skip,
-        orderBy: { id: 'asc' },
+        orderBy: [
+          { order: 'asc' },
+          { id: 'asc' },
+        ],
         select: this.SELECT_COLLECTION_BASE,
       }),
     ]);
@@ -118,5 +122,119 @@ export class CollectionService {
 
   remove(id: number) {
     return this.prisma.collection.delete({ where: { id } });
+  }
+
+  async moveUp(id: number) {
+    const current = await this.prisma.collection.findUnique({ where: { id } });
+    if (!current) throw new Error('Collection not found');
+
+    const previous = await this.prisma.collection.findFirst({
+      where: {
+        order: { lt: current.order },
+        isDeleted: false,
+      },
+      orderBy: { order: 'desc' },
+    });
+
+    if (!previous) return current;
+
+    await this.prisma.$transaction([
+      this.prisma.collection.update({
+        where: { id: current.id },
+        data: { order: previous.order },
+      }),
+      this.prisma.collection.update({
+        where: { id: previous.id },
+        data: { order: current.order },
+      }),
+    ]);
+
+    return await this.prisma.collection.findUnique({ where: { id } });
+  }
+
+  async moveDown(id: number) {
+    const current = await this.prisma.collection.findUnique({ where: { id } });
+    if (!current) throw new Error('Collection not found');
+
+    const next = await this.prisma.collection.findFirst({
+      where: {
+        order: { gt: current.order },
+        isDeleted: false,
+      },
+      orderBy: { order: 'asc' },
+    });
+
+    if (!next) return current;
+
+    await this.prisma.$transaction([
+      this.prisma.collection.update({
+        where: { id: current.id },
+        data: { order: next.order },
+      }),
+      this.prisma.collection.update({
+        where: { id: next.id },
+        data: { order: current.order },
+      }),
+    ]);
+
+    return await this.prisma.collection.findUnique({ where: { id } });
+  }
+
+  async moveToTop(id: number) {
+    const current = await this.prisma.collection.findUnique({ where: { id } });
+    if (!current) throw new Error('Collection not found');
+
+    const minCollection = await this.prisma.collection.findFirst({
+      where: { isDeleted: false },
+      orderBy: { order: 'asc' },
+    });
+
+    if (!minCollection || minCollection.id === current.id) return current;
+
+    if (current.order > minCollection.order) {
+      await this.prisma.collection.updateMany({
+        where: {
+          order: { lt: current.order },
+          isDeleted: false,
+        },
+        data: { order: { increment: 1 } },
+      });
+
+      await this.prisma.collection.update({
+        where: { id },
+        data: { order: minCollection.order },
+      });
+    }
+
+    return await this.prisma.collection.findUnique({ where: { id } });
+  }
+
+  async moveToBottom(id: number) {
+    const current = await this.prisma.collection.findUnique({ where: { id } });
+    if (!current) throw new Error('Collection not found');
+
+    const maxCollection = await this.prisma.collection.findFirst({
+      where: { isDeleted: false },
+      orderBy: { order: 'desc' },
+    });
+
+    if (!maxCollection || maxCollection.id === current.id) return current;
+
+    if (current.order < maxCollection.order) {
+      await this.prisma.collection.updateMany({
+        where: {
+          order: { gt: current.order },
+          isDeleted: false,
+        },
+        data: { order: { decrement: 1 } },
+      });
+
+      await this.prisma.collection.update({
+        where: { id },
+        data: { order: maxCollection.order },
+      });
+    }
+
+    return await this.prisma.collection.findUnique({ where: { id } });
   }
 }

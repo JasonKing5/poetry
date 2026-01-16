@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, Query, Request } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Request } from '@nestjs/common';
 import { PoetryService } from './poem.service';
 import { Public } from 'src/common/decorators/public.decorator';
 import { Dynasty, PoetrySource, PoetryStatus, PoetryType } from '@prisma/client';
@@ -107,5 +107,33 @@ export class PoetryController {
   @Permissions(PermissionEnum.DELETE_POETRY)
   async delete(@Param('id') id: number) {
     return await this.poetryService.delete(id);
+  }
+
+  @Patch(':id/move-up')
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  @Permissions(PermissionEnum.UPDATE_POETRY)
+  async moveUp(@Param('id') id: number) {
+    return await this.poetryService.moveUp(Number(id));
+  }
+
+  @Patch(':id/move-down')
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  @Permissions(PermissionEnum.UPDATE_POETRY)
+  async moveDown(@Param('id') id: number) {
+    return await this.poetryService.moveDown(Number(id));
+  }
+
+  @Patch(':id/move-to-top')
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  @Permissions(PermissionEnum.UPDATE_POETRY)
+  async moveToTop(@Param('id') id: number) {
+    return await this.poetryService.moveToTop(Number(id));
+  }
+
+  @Patch(':id/move-to-bottom')
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  @Permissions(PermissionEnum.UPDATE_POETRY)
+  async moveToBottom(@Param('id') id: number) {
+    return await this.poetryService.moveToBottom(Number(id));
   }
 }

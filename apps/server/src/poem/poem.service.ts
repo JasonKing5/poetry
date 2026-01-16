@@ -20,6 +20,7 @@ export class PoetryService {
     source: true,
     status: true,
     dynasty: true,
+    order: true,
     content: true,
     submitter: {
       select: {
@@ -77,7 +78,10 @@ export class PoetryService {
         where,
         take,
         skip,
-        orderBy: { id: 'asc' },
+        orderBy: [
+          { order: 'asc' },
+          { id: 'asc' },
+        ],
         select: this.SELECT_POETRY_BASE,
       }),
     ]);
@@ -178,5 +182,119 @@ export class PoetryService {
     return await this.prisma.poem.delete({
       where: { id },
     });
+  }
+
+  async moveUp(id: number) {
+    const current = await this.prisma.poem.findUnique({ where: { id } });
+    if (!current) throw new Error('Poem not found');
+
+    const previous = await this.prisma.poem.findFirst({
+      where: {
+        order: { lt: current.order },
+        isDeleted: false,
+      },
+      orderBy: { order: 'desc' },
+    });
+
+    if (!previous) return current;
+
+    await this.prisma.$transaction([
+      this.prisma.poem.update({
+        where: { id: current.id },
+        data: { order: previous.order },
+      }),
+      this.prisma.poem.update({
+        where: { id: previous.id },
+        data: { order: current.order },
+      }),
+    ]);
+
+    return await this.prisma.poem.findUnique({ where: { id } });
+  }
+
+  async moveDown(id: number) {
+    const current = await this.prisma.poem.findUnique({ where: { id } });
+    if (!current) throw new Error('Poem not found');
+
+    const next = await this.prisma.poem.findFirst({
+      where: {
+        order: { gt: current.order },
+        isDeleted: false,
+      },
+      orderBy: { order: 'asc' },
+    });
+
+    if (!next) return current;
+
+    await this.prisma.$transaction([
+      this.prisma.poem.update({
+        where: { id: current.id },
+        data: { order: next.order },
+      }),
+      this.prisma.poem.update({
+        where: { id: next.id },
+        data: { order: current.order },
+      }),
+    ]);
+
+    return await this.prisma.poem.findUnique({ where: { id } });
+  }
+
+  async moveToTop(id: number) {
+    const current = await this.prisma.poem.findUnique({ where: { id } });
+    if (!current) throw new Error('Poem not found');
+
+    const minPoem = await this.prisma.poem.findFirst({
+      where: { isDeleted: false },
+      orderBy: { order: 'asc' },
+    });
+
+    if (!minPoem || minPoem.id === current.id) return current;
+
+    if (current.order > minPoem.order) {
+      await this.prisma.poem.updateMany({
+        where: {
+          order: { lt: current.order },
+          isDeleted: false,
+        },
+        data: { order: { increment: 1 } },
+      });
+
+      await this.prisma.poem.update({
+        where: { id },
+        data: { order: minPoem.order },
+      });
+    }
+
+    return await this.prisma.poem.findUnique({ where: { id } });
+  }
+
+  async moveToBottom(id: number) {
+    const current = await this.prisma.poem.findUnique({ where: { id } });
+    if (!current) throw new Error('Poem not found');
+
+    const maxPoem = await this.prisma.poem.findFirst({
+      where: { isDeleted: false },
+      orderBy: { order: 'desc' },
+    });
+
+    if (!maxPoem || maxPoem.id === current.id) return current;
+
+    if (current.order < maxPoem.order) {
+      await this.prisma.poem.updateMany({
+        where: {
+          order: { gt: current.order },
+          isDeleted: false,
+        },
+        data: { order: { decrement: 1 } },
+      });
+
+      await this.prisma.poem.update({
+        where: { id },
+        data: { order: maxPoem.order },
+      });
+    }
+
+    return await this.prisma.poem.findUnique({ where: { id } });
   }
 }

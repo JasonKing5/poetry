@@ -111,19 +111,14 @@ export class AuthService {
     if (!email) {
       throw new BadRequestException('Email is required');
     }
-    console.log('sendEmail:', email)
 
     const user = await this.userService.findOneByEmail(email)
-    console.log('sendEmail:', 2)
     if (!user) {
-      console.log('sendEmail:', 3)
       throw new UnauthorizedException('User not found');
     }
-    console.log('sendEmail:', 4)
 
     const roles = await this.userService.getUserRoles(user.id);
     const resetToken = this.generateAccessToken(user.id, roles);
-    console.log('sendEmail:', 5)
 
     return await this.mailService.sendResetPasswordEmail(email, resetToken)
   }
@@ -144,10 +139,26 @@ export class AuthService {
   }
 
   private generateAccessToken(id: number, roles: any[], expiresTime?: number) {
+    const roleNames = roles.map(r => r.name);
+    // 安全地提取权限，处理可能缺失的嵌套属性
+    const permissions = roles.flatMap(r => {
+      if (!r.rolePermissions || !Array.isArray(r.rolePermissions)) {
+        console.warn(`Role ${r.name} has no rolePermissions or rolePermissions is not an array`);
+        return [];
+      }
+      return r.rolePermissions.map(p => {
+        if (p.permission && p.permission.name) {
+          return p.permission.name;
+        } else {
+          console.warn(`RolePermission ${p.id} has no permission or permission.name`);
+          return null;
+        }
+      }).filter(Boolean);
+    });
     const payload: JwtPayload = {
       sub: id,
-      roles: roles.map(r => r.name),
-      permissions: roles.flatMap(r => r.rolePermissions.map(p => p.permission.name)),
+      roles: roleNames,
+      permissions: permissions,
     };
     return this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,

@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
     try {
       const payload = await this.jwtService.verifyAsync(token);
       // 将用户信息附加到请求对象
-      request.user = { id: payload.sub, roles: payload.roles };
+      request.user = { id: payload.sub, roles: payload.roles, permissions: payload.permissions || [] };
     } catch {
       throw new UnauthorizedException('登录已过期，请重新登录');
     }

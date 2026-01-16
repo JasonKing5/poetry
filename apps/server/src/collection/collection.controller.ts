@@ -60,4 +60,32 @@ export class CollectionController {
   async remove(@Param('id') id: string) {
     return await this.collectionService.remove(+id);
   }
+
+  @Patch(':id/move-up')
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  @Permissions(PermissionEnum.UPDATE_POETRY_LIST)
+  async moveUp(@Param('id') id: string) {
+    return await this.collectionService.moveUp(+id);
+  }
+
+  @Patch(':id/move-down')
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  @Permissions(PermissionEnum.UPDATE_POETRY_LIST)
+  async moveDown(@Param('id') id: string) {
+    return await this.collectionService.moveDown(+id);
+  }
+
+  @Patch(':id/move-to-top')
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  @Permissions(PermissionEnum.UPDATE_POETRY_LIST)
+  async moveToTop(@Param('id') id: string) {
+    return await this.collectionService.moveToTop(+id);
+  }
+
+  @Patch(':id/move-to-bottom')
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  @Permissions(PermissionEnum.UPDATE_POETRY_LIST)
+  async moveToBottom(@Param('id') id: string) {
+    return await this.collectionService.moveToBottom(+id);
+  }
 }

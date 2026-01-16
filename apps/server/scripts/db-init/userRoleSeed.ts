@@ -67,6 +67,68 @@ export async function userRoleSeed() {
     create: { name: 'deletePoetryList' },
   });
 
+  console.log('Start seed author permissions')
+  const createAuthorPermission = await prisma.permission.upsert({
+    where: { name: 'createAuthor' },
+    update: {},
+    create: { name: 'createAuthor' },
+  });
+
+  const deleteAuthorPermission = await prisma.permission.upsert({
+    where: { name: 'deleteAuthor' },
+    update: {},
+    create: { name: 'deleteAuthor' },
+  });
+
+  const updateAuthorPermission = await prisma.permission.upsert({
+    where: { name: 'updateAuthor' },
+    update: {},
+    create: { name: 'updateAuthor' },
+  });
+
+  const viewDetailAuthorPermission = await prisma.permission.upsert({
+    where: { name: 'viewDetailAuthor' },
+    update: {},
+    create: { name: 'viewDetailAuthor' },
+  });
+
+  const viewAuthorPermission = await prisma.permission.upsert({
+    where: { name: 'viewAuthor' },
+    update: {},
+    create: { name: 'viewAuthor' },
+  });
+
+  console.log('Start seed poetry permissions')
+  const createPoetryPermission = await prisma.permission.upsert({
+    where: { name: 'createPoetry' },
+    update: {},
+    create: { name: 'createPoetry' },
+  });
+
+  const deletePoetryPermission = await prisma.permission.upsert({
+    where: { name: 'deletePoetry' },
+    update: {},
+    create: { name: 'deletePoetry' },
+  });
+
+  const updatePoetryPermission = await prisma.permission.upsert({
+    where: { name: 'updatePoetry' },
+    update: {},
+    create: { name: 'updatePoetry' },
+  });
+
+  const viewDetailPoetryPermission = await prisma.permission.upsert({
+    where: { name: 'viewDetailPoetry' },
+    update: {},
+    create: { name: 'viewDetailPoetry' },
+  });
+
+  const viewPoetryPermission = await prisma.permission.upsert({
+    where: { name: 'viewPoetry' },
+    update: {},
+    create: { name: 'viewPoetry' },
+  });
+
   console.log('Start seed role permission')
   await prisma.rolePermission.createMany({
     data: [
@@ -78,6 +140,18 @@ export async function userRoleSeed() {
       { roleId: adminRole.id, permissionId: createPoetryListPermission.id },
       { roleId: adminRole.id, permissionId: updatePoetryListPermission.id },
       { roleId: adminRole.id, permissionId: deletePoetryListPermission.id },
+      // Author permissions
+      { roleId: adminRole.id, permissionId: createAuthorPermission.id },
+      { roleId: adminRole.id, permissionId: deleteAuthorPermission.id },
+      { roleId: adminRole.id, permissionId: updateAuthorPermission.id },
+      { roleId: adminRole.id, permissionId: viewDetailAuthorPermission.id },
+      { roleId: adminRole.id, permissionId: viewAuthorPermission.id },
+      // Poetry permissions
+      { roleId: adminRole.id, permissionId: createPoetryPermission.id },
+      { roleId: adminRole.id, permissionId: deletePoetryPermission.id },
+      { roleId: adminRole.id, permissionId: updatePoetryPermission.id },
+      { roleId: adminRole.id, permissionId: viewDetailPoetryPermission.id },
+      { roleId: adminRole.id, permissionId: viewPoetryPermission.id },
     ],
     skipDuplicates: true,
   });

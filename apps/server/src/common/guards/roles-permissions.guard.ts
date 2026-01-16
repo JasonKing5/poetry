@@ -58,6 +58,7 @@ export class RolesPermissionsGuard implements CanActivate {
     }
 
     if (requiredPermissions && requiredPermissions.length > 0) {
+
       const userPermissions = user.permissions || [];
       const hasPermission = requiredPermissions.every(p => userPermissions.includes(p));
       if (!hasPermission) {

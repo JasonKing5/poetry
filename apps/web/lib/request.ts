@@ -69,6 +69,12 @@ export const usePut = <T = any, D = any>(url: string, options?: GlobalSuccessOpt
     ...withGlobalSuccess(url, options),
   })
 
+export const usePatch = <T = any, D = any>(url: string, options?: GlobalSuccessOptions): UseMutationResult<T, Error, D> =>
+  useMutation<T, Error, D>({
+    mutationFn: (data: D) => axios.patch(url, data),
+    ...withGlobalSuccess(url, options),
+  })
+
 export const useDel = <T = any, D = any>(url: string, options?: GlobalSuccessOptions): UseMutationResult<T, Error, D> =>
   useMutation<T, Error, D>({
     mutationFn: (data: D) => {

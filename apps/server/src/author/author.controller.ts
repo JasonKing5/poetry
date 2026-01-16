@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
 import { AuthorService } from './author.service';
 import { Public } from 'src/common/decorators/public.decorator';
 import { Roles } from 'src/common/decorators/roles.decorator';
@@ -47,5 +47,33 @@ export class AuthorController {
   @Permissions(PermissionEnum.DELETE_AUTHOR)
   async delete(@Param('id') id: number) {
     return await this.authorService.delete(id);
+  }
+
+  @Patch(':id/move-up')
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  @Permissions(PermissionEnum.UPDATE_AUTHOR)
+  async moveUp(@Param('id') id: number) {
+    return await this.authorService.moveUp(Number(id));
+  }
+
+  @Patch(':id/move-down')
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  @Permissions(PermissionEnum.UPDATE_AUTHOR)
+  async moveDown(@Param('id') id: number) {
+    return await this.authorService.moveDown(Number(id));
+  }
+
+  @Patch(':id/move-to-top')
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  @Permissions(PermissionEnum.UPDATE_AUTHOR)
+  async moveToTop(@Param('id') id: number) {
+    return await this.authorService.moveToTop(Number(id));
+  }
+
+  @Patch(':id/move-to-bottom')
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  @Permissions(PermissionEnum.UPDATE_AUTHOR)
+  async moveToBottom(@Param('id') id: number) {
+    return await this.authorService.moveToBottom(Number(id));
   }
 }
