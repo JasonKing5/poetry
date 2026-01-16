@@ -65,7 +65,12 @@ export class CollectionService {
   }
 
   async findAll(page: number, pageSize: number, title?: string, currentUserId?: number) {
-    const where: any = {};
+    const where: any = {
+      isDeleted: false,
+      collectionPoems: {
+        some: {} // 只查询有诗词的合集
+      }
+    };
     if (title) where.title = { contains: title };
     // 校正分页参数
     const take = Math.max(1, Math.min(pageSize, 100));

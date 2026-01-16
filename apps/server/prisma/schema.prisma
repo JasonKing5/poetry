@@ -142,6 +142,7 @@ model Poem {
   authorId    Int?
   status      PoetryStatus    @default(pending)
   isDeleted   Boolean         @default(false)
+  collectionPoems CollectionPoem[]
   likes       Like[]          @relation("PoemLikes")
   bookmarks   Bookmark[]      @relation("PoemBookmarks")
   comments    Comment[]       @relation("PoemComments")
@@ -165,6 +166,7 @@ model Collection {
   comments    Comment[]       @relation("CollectionComments")
   status      PoetryStatus      @default(pending)
   isDeleted   Boolean         @default(false)
+  collectionPoems CollectionPoem[]
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
 
@@ -175,7 +177,9 @@ model Collection {
 model CollectionPoem {
   id         Int        @id @default(autoincrement())
   collectionId     Int
+  collection       Collection      @relation(fields: [collectionId], references: [id])
   poemId   Int
+  poem             Poem            @relation(fields: [poemId], references: [id])
   order      Int        @default(autoincrement())  // 用于自定义排序
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
