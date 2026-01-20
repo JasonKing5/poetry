@@ -134,3 +134,4 @@ packages/
 - For production deployment, images are built and pushed to GitHub Container Registry
 - PM2 is used for process management in production (see README for deployment commands)
 - The project uses Chinese-focused text embeddings but can be adapted for other languages
+- Both the front-end and back-end of the project have already been started, do not start the project again. To check the server logs, you can go to apps/server/dev.log, apps/server/error.log

@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Dynasty, PoetrySource, PoetryStatus, PoetryType } from '@prisma/client';
-import axios from 'axios';
+import { EmbeddingService } from '../embedding/embedding.service';
 
 @Injectable()
 export class PoetryService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly embeddingService: EmbeddingService
+  ) {}
 
   private SELECT_POETRY_BASE = {
     id: true,
@@ -107,8 +110,7 @@ export class PoetryService {
   }
 
   async search(input: string, limit: number = 10) {
-    const res = await axios.post(`${process.env.EMBEDDING_SERVER_URL}/embed`, { text: input });
-    const inputVector = res?.data?.embedding || [];
+    const inputVector = await this.embeddingService.embed(input);
 
     if (!inputVector.length) {
       throw new Error('Failed to generate embedding for the input text');

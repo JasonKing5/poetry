@@ -1,15 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import axios from 'axios';
 import { PrismaService } from '../../prisma/prisma.service';
+import { EmbeddingService } from '../embedding/embedding.service';
 
 @Injectable()
 export class ChatService {
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly embeddingService: EmbeddingService
+  ) {}
 
   async chat(input: string) {
-    const res = await axios.post(`${process.env.EMBEDDING_SERVER_URL}/embed`, { text: input });
-    const inputVector = res?.data?.embedding || [];
+    const inputVector = await this.embeddingService.embed(input);
 
     if (!inputVector.length) {
       throw new Error('Failed to generate embedding for the input text');
