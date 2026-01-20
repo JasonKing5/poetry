@@ -10,8 +10,69 @@ const BATCH_SIZE = 32; // 每批处理的诗词数量（SiliconFlow API最大批
 const MAX_RETRIES = 3; // 最大重试次数
 const RETRY_DELAY = 2000; // 重试延迟(毫秒)
 
+// 速率限制配置
+const MAX_REQUESTS_PER_MINUTE = 2000; // SiliconFlow API每分钟请求限制
+const MAX_TOKENS_PER_MINUTE = 500000; // SiliconFlow API每分钟token限制
+const BATCH_DELAY_MS = 2000; // 批次间保守延迟（2秒）
+const MIN_REQUEST_INTERVAL_MS = 30; // 请求间最小时间间隔（60000ms ÷ 2000）
+
+// 速率限制状态跟踪
+let totalTokensUsed = 0;
+let requestCount = 0;
+let rateLimitWindowStart = Date.now();
+
 // 延迟函数
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+// 速率限制函数
+async function enforceRateLimits(tokensUsed: number): Promise<void> {
+  const now = Date.now();
+  const windowElapsed = now - rateLimitWindowStart;
+
+  // 如果仍在同一分钟窗口内
+  if (windowElapsed < 60000) {
+    // 检查请求限制
+    if (requestCount >= MAX_REQUESTS_PER_MINUTE) {
+      const waitTime = 60000 - windowElapsed;
+      console.log(`⚠️  请求限制达到 (${requestCount}/${MAX_REQUESTS_PER_MINUTE}), 等待 ${waitTime}ms...`);
+      await delay(waitTime);
+      // 等待后重置计数器
+      totalTokensUsed = tokensUsed;
+      requestCount = 1;
+      return;
+    }
+
+    // 检查token限制
+    if (totalTokensUsed + tokensUsed > MAX_TOKENS_PER_MINUTE) {
+      const waitTime = 60000 - windowElapsed;
+      console.log(`⚠️  Token限制接近 (${totalTokensUsed + tokensUsed}/${MAX_TOKENS_PER_MINUTE}), 等待 ${waitTime}ms...`);
+      await delay(waitTime);
+      // 等待后重置计数器
+      totalTokensUsed = tokensUsed;
+      requestCount = 1;
+      return;
+    }
+
+    // 批次间添加保守延迟
+    if (BATCH_DELAY_MS > 0) {
+      await delay(BATCH_DELAY_MS);
+    }
+  } else {
+    // 新的分钟窗口，重置计数器
+    totalTokensUsed = 0;
+    requestCount = 0;
+    rateLimitWindowStart = now;
+
+    // 仍然添加保守延迟
+    if (BATCH_DELAY_MS > 0) {
+      await delay(BATCH_DELAY_MS);
+    }
+  }
+
+  // 更新计数器
+  totalTokensUsed += tokensUsed;
+  requestCount++;
+}
 
 // 解析命令行参数
 function parseArgs() {
@@ -79,7 +140,7 @@ function truncateText(text: string, maxChars: number = 450): string {
   return truncated;
 }
 
-async function embedPoems(poems: {id: number, title: string, author: {name: string} | null, dynasty: Dynasty, content: string[]}[]) {
+async function embedPoems(poems: {id: number, title: string, author: {name: string} | null, dynasty: Dynasty, content: string[]}[]): Promise<{embeddings: number[][], tokensUsed: number}> {
   // 构建输入文本：标题 + 作者 + 朝代 + 内容
   const texts = poems.map(p => {
     const fullText = `${p.title ?? ''}${p.author?.name ?? ''}${p.dynasty ?? ''}${p.content.join('')}`;
@@ -131,12 +192,13 @@ async function embedPoems(poems: {id: number, title: string, author: {name: stri
 
     console.log(`成功获取 ${embeddings.length} 个嵌入向量，维度: ${embeddings[0]?.length || '未知'}`);
 
-    // 记录使用情况
+    // 记录并存储使用情况
+    const tokensUsed = response.data.usage?.prompt_tokens || 0;
     if (response.data.usage) {
-      console.log(`Token使用情况: 提示token=${response.data.usage.prompt_tokens}, 总token=${response.data.usage.total_tokens}`);
+      console.log(`Token使用情况: 提示token=${tokensUsed}, 总token=${response.data.usage.total_tokens}`);
     }
 
-    return embeddings;
+    return { embeddings, tokensUsed };
   } catch (error: any) {
     if (error.response) {
       // 请求已发送，服务器响应状态码超出2xx范围
@@ -204,7 +266,7 @@ async function main() {
           }
 
           // 处理当前批次
-          const embeddings = await embedPoems(batchPoems.map(p => ({
+          const result = await embedPoems(batchPoems.map(p => ({
             id: p.id,
             title: p.title,
             dynasty: p.dynasty,
@@ -212,8 +274,14 @@ async function main() {
             author: p.author,
           })));
 
+          const embeddings = result.embeddings;
+          const tokensUsed = result.tokensUsed;
+
           success = true;
           successCount += batchPoems.length;
+
+          // 强制执行速率限制
+          await enforceRateLimits(tokensUsed);
 
           // 检查向量维度
           const targetDimension = 1024;
@@ -252,8 +320,18 @@ async function main() {
 
           console.log(`✅ 第 ${batchStart}-${batchEnd} 首处理成功`);
 
-        } catch (error) {
+        } catch (error: any) {
           retryCount++;
+
+          // 检查速率限制错误
+          if (error.response?.status === 429) {
+            console.warn(`⚠️  速率限制超出，增加延迟...`);
+            // 速率限制的指数退避
+            const backoffDelay = Math.min(RETRY_DELAY * Math.pow(2, retryCount), 60000);
+            console.log(`等待 ${backoffDelay}ms 后重试...`);
+            await delay(backoffDelay);
+            continue; // 继续重试循环
+          }
 
           if (retryCount > MAX_RETRIES) {
             console.error(`❌ 第 ${batchStart}-${batchEnd} 首处理失败，已达到最大重试次数:`, error);
