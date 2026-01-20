@@ -55,7 +55,8 @@ services:
     environment:
       - NODE_ENV=production
       - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/poetry
-      - EMBEDDING_SERVER_URL=http://embedding-server:4001
+      - SILICONFLOW_API_URL=https://api.siliconflow.cn/v1
+      - SILICONFLOW_API_KEY=${SILICONFLOW_API_KEY}
     depends_on:
       - postgres
     networks:
@@ -74,7 +75,7 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - NEXT_PUBLIC_API_BASE_URL=http://server:4000
+      - NEXT_PUBLIC_API_BASE_URL=http://server:4000/api
     depends_on:
       - server
     networks:

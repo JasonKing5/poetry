@@ -12,10 +12,10 @@ export class EmbeddingService {
   private readonly apiKey?: string;
 
   constructor() {
-    const url = process.env.EMBEDDING_SERVER_URL;
-    console.log(`EmbeddingService constructor: EMBEDDING_SERVER_URL=${url}`);
+    const url = process.env.SILICONFLOW_API_URL;
+    console.log(`EmbeddingService constructor: SILICONFLOW_API_URL=${url}`);
     if (!url) {
-      throw new Error('EMBEDDING_SERVER_URL environment variable is not set');
+      throw new Error('SILICONFLOW_API_URL environment variable is not set');
     }
     this.embeddingServerUrl = url;
     this.isSiliconFlow = url.includes('siliconflow');

@@ -4,7 +4,6 @@ import * as path from 'path';
 import { userRoleSeed } from './userRoleSeed';
 import { authorSeed } from './authorSeed';
 import { poetrySeed } from './poetrySeed';
-import { embedPoemsSeed } from './embadding';
 
 const prisma = new PrismaClient();
 
