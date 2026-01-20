@@ -19,6 +19,7 @@
     "db:migrate:baseline": "npx prisma migrate resolve --applied 20260115051623_init",
     "data:init": "ts-node ./scripts/db-init/index.ts",
     "data:migrate": "ts-node ./scripts/migrations/index.ts",
+    "embed:siliconflow": "ts-node ./scripts/db-init/siliconflow-embedding.ts",
     "start": "nest start",
     "dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
