@@ -90,12 +90,6 @@ function AuthorPageContent() {
     resetFilters();
   };
 
-  const getShortContent = (content: string[], length: number) => {
-    if (content.length <= length) {
-      return content;
-    }
-    return content.slice(0, length);
-  };
 
   // 页面初始化时，如果URL有type参数，则同步到store
   useEffect(() => {

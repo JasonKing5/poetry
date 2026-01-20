@@ -13,12 +13,6 @@ export default function AuthorDetailPage() {
   const { data, element } = withLoadingError(useGet<Author>(`/authors/${id}`));
   const { data: poemPageRes, element: poemElement } = withLoadingError(usePoemList({ author: Number(id), pageSize: 12 }));
 
-  const getShortContent = (content: string[], length: number) => {
-    if (content.length <= length) {
-      return content;
-    }
-    return content.slice(0, length);
-  };
 
   if (element) {
     return element;
@@ -47,7 +41,7 @@ export default function AuthorDetailPage() {
                     title={poem.title}
                     author={poem.author.name}
                     dynasty={poem.dynasty}
-                    content={getShortContent(poem.content, 8)}
+                    content={poem.content}
                   />
                 </li>
               ))

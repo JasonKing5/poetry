@@ -17,12 +17,6 @@ export default function CollectionDetailPage() {
     return element || poemsElement;
   }
 
-  const getShortContent = (content: string[], length: number) => {
-    if (content.length <= length) {
-      return content;
-    }
-    return content.slice(0, length);
-  };
 
   return (
     <div className="w-full flex justify-center flex-col items-center">
@@ -41,7 +35,7 @@ export default function CollectionDetailPage() {
                   title={poem.title}
                   author={poem.author.name}
                   dynasty={poem.dynasty}
-                  content={getShortContent(poem.content, 8)}
+                  content={poem.content}
                   likesCount={poem.likes?.count || 0}
                   isLiked={poem.likes?.isLiked || false}
                 />

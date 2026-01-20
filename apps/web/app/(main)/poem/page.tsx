@@ -141,12 +141,6 @@ function PoemPageContent() {
     resetFilters();
   };
 
-  const getShortContent = (content: string[], length: number) => {
-    if (content.length <= length) {
-      return content;
-    }
-    return content.slice(0, length);
-  };
 
   // 页面初始化时，如果URL有type参数，则同步到store
   useEffect(() => {
@@ -253,8 +247,8 @@ function PoemPageContent() {
         </div>
       </div>
       <ul className="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {element ? element : (data as PoemListResponse)?.list?.length > 0 ? (
-          (data as PoemListResponse)?.list.map((poem) => (
+        {element || 
+          (data as PoemListResponse)?.list?.map((poem) => (
             <li className="w-full" key={poem.id}>
               <PoemCard
                 id={poem.id}
@@ -262,13 +256,16 @@ function PoemPageContent() {
                 title={poem.title}
                 author={poem.author.name}
                 dynasty={poem.dynasty}
-                content={getShortContent(poem.content, 8)}
+                content={poem.content}
                 likesCount={poem.likes?.count || 0}
                 isLiked={poem.likes?.isLiked || false}
               />
             </li>
           ))
-        ) : <div className='min-h-40 flex justify-center items-center'>无结果</div>}
+        }
+        {!element && (!data?.list || data.list.length === 0) && (
+          <div className='min-h-40 flex justify-center items-center col-span-full'>无结果</div>
+        )}
       </ul>
 
         <div className="flex gap-2">
