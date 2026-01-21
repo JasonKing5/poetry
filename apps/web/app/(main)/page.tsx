@@ -14,6 +14,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { withLoadingError } from "@/components/withLoadingError";
+import LunarCalendarCard from "@/components/LunarCalendarCard";
 
 const carouselItems = [
   {
@@ -135,7 +136,7 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
 
-  const { data: lunarInfo, element: lunarLoadingElement } = withLoadingError(useLunar());
+  const { data: lunarInfo, isLoading: lunarLoading, error: lunarError } = useLunar();
   useEffect(() => {
     if (!carouselApi) return;
 
@@ -187,13 +188,12 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-col items-center justify-center w-1/3 md:w-1/4 min-w-[90px] md:min-w-[120px] border-l border-white px-2 md:px-4">
-            {lunarLoadingElement ? lunarLoadingElement : 
-            <>
-              <div className="text-white text-base md:text-lg font-bold mb-0.5 md:mb-1">{lunarInfo?.gregoriandate}</div>
-              <div className="text-white text-xs md:text-base mb-0.5 md:mb-1">{`${lunarInfo?.lubarmonth} ${lunarInfo?.lunarday}`}</div>
-              <div className="text-white text-xs md:text-base">{lunarInfo?.festival}</div>
-              <div className="text-white text-xs md:text-base">{lunarInfo?.shengxiao}</div>
-            </>}
+            <LunarCalendarCard
+              data={lunarInfo}
+              isLoading={lunarLoading}
+              error={lunarError}
+              className="w-full h-full"
+            />
           </div>
         </div>
       </div>
