@@ -13,8 +13,9 @@ import {
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { withLoadingError } from "@/components/withLoadingError";
 import LunarCalendarCard from "@/components/LunarCalendarCard";
+import { useCalendarPoem } from '@/services/poem.service';
+import CalendarPoemDisplay from '@/components/CalendarPoemDisplay';
 
 const carouselItems = [
   {
@@ -137,6 +138,8 @@ export default function Home() {
   const [totalItems, setTotalItems] = useState(0);
 
   const { data: lunarInfo, isLoading: lunarLoading, error: lunarError } = useLunar();
+  const { data: calendarPoemData, isLoading: poemLoading, error: poemError } = useCalendarPoem();
+  const poem = calendarPoemData?.poem;
   useEffect(() => {
     if (!carouselApi) return;
 
@@ -179,14 +182,11 @@ export default function Home() {
         <div
           className="relative flex w-full max-w-6xl h-28 md:h-36 bg-[#b6b08a]/60 rounded-xl shadow-lg overflow-hidden"
         >
-          <div className="flex-1 flex flex-col justify-center items-center px-4 md:px-8 py-2 md:py-4">
-            <div className="text-white text-base md:text-[1.35rem] lg:text-2xl font-semibold tracking-wide text-left leading-relaxed drop-shadow-lg mb-1 md:mb-2">
-              雪沫乳花浮午盏，蓼茸蒿笋试春盘。<br className="hidden md:block" />人间有味是清欢。
-            </div>
-            <div className="text-white text-sm md:text-base lg:text-lg text-left opacity-90 tracking-wide">
-              —— 苏轼 · 宋 《浣溪沙·细雨斜风作晓寒》
-            </div>
-          </div>
+          <CalendarPoemDisplay
+            poem={poem}
+            isLoading={poemLoading || lunarLoading}
+            error={poemError || lunarError}
+          />
           <div className="flex flex-col items-center justify-center w-1/3 md:w-1/4 min-w-[90px] md:min-w-[120px] border-l border-white px-2 md:px-4">
             <LunarCalendarCard
               data={lunarInfo}

@@ -62,11 +62,11 @@ export class PoetryController {
 
   @Post('/search')
   @Public()
-  async search(@Body() body: { 
+  async search(@Body() body: {
     input: string,
     limit?: number,
   }) {
-    const { 
+    const {
       input,
       limit = 10,
     } = body;
@@ -74,6 +74,12 @@ export class PoetryController {
     console.log('limit: ', limit);
 
     return await this.poetryService.search(input, limit);
+  }
+
+  @Get('/calendar-poem')
+  @Public()
+  async getCalendarPoem() {
+    return await this.poetryService.getCalendarPoem();
   }
 
   @Get('/:id')

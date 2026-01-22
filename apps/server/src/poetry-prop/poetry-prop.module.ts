@@ -4,6 +4,7 @@ import { PoetryPropService } from './poetry-prop.service';
 
 @Module({
   controllers: [PoetryPropController],
-  providers: [PoetryPropService]
+  providers: [PoetryPropService],
+  exports: [PoetryPropService]
 })
 export class PoetryPropModule {}
