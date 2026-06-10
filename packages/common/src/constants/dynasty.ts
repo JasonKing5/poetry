@@ -1,12 +1,12 @@
 export const DYNASTY_MAP = {
-  chunQiu: '春秋',
-  zhanGuo: '战国',
-  qin: '秦',
-  han: '汉',
+  xianQin: '先秦',
+  qinHan: '秦汉',
+  weiJinNanBeiChao: '魏晋南北朝',
   sui: '隋',
   tang: '唐',
   song: '宋',
   yuan: '元',
   ming: '明',
   qing: '清',
+  modern: '近现代',
 } as const;

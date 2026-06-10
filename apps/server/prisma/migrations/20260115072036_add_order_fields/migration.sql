@@ -1,8 +1,0 @@
--- AlterTable
-ALTER TABLE "Author" ADD COLUMN     "order" INTEGER NOT NULL DEFAULT 0;
-
--- AlterTable
-ALTER TABLE "Collection" ADD COLUMN     "order" INTEGER NOT NULL DEFAULT 0;
-
--- AlterTable
-ALTER TABLE "Poem" ADD COLUMN     "order" INTEGER NOT NULL DEFAULT 0;

@@ -192,11 +192,11 @@ export default function AppLayout({ children }: AppLayoutProps) {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat bg-fixed">
       <header 
         className={cn(
-          'fixed w-full z-50 transition-all duration-300',
-          isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-md' : 'bg-white shadow-sm'
+          'fixed w-full z-50 transition-all duration-300 backdrop-blur-md',
+          isScrolled ? 'bg-white/80 shadow-md' : 'bg-white/60 shadow-sm'
         )}
       >
         <div className="container mx-auto px-4">
@@ -357,13 +357,13 @@ export default function AppLayout({ children }: AppLayoutProps) {
       </header>
       {/* Add padding top to account for fixed header */}
       <main
-        className="flex-1 pt-22 pb-6 px-4 md:px-6 main-bg-ink overflow-auto"
+        className="flex-1 pt-22 pb-6 px-4 md:px-6 bg-background/90 overflow-auto"
       >
         <div className="container mx-auto">
           {children}
         </div>
       </main>
-      <footer className="bg-white-50 p-4 text-center text-sm text-gray-500">
+      <footer className="bg-white/60 backdrop-blur-md p-4 text-center text-sm text-gray-500">
         {footerLinks()}
         <div className="mx-auto flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mt-2">
           <div>

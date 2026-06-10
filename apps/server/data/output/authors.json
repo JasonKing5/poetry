@@ -1,0 +1,2928 @@
+[
+  {
+    "id": 1,
+    "name": "范成大",
+    "dynasty": "song",
+    "description": "字至能，号石湖居士，南宋诗人。田园诗成就颇高，与陆游、杨万里、尤袤齐名。",
+    "score": {
+      "poemCount": 61,
+      "avgScore": 49.7,
+      "textbookCount": 55,
+      "anthologyCount": 1,
+      "tierWeight": 10,
+      "total": 712
+    }
+  },
+  {
+    "id": 2,
+    "name": "杜甫",
+    "dynasty": "tang",
+    "description": "字子美，自号少陵野老，唐代伟大的现实主义诗人，被后人誉为\"诗圣\"。其诗沉郁顿挫，忧国忧民，被誉为\"诗史\"。",
+    "score": {
+      "poemCount": 65,
+      "avgScore": 70.5,
+      "textbookCount": 26,
+      "anthologyCount": 38,
+      "tierWeight": 30,
+      "total": 645
+    }
+  },
+  {
+    "id": 3,
+    "name": "李白",
+    "dynasty": "tang",
+    "description": "字太白，号青莲居士，唐代伟大的浪漫主义诗人，被后人誉为\"诗仙\"。其诗风豪放飘逸，想象丰富，语言流转自然，音律和谐多变。",
+    "score": {
+      "poemCount": 39,
+      "avgScore": 78.8,
+      "textbookCount": 18,
+      "anthologyCount": 20,
+      "tierWeight": 30,
+      "total": 427
+    }
+  },
+  {
+    "id": 4,
+    "name": "苏轼",
+    "dynasty": "song",
+    "description": "字子瞻，号东坡居士，北宋文学家、书画家。\"唐宋八大家\"之一，词开豪放一派，与辛弃疾并称\"苏辛\"。",
+    "score": {
+      "poemCount": 42,
+      "avgScore": 68.8,
+      "textbookCount": 7,
+      "anthologyCount": 24,
+      "tierWeight": 30,
+      "total": 338
+    }
+  },
+  {
+    "id": 5,
+    "name": "李商隐",
+    "dynasty": "tang",
+    "description": "字义山，号玉谿生，唐代著名诗人。其诗构思新奇，风格绮丽，尤其爱情诗和无题诗缠绵悱恻。",
+    "score": {
+      "poemCount": 27,
+      "avgScore": 64.8,
+      "textbookCount": 20,
+      "anthologyCount": 6,
+      "tierWeight": 20,
+      "total": 336
+    }
+  },
+  {
+    "id": 6,
+    "name": "王维",
+    "dynasty": "tang",
+    "description": "字摩诘，号摩诘居士，唐代著名诗人、画家。其诗以山水田园见长，被苏轼赞为\"诗中有画，画中有诗\"。",
+    "score": {
+      "poemCount": 29,
+      "avgScore": 76.4,
+      "textbookCount": 4,
+      "anthologyCount": 24,
+      "tierWeight": 30,
+      "total": 286
+    }
+  },
+  {
+    "id": 7,
+    "name": "陆游",
+    "dynasty": "song",
+    "description": "字务观，号放翁，南宋爱国诗人。一生笔耕不辍，诗词文均有很高成就，存诗九千多首。",
+    "score": {
+      "poemCount": 29,
+      "avgScore": 63.8,
+      "textbookCount": 16,
+      "anthologyCount": 0,
+      "tierWeight": 30,
+      "total": 280
+    }
+  },
+  {
+    "id": 8,
+    "name": "秦观",
+    "dynasty": "song",
+    "description": "字少游，又字太虚，号淮海居士，北宋婉约派词人。\"苏门四学士\"之一，词风婉约细腻。",
+    "score": {
+      "poemCount": 29,
+      "avgScore": 61.5,
+      "textbookCount": 0,
+      "anthologyCount": 25,
+      "tierWeight": 20,
+      "total": 234
+    }
+  },
+  {
+    "id": 9,
+    "name": "辛弃疾",
+    "dynasty": "song",
+    "description": "字幼安，号稼轩，南宋豪放派词人、将领。与苏轼并称\"苏辛\"，词风慷慨激昂，爱国情怀深沉。",
+    "score": {
+      "poemCount": 20,
+      "avgScore": 77.3,
+      "textbookCount": 3,
+      "anthologyCount": 15,
+      "tierWeight": 30,
+      "total": 214
+    }
+  },
+  {
+    "id": 10,
+    "name": "杨万里",
+    "dynasty": "song",
+    "description": "字廷秀，号诚斋，南宋著名诗人。与陆游、范成大、尤袤合称\"南宋四家\"，创\"诚斋体\"。",
+    "score": {
+      "poemCount": 12,
+      "avgScore": 52.3,
+      "textbookCount": 10,
+      "anthologyCount": 0,
+      "tierWeight": 20,
+      "total": 170
+    }
+  },
+  {
+    "id": 11,
+    "name": "柳永",
+    "dynasty": "song",
+    "description": "字耆卿，北宋著名词人，婉约派代表人物。其词善用白描手法，铺叙刻画，情景交融。",
+    "score": {
+      "poemCount": 21,
+      "avgScore": 62.3,
+      "textbookCount": 1,
+      "anthologyCount": 12,
+      "tierWeight": 20,
+      "total": 163
+    }
+  },
+  {
+    "id": 12,
+    "name": "王安石",
+    "dynasty": "song",
+    "description": "字介甫，号半山，北宋杰出的政治家、文学家、思想家、改革家。\"唐宋八大家\"之一。",
+    "score": {
+      "poemCount": 13,
+      "avgScore": 51.3,
+      "textbookCount": 8,
+      "anthologyCount": 1,
+      "tierWeight": 20,
+      "total": 157
+    }
+  },
+  {
+    "id": 13,
+    "name": "欧阳修",
+    "dynasty": "song",
+    "description": "字永叔，号醉翁、六一居士，北宋政治家、文学家。\"唐宋八大家\"之一，北宋古文运动的领袖。",
+    "score": {
+      "poemCount": 17,
+      "avgScore": 61.7,
+      "textbookCount": 0,
+      "anthologyCount": 12,
+      "tierWeight": 30,
+      "total": 155
+    }
+  },
+  {
+    "id": 14,
+    "name": "孟浩然",
+    "dynasty": "tang",
+    "description": "名浩，字浩然，唐代著名的山水田园派诗人。与王维并称\"王孟\"，其诗清淡自然，意境深远。",
+    "score": {
+      "poemCount": 11,
+      "avgScore": 74.2,
+      "textbookCount": 1,
+      "anthologyCount": 11,
+      "tierWeight": 20,
+      "total": 144
+    }
+  },
+  {
+    "id": 15,
+    "name": "张九龄",
+    "dynasty": "tang",
+    "description": "字子寿，唐代名相、诗人。其诗风格清淡，被誉为\"岭南第一人\"。",
+    "score": {
+      "poemCount": 14,
+      "avgScore": 61,
+      "textbookCount": 0,
+      "anthologyCount": 14,
+      "tierWeight": 10,
+      "total": 139
+    }
+  },
+  {
+    "id": 16,
+    "name": "白居易",
+    "dynasty": "tang",
+    "description": "字乐天，号香山居士，唐代伟大的现实主义诗人。其诗题材广泛，语言平易通俗，相传老妪能解。",
+    "score": {
+      "poemCount": 8,
+      "avgScore": 78.8,
+      "textbookCount": 4,
+      "anthologyCount": 2,
+      "tierWeight": 30,
+      "total": 135
+    }
+  },
+  {
+    "id": 17,
+    "name": "晏几道",
+    "dynasty": "song",
+    "description": "字叔原，号小山，北宋词人，晏殊之子。其词工于言情，风格凄婉感伤，措辞婉妙。",
+    "score": {
+      "poemCount": 14,
+      "avgScore": 59.5,
+      "textbookCount": 0,
+      "anthologyCount": 11,
+      "tierWeight": 20,
+      "total": 133
+    }
+  },
+  {
+    "id": 18,
+    "name": "王昌龄",
+    "dynasty": "tang",
+    "description": "字少伯，唐代著名边塞诗人，被誉为\"七绝圣手\"。其诗含蓄、深婉、浑厚、明快。",
+    "score": {
+      "poemCount": 9,
+      "avgScore": 62,
+      "textbookCount": 3,
+      "anthologyCount": 6,
+      "tierWeight": 20,
+      "total": 129
+    }
+  },
+  {
+    "id": 19,
+    "name": "李清照",
+    "dynasty": "song",
+    "description": "号易安居士，宋代杰出女词人，婉约词派代表人物。其词善用白描手法，自辟途径，语言清丽。",
+    "score": {
+      "poemCount": 10,
+      "avgScore": 75.5,
+      "textbookCount": 1,
+      "anthologyCount": 6,
+      "tierWeight": 30,
+      "total": 128
+    }
+  },
+  {
+    "id": 20,
+    "name": "韦应物",
+    "dynasty": "tang",
+    "description": "唐代诗人，世称\"韦苏州\"。其诗以写田园风物著名，语言简淡，风格澄澈。",
+    "score": {
+      "poemCount": 10,
+      "avgScore": 65.1,
+      "textbookCount": 0,
+      "anthologyCount": 10,
+      "tierWeight": 20,
+      "total": 123
+    }
+  },
+  {
+    "id": 21,
+    "name": "高适",
+    "dynasty": "tang",
+    "description": "字达夫，唐代著名边塞诗人。与岑参并称\"高岑\"，其诗笔力雄健，气势奔放。",
+    "score": {
+      "poemCount": 6,
+      "avgScore": 70,
+      "textbookCount": 4,
+      "anthologyCount": 3,
+      "tierWeight": 20,
+      "total": 122
+    }
+  },
+  {
+    "id": 22,
+    "name": "姜夔",
+    "dynasty": "song",
+    "description": "字尧章，号白石道人，南宋文学家、音乐家。其词清空峭拔，格调甚高，为清雅词派的代表。",
+    "score": {
+      "poemCount": 8,
+      "avgScore": 70.8,
+      "textbookCount": 1,
+      "anthologyCount": 8,
+      "tierWeight": 20,
+      "total": 121
+    }
+  },
+  {
+    "id": 23,
+    "name": "晏殊",
+    "dynasty": "song",
+    "description": "字同叔，北宋著名词人。其词擅长小令，语言婉丽，音韵和谐，颇受南唐冯延巳影响。",
+    "score": {
+      "poemCount": 8,
+      "avgScore": 82.9,
+      "textbookCount": 1,
+      "anthologyCount": 6,
+      "tierWeight": 20,
+      "total": 117
+    }
+  },
+  {
+    "id": 24,
+    "name": "岳飞",
+    "dynasty": "song",
+    "description": "字鹏举，南宋抗金名将、民族英雄。其词《满江红》慷慨激昂，为千古传诵的爱国名篇。",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 157,
+      "textbookCount": 1,
+      "anthologyCount": 1,
+      "tierWeight": 20,
+      "total": 116
+    }
+  },
+  {
+    "id": 25,
+    "name": "曹操",
+    "dynasty": "weiJinNanBeiChao",
+    "description": "字孟德，东汉末年杰出的政治家、军事家、文学家。其诗气魄雄伟，慷慨悲凉，开建安文学之风。",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 84,
+      "textbookCount": 3,
+      "anthologyCount": 0,
+      "tierWeight": 30,
+      "total": 110
+    }
+  },
+  {
+    "id": 26,
+    "name": "屈原",
+    "dynasty": "xianQin",
+    "description": "名平，字原，战国时期楚国诗人、政治家。中国浪漫主义文学的奠基人，代表作《离骚》对后世影响深远。",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 70,
+      "textbookCount": 1,
+      "anthologyCount": 4,
+      "tierWeight": 30,
+      "total": 103
+    }
+  },
+  {
+    "id": 27,
+    "name": "杜牧",
+    "dynasty": "tang",
+    "description": "字牧之，号樊川居士，唐代杰出的诗人、散文家。与李商隐并称\"小李杜\"，以七言绝句著称。",
+    "score": {
+      "poemCount": 8,
+      "avgScore": 64.3,
+      "textbookCount": 3,
+      "anthologyCount": 1,
+      "tierWeight": 20,
+      "total": 103
+    }
+  },
+  {
+    "id": 28,
+    "name": "王之涣",
+    "dynasty": "tang",
+    "description": "字季凌，唐代诗人。\"白日依山尽，黄河入海流\"千古传诵。",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 75,
+      "textbookCount": 4,
+      "anthologyCount": 1,
+      "tierWeight": 10,
+      "total": 101
+    }
+  },
+  {
+    "id": 29,
+    "name": "毛泽东",
+    "dynasty": "modern",
+    "description": "字润之，伟大的无产阶级革命家、战略家和理论家。其诗词气势磅礴，意境高远，具有革命浪漫主义风格。",
+    "score": {
+      "poemCount": 5,
+      "avgScore": 74.6,
+      "textbookCount": 2,
+      "anthologyCount": 0,
+      "tierWeight": 30,
+      "total": 97
+    }
+  },
+  {
+    "id": 30,
+    "name": "王冕",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 6,
+      "avgScore": 50,
+      "textbookCount": 5,
+      "anthologyCount": 0,
+      "tierWeight": 10,
+      "total": 97
+    }
+  },
+  {
+    "id": 31,
+    "name": "贺知章",
+    "dynasty": "tang",
+    "description": "字季真，号四明狂客，唐代著名诗人、书法家。\"少小离家老大回\"传诵至今。",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 56,
+      "textbookCount": 4,
+      "anthologyCount": 0,
+      "tierWeight": 20,
+      "total": 96
+    }
+  },
+  {
+    "id": 32,
+    "name": "张若虚",
+    "dynasty": "tang",
+    "description": "唐代诗人，与贺知章、张旭、包融并称\"吴中四士\"。仅存两首诗，其中《春江花月夜》被誉为\"孤篇盖全唐\"。",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 125,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 20,
+      "total": 95
+    }
+  },
+  {
+    "id": 33,
+    "name": "周邦彦",
+    "dynasty": "song",
+    "description": "字美成，号清真居士，北宋著名词人。其词格律谨严，语言典丽精雅，为婉约词派的集大成者。",
+    "score": {
+      "poemCount": 6,
+      "avgScore": 65.7,
+      "textbookCount": 0,
+      "anthologyCount": 6,
+      "tierWeight": 20,
+      "total": 95
+    }
+  },
+  {
+    "id": 34,
+    "name": "岑参",
+    "dynasty": "tang",
+    "description": "唐代著名的边塞诗人。其诗善于描绘塞上风光和战争景象，气势豪迈，情辞慷慨。",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 78,
+      "textbookCount": 1,
+      "anthologyCount": 3,
+      "tierWeight": 20,
+      "total": 92
+    }
+  },
+  {
+    "id": 35,
+    "name": "李煜",
+    "dynasty": "tang",
+    "description": "初名从嘉，字重光，号钟隐，南唐末代国主。世称南唐后主、李后主。其词感情真挚，意境深远，被誉为\"千古词帝\"。",
+    "score": {
+      "poemCount": 3,
+      "avgScore": 72,
+      "textbookCount": 2,
+      "anthologyCount": 0,
+      "tierWeight": 30,
+      "total": 92
+    }
+  },
+  {
+    "id": 36,
+    "name": "刘长卿",
+    "dynasty": "tang",
+    "description": "字文房，唐代诗人，擅长五言诗，自诩\"五言长城\"。",
+    "score": {
+      "poemCount": 7,
+      "avgScore": 62.1,
+      "textbookCount": 0,
+      "anthologyCount": 7,
+      "tierWeight": 10,
+      "total": 90
+    }
+  },
+  {
+    "id": 37,
+    "name": "马致远",
+    "dynasty": "yuan",
+    "description": "字千里，号东篱，元代著名杂剧家、散曲家。与关汉卿、郑光祖、白朴并称\"元曲四大家\"。",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 114,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 20,
+      "total": 89
+    }
+  },
+  {
+    "id": 38,
+    "name": "张继",
+    "dynasty": "tang",
+    "description": "字懿孙，唐代诗人。\"姑苏城外寒山寺，夜半钟声到客船\"千古传诵。",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 120,
+      "textbookCount": 1,
+      "anthologyCount": 1,
+      "tierWeight": 10,
+      "total": 87
+    }
+  },
+  {
+    "id": 39,
+    "name": "刘禹锡",
+    "dynasty": "tang",
+    "description": "字梦得，唐代文学家、哲学家。其诗善用比兴手法，寄托深远，风格豪健清朗。",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 58.3,
+      "textbookCount": 2,
+      "anthologyCount": 2,
+      "tierWeight": 20,
+      "total": 87
+    }
+  },
+  {
+    "id": 40,
+    "name": "孟郊",
+    "dynasty": "tang",
+    "description": "字东野，唐代诗人。与贾岛并称\"郊寒岛瘦\"，\"谁言寸草心，报得三春晖\"传诵千古。",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 100.5,
+      "textbookCount": 1,
+      "anthologyCount": 2,
+      "tierWeight": 10,
+      "total": 84
+    }
+  },
+  {
+    "id": 41,
+    "name": "柳宗元",
+    "dynasty": "tang",
+    "description": "字子厚，世称\"柳河东\"，唐代杰出的文学家、思想家。\"唐宋八大家\"之一，与韩愈并称\"韩柳\"。",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 61.3,
+      "textbookCount": 1,
+      "anthologyCount": 3,
+      "tierWeight": 20,
+      "total": 84
+    }
+  },
+  {
+    "id": 42,
+    "name": "李绅",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 3,
+      "avgScore": 70,
+      "textbookCount": 3,
+      "anthologyCount": 0,
+      "tierWeight": 10,
+      "total": 81
+    }
+  },
+  {
+    "id": 43,
+    "name": "王湾",
+    "dynasty": "tang",
+    "description": "唐代诗人，\"潮平两岸阔，风正一帆悬\"为其名句。",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 106,
+      "textbookCount": 1,
+      "anthologyCount": 1,
+      "tierWeight": 10,
+      "total": 80
+    }
+  },
+  {
+    "id": 44,
+    "name": "韩愈",
+    "dynasty": "tang",
+    "description": "字退之，世称\"韩昌黎\"，唐代杰出的文学家、思想家。\"唐宋八大家\"之首，古文运动的倡导者。",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 64,
+      "textbookCount": 0,
+      "anthologyCount": 4,
+      "tierWeight": 20,
+      "total": 80
+    }
+  },
+  {
+    "id": 45,
+    "name": "陈子昂",
+    "dynasty": "tang",
+    "description": "字伯玉，唐代文学家、诗人。初唐诗歌革新的先驱，\"念天地之悠悠，独怆然而涕下\"意境深远。",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 103,
+      "textbookCount": 1,
+      "anthologyCount": 1,
+      "tierWeight": 10,
+      "total": 79
+    }
+  },
+  {
+    "id": 46,
+    "name": "王勃",
+    "dynasty": "tang",
+    "description": "字子安，唐代文学家，\"初唐四杰\"之首。其文《滕王阁序》千古传诵。",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 96,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 20,
+      "total": 75
+    }
+  },
+  {
+    "id": 47,
+    "name": "崔颢",
+    "dynasty": "tang",
+    "description": "唐代诗人，其《黄鹤楼》被严羽评为\"唐人七律第一\"。",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 80,
+      "textbookCount": 1,
+      "anthologyCount": 2,
+      "tierWeight": 10,
+      "total": 74
+    }
+  },
+  {
+    "id": 48,
+    "name": "王翰",
+    "dynasty": "tang",
+    "description": "字子羽，唐代边塞诗人。\"葡萄美酒夜光杯\"传诵千古。",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 51.5,
+      "textbookCount": 3,
+      "anthologyCount": 0,
+      "tierWeight": 10,
+      "total": 74
+    }
+  },
+  {
+    "id": 49,
+    "name": "元稹",
+    "dynasty": "tang",
+    "description": "字微之，唐代诗人。与白居易并称\"元白\"，倡导新乐府运动。",
+    "score": {
+      "poemCount": 8,
+      "avgScore": 53.3,
+      "textbookCount": 0,
+      "anthologyCount": 4,
+      "tierWeight": 10,
+      "total": 73
+    }
+  },
+  {
+    "id": 50,
+    "name": "张养浩",
+    "dynasty": "yuan",
+    "description": "字希孟，号云庄，元代散曲家。\"兴，百姓苦；亡，百姓苦\"深刻揭示了历史的残酷。",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 99,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 10,
+      "total": 72
+    }
+  },
+  {
+    "id": 51,
+    "name": "张先",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 7,
+      "avgScore": 46.7,
+      "textbookCount": 0,
+      "anthologyCount": 7,
+      "tierWeight": 0,
+      "total": 72
+    }
+  },
+  {
+    "id": 52,
+    "name": "文天祥",
+    "dynasty": "song",
+    "description": "字宋瑞，号文山，南宋末年政治家、文学家、民族英雄。\"人生自古谁无死，留取丹心照汗青\"传诵至今。",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 67,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 20,
+      "total": 68
+    }
+  },
+  {
+    "id": 53,
+    "name": "黄庭坚",
+    "dynasty": "song",
+    "description": "字鲁直，号山谷道人，北宋著名诗人、书法家。江西诗派的开创者。",
+    "score": {
+      "poemCount": 6,
+      "avgScore": 52.3,
+      "textbookCount": 0,
+      "anthologyCount": 4,
+      "tierWeight": 10,
+      "total": 68
+    }
+  },
+  {
+    "id": 54,
+    "name": "李贺",
+    "dynasty": "tang",
+    "description": "字长吉，唐代著名诗人，被誉为\"诗鬼\"。其诗想象奇特，色彩浓郁。",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 58.8,
+      "textbookCount": 2,
+      "anthologyCount": 0,
+      "tierWeight": 10,
+      "total": 67
+    }
+  },
+  {
+    "id": 55,
+    "name": "龚自珍",
+    "dynasty": "qing",
+    "description": "字璱人，号定盦，清代思想家、文学家。其诗文主张\"更法\"、\"改图\"，揭露清统治者的腐朽。",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 57.3,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 20,
+      "total": 67
+    }
+  },
+  {
+    "id": 56,
+    "name": "贺铸",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 6,
+      "avgScore": 46.5,
+      "textbookCount": 0,
+      "anthologyCount": 6,
+      "tierWeight": 0,
+      "total": 65
+    }
+  },
+  {
+    "id": 57,
+    "name": "李颀",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 5,
+      "avgScore": 48.6,
+      "textbookCount": 0,
+      "anthologyCount": 5,
+      "tierWeight": 0,
+      "total": 59
+    }
+  },
+  {
+    "id": 58,
+    "name": "马戴",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 5,
+      "avgScore": 48,
+      "textbookCount": 0,
+      "anthologyCount": 5,
+      "tierWeight": 0,
+      "total": 59
+    }
+  },
+  {
+    "id": 59,
+    "name": "范仲淹",
+    "dynasty": "song",
+    "description": "字希文，北宋杰出的思想家、政治家、文学家。其《岳阳楼记》中\"先天下之忧而忧\"传颂千古。",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 68,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 20,
+      "total": 58
+    }
+  },
+  {
+    "id": 60,
+    "name": "许浑",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 5,
+      "avgScore": 46.8,
+      "textbookCount": 0,
+      "anthologyCount": 5,
+      "tierWeight": 0,
+      "total": 58
+    }
+  },
+  {
+    "id": 61,
+    "name": "曹植",
+    "dynasty": "weiJinNanBeiChao",
+    "description": "字子建，三国时期曹魏著名文学家。\"建安之杰\"，其诗\"骨气奇高，词采华茂\"。",
+    "score": {
+      "poemCount": 3,
+      "avgScore": 55.3,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 20,
+      "total": 54
+    }
+  },
+  {
+    "id": 62,
+    "name": "韦庄",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 72,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 10,
+      "total": 53
+    }
+  },
+  {
+    "id": 63,
+    "name": "史达祖",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 50.3,
+      "textbookCount": 0,
+      "anthologyCount": 4,
+      "tierWeight": 0,
+      "total": 53
+    }
+  },
+  {
+    "id": 64,
+    "name": "张炎",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 50.3,
+      "textbookCount": 0,
+      "anthologyCount": 4,
+      "tierWeight": 0,
+      "total": 53
+    }
+  },
+  {
+    "id": 65,
+    "name": "吴文英",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 49.5,
+      "textbookCount": 0,
+      "anthologyCount": 4,
+      "tierWeight": 0,
+      "total": 53
+    }
+  },
+  {
+    "id": 66,
+    "name": "沈佺期",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 46.5,
+      "textbookCount": 0,
+      "anthologyCount": 4,
+      "tierWeight": 0,
+      "total": 51
+    }
+  },
+  {
+    "id": 67,
+    "name": "宋之问",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 63,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 10,
+      "total": 49
+    }
+  },
+  {
+    "id": 68,
+    "name": "祖咏",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 63,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 10,
+      "total": 49
+    }
+  },
+  {
+    "id": 69,
+    "name": "朱熹",
+    "dynasty": "song",
+    "description": "字元晦，号晦庵，南宋理学家、思想家、教育家。\"问渠那得清如许，为有源头活水来\"传诵千古。",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 41.8,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 10,
+      "total": 49
+    }
+  },
+  {
+    "id": 70,
+    "name": "杜荀鹤",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 60,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 10,
+      "total": 47
+    }
+  },
+  {
+    "id": 71,
+    "name": "温庭筠",
+    "dynasty": "tang",
+    "description": "本名岐，字飞卿，唐代诗人、词人。花间派的鼻祖，词风绮丽。",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 60,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 10,
+      "total": 47
+    }
+  },
+  {
+    "id": 72,
+    "name": "袁去华",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 3,
+      "avgScore": 51,
+      "textbookCount": 0,
+      "anthologyCount": 3,
+      "tierWeight": 0,
+      "total": 47
+    }
+  },
+  {
+    "id": 73,
+    "name": "罗隐",
+    "dynasty": "tang",
+    "description": "字昭谏，唐代文学家。其诗多讽刺现实，语言犀利。",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 50,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 10,
+      "total": 47
+    }
+  },
+  {
+    "id": 74,
+    "name": "贾岛",
+    "dynasty": "tang",
+    "description": "字阆仙，唐代诗人，\"推敲\"典故的主人公。其诗以苦吟著称。",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 50,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 10,
+      "total": 47
+    }
+  },
+  {
+    "id": 75,
+    "name": "叶绍翁",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 50,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 10,
+      "total": 47
+    }
+  },
+  {
+    "id": 76,
+    "name": "关汉卿",
+    "dynasty": "yuan",
+    "description": "号已斋叟，元代杂剧奠基人，\"元曲四大家\"之首。被誉为\"曲圣\"，代表作《窦娥冤》。",
+    "score": {
+      "poemCount": 3,
+      "avgScore": 41.3,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 20,
+      "total": 47
+    }
+  },
+  {
+    "id": 77,
+    "name": "韩翃",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 3,
+      "avgScore": 42.7,
+      "textbookCount": 1,
+      "anthologyCount": 2,
+      "tierWeight": 0,
+      "total": 47
+    }
+  },
+  {
+    "id": 78,
+    "name": "骆宾王",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 54,
+      "textbookCount": 1,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 46
+    }
+  },
+  {
+    "id": 79,
+    "name": "钱起",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 3,
+      "avgScore": 49,
+      "textbookCount": 0,
+      "anthologyCount": 3,
+      "tierWeight": 0,
+      "total": 46
+    }
+  },
+  {
+    "id": 80,
+    "name": "司空曙",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 3,
+      "avgScore": 50,
+      "textbookCount": 0,
+      "anthologyCount": 3,
+      "tierWeight": 0,
+      "total": 46
+    }
+  },
+  {
+    "id": 81,
+    "name": "纳兰性德",
+    "dynasty": "qing",
+    "description": "字容若，号楞伽山人，清代最著名词人之一。其词真挚自然，凄婉哀怨，被誉为\"清代第一词人\"。",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 42.5,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 20,
+      "total": 45
+    }
+  },
+  {
+    "id": 82,
+    "name": "李峤",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 35,
+      "textbookCount": 2,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 42
+    }
+  },
+  {
+    "id": 83,
+    "name": "周密",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 52.5,
+      "textbookCount": 0,
+      "anthologyCount": 2,
+      "tierWeight": 0,
+      "total": 40
+    }
+  },
+  {
+    "id": 84,
+    "name": "曹组",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 51,
+      "textbookCount": 0,
+      "anthologyCount": 2,
+      "tierWeight": 0,
+      "total": 40
+    }
+  },
+  {
+    "id": 85,
+    "name": "张孝祥",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 50,
+      "textbookCount": 0,
+      "anthologyCount": 2,
+      "tierWeight": 0,
+      "total": 39
+    }
+  },
+  {
+    "id": 86,
+    "name": "晁冲之",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 48.5,
+      "textbookCount": 0,
+      "anthologyCount": 2,
+      "tierWeight": 0,
+      "total": 38
+    }
+  },
+  {
+    "id": 87,
+    "name": "晁补之",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 48.5,
+      "textbookCount": 0,
+      "anthologyCount": 2,
+      "tierWeight": 0,
+      "total": 38
+    }
+  },
+  {
+    "id": 88,
+    "name": "元结",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 2,
+      "tierWeight": 0,
+      "total": 37
+    }
+  },
+  {
+    "id": 89,
+    "name": "蔡伸",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 57,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 36
+    }
+  },
+  {
+    "id": 90,
+    "name": "王绩",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 48,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 36
+    }
+  },
+  {
+    "id": 91,
+    "name": "卢纶",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 54,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 34
+    }
+  },
+  {
+    "id": 92,
+    "name": "刘过",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 54,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 34
+    }
+  },
+  {
+    "id": 93,
+    "name": "黄孝迈",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 54,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 34
+    }
+  },
+  {
+    "id": 94,
+    "name": "潘希白",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 54,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 34
+    }
+  },
+  {
+    "id": 95,
+    "name": "李元膺",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 52,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 33
+    }
+  },
+  {
+    "id": 96,
+    "name": "周紫芝",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 52,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 33
+    }
+  },
+  {
+    "id": 97,
+    "name": "李之仪",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 51,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 33
+    }
+  },
+  {
+    "id": 98,
+    "name": "李甲",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 51,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 33
+    }
+  },
+  {
+    "id": 99,
+    "name": "姚云文",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 51,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 33
+    }
+  },
+  {
+    "id": 100,
+    "name": "章良能",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 51,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 33
+    }
+  },
+  {
+    "id": 101,
+    "name": "程垓",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 51,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 33
+    }
+  },
+  {
+    "id": 102,
+    "name": "陈家庆",
+    "dynasty": "qing",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 59,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 32
+    }
+  },
+  {
+    "id": 103,
+    "name": "陶潜",
+    "dynasty": "weiJinNanBeiChao",
+    "description": "",
+    "score": {
+      "poemCount": 3,
+      "avgScore": 51.3,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 32
+    }
+  },
+  {
+    "id": 104,
+    "name": "陈孚",
+    "dynasty": "yuan",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 57,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 31
+    }
+  },
+  {
+    "id": 105,
+    "name": "皎然",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 48,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 31
+    }
+  },
+  {
+    "id": 106,
+    "name": "皇甫冉",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 48,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 31
+    }
+  },
+  {
+    "id": 107,
+    "name": "朱服",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 48,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 31
+    }
+  },
+  {
+    "id": 108,
+    "name": "陆淞",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 48,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 31
+    }
+  },
+  {
+    "id": 109,
+    "name": "汪藻",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 48,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 31
+    }
+  },
+  {
+    "id": 110,
+    "name": "黄公绍",
+    "dynasty": "yuan",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 48,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 31
+    }
+  },
+  {
+    "id": 111,
+    "name": "林杰",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 38,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 31
+    }
+  },
+  {
+    "id": 112,
+    "name": "高鼎",
+    "dynasty": "qing",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 38,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 31
+    }
+  },
+  {
+    "id": 113,
+    "name": "杨慎",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 56,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 114,
+    "name": "陈克",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 46,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 115,
+    "name": "杜审言",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 116,
+    "name": "丘为",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 117,
+    "name": "张乔",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 118,
+    "name": "张籍",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 119,
+    "name": "李益",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 120,
+    "name": "常建",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 121,
+    "name": "綦毋潜",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 122,
+    "name": "崔涂",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 123,
+    "name": "朱嗣发",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 124,
+    "name": "张镃",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 125,
+    "name": "陈与义",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 126,
+    "name": "陈亮",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 127,
+    "name": "俞国宝",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 128,
+    "name": "韩缜",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 45,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 129,
+    "name": "胡令能",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 35,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 130,
+    "name": "曾几",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 35,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 131,
+    "name": "翁卷",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 35,
+      "textbookCount": 1,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 30
+    }
+  },
+  {
+    "id": 132,
+    "name": "释法明",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 53,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 29
+    }
+  },
+  {
+    "id": 133,
+    "name": "刘辰翁",
+    "dynasty": "yuan",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 43,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 29
+    }
+  },
+  {
+    "id": 134,
+    "name": "曹家达",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 40,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 28
+    }
+  },
+  {
+    "id": 135,
+    "name": "诗经",
+    "dynasty": "xianQin",
+    "description": "",
+    "score": {
+      "poemCount": 4,
+      "avgScore": 38.8,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 27
+    }
+  },
+  {
+    "id": 136,
+    "name": "刘克庄",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 39,
+      "textbookCount": 0,
+      "anthologyCount": 1,
+      "tierWeight": 0,
+      "total": 27
+    }
+  },
+  {
+    "id": 137,
+    "name": "丘浚",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 41,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 25
+    }
+  },
+  {
+    "id": 138,
+    "name": "卢挚",
+    "dynasty": "yuan",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 44,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 24
+    }
+  },
+  {
+    "id": 139,
+    "name": "蒋士铨",
+    "dynasty": "qing",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 40,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 24
+    }
+  },
+  {
+    "id": 140,
+    "name": "潘受",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 39,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 24
+    }
+  },
+  {
+    "id": 141,
+    "name": "杨士奇",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 42,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 23
+    }
+  },
+  {
+    "id": 142,
+    "name": "梁三苏",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 42,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 23
+    }
+  },
+  {
+    "id": 143,
+    "name": "叶璧华",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 42,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 23
+    }
+  },
+  {
+    "id": 144,
+    "name": "释师范",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 41,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 23
+    }
+  },
+  {
+    "id": 145,
+    "name": "释法薰",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 41,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 23
+    }
+  },
+  {
+    "id": 146,
+    "name": "李纲",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 41,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 23
+    }
+  },
+  {
+    "id": 147,
+    "name": "释智朋",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 38,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 23
+    }
+  },
+  {
+    "id": 148,
+    "name": "胡直",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 39,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 22
+    }
+  },
+  {
+    "id": 149,
+    "name": "程敏政",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 39,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 22
+    }
+  },
+  {
+    "id": 150,
+    "name": "释印肃",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 36.5,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 22
+    }
+  },
+  {
+    "id": 151,
+    "name": "释士圭",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 35.5,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 22
+    }
+  },
+  {
+    "id": 152,
+    "name": "黄文仪",
+    "dynasty": "qing",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 36,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 22
+    }
+  },
+  {
+    "id": 153,
+    "name": "释普度",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 35,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 22
+    }
+  },
+  {
+    "id": 154,
+    "name": "林则徐",
+    "dynasty": "qing",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 35,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 22
+    }
+  },
+  {
+    "id": 155,
+    "name": "沈亚之",
+    "dynasty": "tang",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 38,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 21
+    }
+  },
+  {
+    "id": 156,
+    "name": "李涛",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 38,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 21
+    }
+  },
+  {
+    "id": 157,
+    "name": "释心月",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 38,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 21
+    }
+  },
+  {
+    "id": 158,
+    "name": "饶节",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 38,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 21
+    }
+  },
+  {
+    "id": 159,
+    "name": "王哲",
+    "dynasty": "yuan",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 38,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 21
+    }
+  },
+  {
+    "id": 160,
+    "name": "李贽",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 38,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 21
+    }
+  },
+  {
+    "id": 161,
+    "name": "翁瑞恩",
+    "dynasty": "qing",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 38,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 21
+    }
+  },
+  {
+    "id": 162,
+    "name": "冯振",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 38,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 21
+    }
+  },
+  {
+    "id": 163,
+    "name": "汪东",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 38,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 21
+    }
+  },
+  {
+    "id": 164,
+    "name": "江源",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 37,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 21
+    }
+  },
+  {
+    "id": 165,
+    "name": "黎瑜娘",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 37,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 21
+    }
+  },
+  {
+    "id": 166,
+    "name": "姚佳",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 37,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 21
+    }
+  },
+  {
+    "id": 167,
+    "name": "释居简",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 33,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 21
+    }
+  },
+  {
+    "id": 168,
+    "name": "夏曾佑",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 36,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 20
+    }
+  },
+  {
+    "id": 169,
+    "name": "白玉蟾",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 35,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 20
+    }
+  },
+  {
+    "id": 170,
+    "name": "胡宏",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 35,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 20
+    }
+  },
+  {
+    "id": 171,
+    "name": "释祖钦",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 35,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 20
+    }
+  },
+  {
+    "id": 172,
+    "name": "释智愚",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 35,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 20
+    }
+  },
+  {
+    "id": 173,
+    "name": "释克勤",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 35,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 20
+    }
+  },
+  {
+    "id": 174,
+    "name": "朱晞颜",
+    "dynasty": "yuan",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 35,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 20
+    }
+  },
+  {
+    "id": 175,
+    "name": "李桢",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 35,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 20
+    }
+  },
+  {
+    "id": 176,
+    "name": "戴延介",
+    "dynasty": "qing",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 35,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 20
+    }
+  },
+  {
+    "id": 177,
+    "name": "詹安泰",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 35,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 20
+    }
+  },
+  {
+    "id": 178,
+    "name": "熊东遨",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 35,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 20
+    }
+  },
+  {
+    "id": 179,
+    "name": "章士钊",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 35,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 20
+    }
+  },
+  {
+    "id": 180,
+    "name": "苏葵",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 20
+    }
+  },
+  {
+    "id": 181,
+    "name": "林光",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 2,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 20
+    }
+  },
+  {
+    "id": 182,
+    "name": "许月卿",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 34,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 19
+    }
+  },
+  {
+    "id": 183,
+    "name": "曹勋",
+    "dynasty": "song",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 184,
+    "name": "张宁",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 185,
+    "name": "文徵明",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 186,
+    "name": "王洪",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 187,
+    "name": "申佳允",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 188,
+    "name": "黄克晦",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 189,
+    "name": "刘基",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 190,
+    "name": "郯韶",
+    "dynasty": "ming",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 191,
+    "name": "谭献",
+    "dynasty": "qing",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 192,
+    "name": "洪繻",
+    "dynasty": "qing",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 193,
+    "name": "张令仪",
+    "dynasty": "qing",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 194,
+    "name": "吴尚憙",
+    "dynasty": "qing",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 195,
+    "name": "周之琦",
+    "dynasty": "qing",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 196,
+    "name": "朱帆",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 197,
+    "name": "顾随",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 198,
+    "name": "卢前",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 199,
+    "name": "陈仁德",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 200,
+    "name": "陈永正",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 201,
+    "name": "何永沂",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 202,
+    "name": "陈洵",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 203,
+    "name": "易顺鼎",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 204,
+    "name": "梁启超",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 205,
+    "name": "沈曾植",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 206,
+    "name": "陈肇兴",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 207,
+    "name": "费墨娟",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 208,
+    "name": "聂绀弩",
+    "dynasty": "modern",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 32,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 18
+    }
+  },
+  {
+    "id": 209,
+    "name": "曹雪芹",
+    "dynasty": "qing",
+    "description": "",
+    "score": {
+      "poemCount": 1,
+      "avgScore": 30,
+      "textbookCount": 0,
+      "anthologyCount": 0,
+      "tierWeight": 0,
+      "total": 17
+    }
+  }
+]

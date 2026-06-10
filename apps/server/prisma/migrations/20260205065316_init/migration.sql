@@ -2,7 +2,7 @@
 CREATE EXTENSION IF NOT EXISTS "vector";
 
 -- CreateEnum
-CREATE TYPE "PoetryType" AS ENUM ('shiJing', 'chuCi', 'lunYu', 'tangShi', 'songCi', 'yuanQu');
+CREATE TYPE "PoetryType" AS ENUM ('shi', 'ci', 'qu');
 
 -- CreateEnum
 CREATE TYPE "PoetrySource" AS ENUM ('ancientPoem', 'systemUser');
@@ -11,7 +11,7 @@ CREATE TYPE "PoetrySource" AS ENUM ('ancientPoem', 'systemUser');
 CREATE TYPE "PoetryStatus" AS ENUM ('pending', 'approved', 'notApproved');
 
 -- CreateEnum
-CREATE TYPE "Dynasty" AS ENUM ('chunQiu', 'zhanGuo', 'qin', 'han', 'sui', 'tang', 'song', 'yuan', 'ming', 'qing');
+CREATE TYPE "Dynasty" AS ENUM ('xianQin', 'qinHan', 'weiJinNanBeiChao', 'sui', 'tang', 'song', 'yuan', 'ming', 'qing', 'modern');
 
 -- CreateEnum
 CREATE TYPE "TargetType" AS ENUM ('POEM', 'COLLECTION', 'COMMENT', 'BOOKMARK');
@@ -79,6 +79,8 @@ CREATE TABLE "Author" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL DEFAULT '',
+    "dynasty" "Dynasty",
+    "order" INTEGER NOT NULL DEFAULT 0,
     "submitterId" INTEGER NOT NULL,
     "status" "PoetryStatus" NOT NULL DEFAULT 'pending',
     "isDeleted" BOOLEAN NOT NULL DEFAULT false,
@@ -96,7 +98,8 @@ CREATE TABLE "Poem" (
     "type" "PoetryType" NOT NULL,
     "source" "PoetrySource" NOT NULL,
     "dynasty" "Dynasty" NOT NULL,
-    "embedding" vector(512),
+    "embedding" vector(1024),
+    "order" INTEGER NOT NULL DEFAULT 0,
     "submitterId" INTEGER NOT NULL,
     "authorId" INTEGER,
     "status" "PoetryStatus" NOT NULL DEFAULT 'pending',
@@ -113,6 +116,7 @@ CREATE TABLE "Collection" (
     "title" TEXT NOT NULL,
     "description" TEXT,
     "isPublic" BOOLEAN NOT NULL DEFAULT true,
+    "order" INTEGER NOT NULL DEFAULT 0,
     "creatorId" INTEGER NOT NULL,
     "status" "PoetryStatus" NOT NULL DEFAULT 'pending',
     "isDeleted" BOOLEAN NOT NULL DEFAULT false,
@@ -262,6 +266,12 @@ ALTER TABLE "Poem" ADD CONSTRAINT "Poem_authorId_fkey" FOREIGN KEY ("authorId") 
 
 -- AddForeignKey
 ALTER TABLE "Collection" ADD CONSTRAINT "Collection_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CollectionPoem" ADD CONSTRAINT "CollectionPoem_collectionId_fkey" FOREIGN KEY ("collectionId") REFERENCES "Collection"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CollectionPoem" ADD CONSTRAINT "CollectionPoem_poemId_fkey" FOREIGN KEY ("poemId") REFERENCES "Poem"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Comment" ADD CONSTRAINT "Comment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

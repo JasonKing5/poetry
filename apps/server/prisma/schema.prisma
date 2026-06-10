@@ -76,12 +76,9 @@ model RolePermission {
 }
 
 enum PoetryType {
-  shiJing
-  chuCi
-  lunYu
-  tangShi
-  songCi
-  yuanQu
+  shi
+  ci
+  qu
 }
 
 // 枚举类型：来源
@@ -99,16 +96,16 @@ enum PoetryStatus {
 
 // 枚举类型：朝代
 enum Dynasty {
-  chunQiu
-  zhanGuo
-  qin
-  han
-  sui
-  tang
-  song
-  yuan
-  ming
-  qing
+  xianQin           // 先秦 (诗经、楚辞)
+  qinHan            // 秦汉 (乐府)
+  weiJinNanBeiChao  // 魏晋南北朝 (建安、陶渊明)
+  sui               // 隋代
+  tang              // 唐代 (含隋末唐初)
+  song              // 宋代 (含五代、唐末宋初、辽、金)
+  yuan              // 元代 (含金末元初)
+  ming              // 明代
+  qing              // 清代 (含明末清初)
+  modern            // 近现代 (含民国、当代)
 }
 
 // 古代诗人表
